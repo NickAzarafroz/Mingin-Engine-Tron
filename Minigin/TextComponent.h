@@ -1,0 +1,34 @@
+#pragma once
+#include <string>
+#include <memory>
+#include "Transform.h"
+#include "ResourceManager.h"
+#include "BaseComponent.h"
+#include "GameObject.h"
+
+namespace dae
+{
+	class Font;
+	class Texture2D;
+	class TextComponent : public BaseComponent
+	{
+	public:
+		TextComponent();
+		virtual void Start();
+		virtual void Update(float elapsedSec) override;
+		virtual void Render() const override;
+		void SetText(const std::string& text);
+		void SetFont(const std::shared_ptr<Font>& font);
+		void SetFontColor(Uint8 r, Uint8 g, Uint8 b);
+		~TextComponent();
+
+	private:
+		bool m_needsUpdate;
+		std::string m_text;
+		std::shared_ptr<Font> m_font{};
+		std::shared_ptr<Texture2D> m_textTexture;
+		Transform m_transform{};
+		SDL_Color m_Color;
+	};
+}
+
