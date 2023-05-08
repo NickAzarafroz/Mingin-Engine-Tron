@@ -5,7 +5,7 @@ void PlayerComponent::Start()
 {
 }
 
-void PlayerComponent::Update(float elapsedSec)
+void PlayerComponent::Update(float)
 {
 }
 

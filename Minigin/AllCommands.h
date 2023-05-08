@@ -25,14 +25,18 @@ namespace dae
 	class MoveGridCommand : public GameActorCommand
 	{
 	public:
-		MoveGridCommand(GameObject* actor, glm::vec2 dir) : GameActorCommand(actor), m_Dir{ dir } {}
+		MoveGridCommand(GameObject* actor, glm::vec2 dir, GridComponent* pGrid) : GameActorCommand(actor), m_Dir{ dir }, m_pGrid{ pGrid } {}
 		void Execute() override
 		{
 			float x = GetGameActor()->GetWorldPosition().x;
-			float y = GetGameActor()->GetWorldPosition().y;
+			float y = GetGameActor()->GetWorldPosition().y; 
 
 			x += m_Dir.x * 50.f * GetGameActor()->GetElapsedSec();
 			y += m_Dir.y * 50.f * GetGameActor()->GetElapsedSec();
+
+			m_Cell = m_pGrid->GetCell(glm::vec2{ x,y });
+
+
 
 			if(x < 0.f)
 			{
@@ -59,5 +63,8 @@ namespace dae
 
 	private:
 		glm::vec2 m_Dir{};
+		GridComponent* m_pGrid{};
+		Cell m_Cell{};
+		Cell m_DestinationCell{};
 	};
 }

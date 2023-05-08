@@ -24,6 +24,7 @@ namespace dae
 
 		void Initialize(float cellWidth, float cellHeight);
 		Cell GetCell(glm::vec2 localPosition) const;
+		Cell GetDestinationCell(glm::vec2 localPosition, glm::vec2 dir);
 		~GridComponent();
 
 	private:

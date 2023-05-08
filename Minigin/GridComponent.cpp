@@ -50,12 +50,21 @@ Cell GridComponent::GetCell(glm::vec2 localPosition) const
 
 	if (row >= 0 && row < m_Rows && col >= 0 && col < m_Cols)
 	{
-		int index = row * m_Cols + col;
+		int index = row * m_Rows + col;
 		return m_Cells[index];
+	}
+	else
+	{
+		return m_Cells[0];
 	}
 
 	// Return an invalid cell if the local position is not within any cell
 	//...
+}
+
+Cell dae::GridComponent::GetDestinationCell(glm::vec2 localPosition, glm::vec2 dir)
+{
+
 }
 
 GridComponent::~GridComponent()

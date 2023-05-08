@@ -50,22 +50,12 @@ void load()
 	auto moveUpCommand = std::make_unique<dae::MoveCommand>(goPlayer.get(), 50.f, glm::vec2{ 0.f, -1.f });
 	auto moveDownCommand = std::make_unique<dae::MoveCommand>(goPlayer.get(), 50.f, glm::vec2{ 0.f, 1.f });*/
 
-	auto gridRight = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 1.f, 0.f });
-	auto gridLeft = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ -1.f, 0.f });
-	auto gridUp = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, -1.f });
-	auto gridDown = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, 1.f });
-
 	//input.AddController(std::move(p0));
 
 	/*input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadRight, std::move(moveRightCommand));
 	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadLeft, std::move(moveLeftCommand));
 	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadUp, std::move(moveUpCommand));
 	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadDown, std::move(moveDownCommand));*/
-
-	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_D, std::move(gridRight));
-	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_A, std::move(gridLeft));
-	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_S, std::move(gridDown));
-	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_W, std::move(gridUp));
 
 	//Background Texture Top
 	//-----------------------------------------------------------------------
@@ -114,7 +104,7 @@ void load()
 	//Player
 	//--------------------------------------------------------------------------
 	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("DigDugPlayer.png");
-	goPlayer->SetLocalPosition(glm::vec3(8.f, 8.f, 0.0f));
+	goPlayer->SetLocalPosition(glm::vec3(40.f, 40.f, 0.0f));
 	//---------------------------------------------------------------------------
 
 	//Enemy
@@ -129,6 +119,16 @@ void load()
 	goGrid->AddComponent<dae::TextureComponent>()->SetTexture("Grid[x].png");
 	goGrid->GetComponent<dae::GridComponent>()->Initialize(32.f, 32.f);
 	//---------------------------------------------------------------------------
+
+	auto gridRight = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto gridLeft = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ -1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto gridUp = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, -1.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto gridDown = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, 1.f }, goGrid->GetComponent<dae::GridComponent>());
+
+	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_D, std::move(gridRight));
+	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_A, std::move(gridLeft));
+	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_S, std::move(gridDown));
+	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_W, std::move(gridUp));
 
 
 	scene.Add(goBackground);
