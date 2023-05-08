@@ -26,6 +26,9 @@ void GridComponent::Render() const
 
 void GridComponent::Initialize(float cellWidth, float cellHeight)
 {
+	m_CellWidth = cellWidth;
+	m_CellHeight = cellHeight;
+
 	for (int col{ 0 }; col < m_Cols; ++col)
 	{
 		for (int row{ 0 }; row < m_Rows; ++row)
@@ -40,6 +43,21 @@ void GridComponent::Initialize(float cellWidth, float cellHeight)
 	}
 }
 
-dae::GridComponent::~GridComponent()
+Cell GridComponent::GetCell(glm::vec2 localPosition) const
+{
+	int row = static_cast<int>(localPosition.x / m_CellWidth);
+	int col = static_cast<int>(localPosition.y / m_CellHeight);
+
+	if (row >= 0 && row < m_Rows && col >= 0 && col < m_Cols)
+	{
+		int index = row * m_Cols + col;
+		return m_Cells[index];
+	}
+
+	// Return an invalid cell if the local position is not within any cell
+	//...
+}
+
+GridComponent::~GridComponent()
 {
 }

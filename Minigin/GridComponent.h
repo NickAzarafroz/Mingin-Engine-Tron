@@ -21,12 +21,18 @@ namespace dae
 		virtual void Start() override;
 		virtual void Update(float elapsedSec) override;
 		virtual void Render() const override;
+
 		void Initialize(float cellWidth, float cellHeight);
+		Cell GetCell(glm::vec2 localPosition) const;
 		~GridComponent();
 
 	private:
 		const int m_Rows{ 14 };
 		const int m_Cols{ 18 };
+
+		float m_CellWidth;
+		float m_CellHeight;
+
 		TextureComponent* m_pTexture;
 		std::vector<Cell> m_Cells;
 	};
