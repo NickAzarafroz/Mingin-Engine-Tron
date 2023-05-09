@@ -64,7 +64,18 @@ Cell GridComponent::GetCell(glm::vec2 localPosition) const
 
 Cell dae::GridComponent::GetDestinationCell(glm::vec2 localPosition, glm::vec2 dir)
 {
+	int row = static_cast<int>(localPosition.x / m_CellWidth);
+	int col = static_cast<int>(localPosition.y / m_CellHeight);
 
+	if (row >= 0 && row < m_Rows && col >= 0 && col < m_Cols)
+	{
+		int index = (row + static_cast<int>(dir.y)) * m_Rows + (col + static_cast<int>(dir.x));
+		return m_Cells[index];
+	}
+	else
+	{
+		return m_Cells[0];
+	}
 }
 
 GridComponent::~GridComponent()

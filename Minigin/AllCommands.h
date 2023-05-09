@@ -28,37 +28,34 @@ namespace dae
 		MoveGridCommand(GameObject* actor, glm::vec2 dir, GridComponent* pGrid) : GameActorCommand(actor), m_Dir{ dir }, m_pGrid{ pGrid } {}
 		void Execute() override
 		{
-			float x = GetGameActor()->GetWorldPosition().x;
-			float y = GetGameActor()->GetWorldPosition().y; 
-
-			x += m_Dir.x * 50.f * GetGameActor()->GetElapsedSec();
-			y += m_Dir.y * 50.f * GetGameActor()->GetElapsedSec();
-
-			m_Cell = m_pGrid->GetCell(glm::vec2{ x,y });
-
-
-
-			if(x < 0.f)
+			if(!m_DestinationReached)
 			{
-				x = 8.f;
-			}
-			
-			if(x > 448.f)
-			{
-				x = 424.f;
-			}
+				float x = GetGameActor()->GetWorldPosition().x;
+				float y = GetGameActor()->GetWorldPosition().y;
 
-			if(y < 0.f)
-			{
-				y = 8.f;
-			}
+				if(m_DoUntilFinished)
+				{
+					m_Cell = m_pGrid->GetCell(glm::vec2{ x,y });
+					m_DestinationCell = m_pGrid->GetDestinationCell(glm::vec2{ x,y }, m_Dir);
+					m_DoUntilFinished = false;
+				}
 
-			if(y > 576.f)
-			{
-				y = 552.f;
-			}
+				if (fabs((x * 2.f) - m_DestinationCell.centerPosition.x) < 0.1f && fabs((y * 2.f) - m_DestinationCell.centerPosition.y) < 0.1f)
+				{
+					m_DestinationReached = true;
+				}
 
-			GetGameActor()->SetLocalPosition(glm::vec3(x, y, 0.0f));
+				glm::vec2 distance = m_DestinationCell.centerPosition - m_Cell.centerPosition;
+
+				float length = static_cast<float>(distance.length());
+				distance.x /= length;
+				distance.y /= length;
+
+				x += distance.x * 10.f * GetGameActor()->GetElapsedSec();
+				y += distance.y * 10.f * GetGameActor()->GetElapsedSec();
+
+				GetGameActor()->SetLocalPosition(glm::vec3(x, y, 0.0f));
+			}
 		};
 
 	private:
@@ -66,5 +63,7 @@ namespace dae
 		GridComponent* m_pGrid{};
 		Cell m_Cell{};
 		Cell m_DestinationCell{};
+		bool m_DestinationReached{};
+		bool m_DoUntilFinished{ true };
 	};
 }
