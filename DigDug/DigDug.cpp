@@ -104,7 +104,7 @@ void load()
 	//Player
 	//--------------------------------------------------------------------------
 	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("DigDugPlayer.png");
-	goPlayer->SetLocalPosition(glm::vec3(8.f, 8.f, 0.0f));
+	goPlayer->SetLocalPosition(glm::vec3(32.f, 32.f, 0.0f));
 	//---------------------------------------------------------------------------
 
 	//Enemy

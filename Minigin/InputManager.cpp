@@ -23,12 +23,18 @@ bool dae::InputManager::ProcessInput()
 	}
 
 	const Uint8* pStates = SDL_GetKeyboardState(nullptr);
-
+	//TODO: NEEDS TO BE CHANGED SO THE USER CAN DECIDE IF HE WANTS TO HAVE THAT
+	bool commandExecuted = false;
+	
 	for(const auto& [keyBoardKey, command] : m_KeyBoardCommands)
 	{
 		if(pStates[keyBoardKey])
 		{
-			command->Execute();
+			if (!commandExecuted)
+			{
+				command->Execute();
+				commandExecuted = true;
+			}
 		}
 	}
 

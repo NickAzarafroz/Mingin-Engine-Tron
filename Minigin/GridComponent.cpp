@@ -37,7 +37,7 @@ void GridComponent::Initialize(float cellWidth, float cellHeight)
 			c.width = cellWidth;
 			c.height = cellHeight;
 			c.localPosition = glm::vec2{ row * cellWidth, col * cellHeight };
-			c.centerPosition = glm::vec2{ (c.localPosition.x + cellWidth) / 2, (c.localPosition.y + cellHeight) / 2 };
+			c.centerPosition = glm::vec2{ c.localPosition.x + cellWidth / 2, c.localPosition.y + cellHeight / 2 };
 			m_Cells.push_back(c);
 		}
 	}
@@ -45,8 +45,8 @@ void GridComponent::Initialize(float cellWidth, float cellHeight)
 
 Cell GridComponent::GetCell(glm::vec2 localPosition) const
 {
-	int row = static_cast<int>(localPosition.x / m_CellWidth);
-	int col = static_cast<int>(localPosition.y / m_CellHeight);
+	int row = static_cast<int>(localPosition.y / m_CellWidth);
+	int col = static_cast<int>(localPosition.x / m_CellHeight);
 
 	if (row >= 0 && row < m_Rows && col >= 0 && col < m_Cols)
 	{
@@ -64,8 +64,8 @@ Cell GridComponent::GetCell(glm::vec2 localPosition) const
 
 Cell dae::GridComponent::GetDestinationCell(glm::vec2 localPosition, glm::vec2 dir)
 {
-	int row = static_cast<int>(localPosition.x / m_CellWidth);
-	int col = static_cast<int>(localPosition.y / m_CellHeight);
+	int row = static_cast<int>(localPosition.y / m_CellWidth);
+	int col = static_cast<int>(localPosition.x / m_CellHeight);
 
 	if (row >= 0 && row < m_Rows && col >= 0 && col < m_Cols)
 	{
