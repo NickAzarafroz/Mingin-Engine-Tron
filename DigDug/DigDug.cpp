@@ -18,7 +18,7 @@
 #include "TextureComponent.h"
 #include "FPSComponent.h"
 #include "RotateComponent.h"
-//#include "LiveDisplayComponent.h"
+#include "LiveDisplayComponent.h"
 //#include "ScoreDisplayComponent.h"
 #include "GridComponent.h"
 
@@ -42,6 +42,7 @@ void load()
 	auto goPlayer = std::make_shared<dae::GameObject>();
 	auto goEnemy = std::make_shared<dae::GameObject>();
 	auto goGrid = std::make_shared<dae::GameObject>();
+	auto goHealth = std::make_shared<dae::GameObject>();
 
 	auto p0 = std::make_unique<dae::XBox360Controller>(0);
 
@@ -120,15 +121,27 @@ void load()
 	goGrid->GetComponent<dae::GridComponent>()->Initialize(32.f, 32.f);
 	//---------------------------------------------------------------------------
 
+	//Health Displayer
+	//---------------------------------------------------------------------------
+	goHealth->AddComponent<dae::TextComponent>()->SetFont(pDigDugFont);
+	goHealth->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 255);
+	goHealth->AddComponent<dae::LiveDisplayComponent>();
+	goHealth->AddComponent<dae::PlayerComponent>();
+	goHealth->SetLocalPosition(glm::vec3{ 0.f, 700.f, 0.f });
+	//---------------------------------------------------------------------------
+
 	auto gridRight = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
 	auto gridLeft = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ -1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
 	auto gridUp = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, -1.f }, goGrid->GetComponent<dae::GridComponent>());
 	auto gridDown = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, 1.f }, goGrid->GetComponent<dae::GridComponent>());
 
+	auto decreaseHealth = std::make_unique<dae::ChangeHealthCommand>(goHealth.get(), 1);
+
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_D, std::move(gridRight));
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_A, std::move(gridLeft));
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_S, std::move(gridDown));
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_W, std::move(gridUp));
+	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_P, std::move(decreaseHealth));
 
 
 	scene.Add(goBackground);
@@ -140,6 +153,7 @@ void load()
 	scene.Add(goPlayer);
 	scene.Add(goEnemy);
 	scene.Add(goGrid);
+	scene.Add(goHealth);
 }
 
 int main(int, char*[]) 

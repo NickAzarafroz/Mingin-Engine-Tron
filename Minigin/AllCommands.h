@@ -1,11 +1,13 @@
 #pragma once
 #include "GameActorCommand.h"
+#include "PlayerComponent.h"
 namespace dae
 {
 	class MoveCommand : public GameActorCommand
 	{
 	public:
 		MoveCommand(GameObject* actor, float speed, glm::vec2 dir) : GameActorCommand(actor), m_Speed{ speed }, m_Dir{ dir } {}
+		virtual ~MoveCommand() = default;
 		void Execute() override 
 		{ 
 			float x = GetGameActor()->GetWorldPosition().x;
@@ -26,6 +28,7 @@ namespace dae
 	{
 	public:
 		MoveGridCommand(GameObject* actor, glm::vec2 dir, GridComponent* pGrid) : GameActorCommand(actor), m_Dir{ dir }, m_pGrid{ pGrid } {}
+		virtual ~MoveGridCommand() = default;
 		void Execute() override
 		{
 			float x = GetGameActor()->GetWorldPosition().x;
@@ -97,4 +100,18 @@ namespace dae
 	glm::vec2 MoveGridCommand::m_TempDir{};
 	Cell MoveGridCommand::m_Cell{};
 	Cell MoveGridCommand::m_DestinationCell{};
+
+	class ChangeHealthCommand : public GameActorCommand
+	{
+	public:
+		ChangeHealthCommand(GameObject* actor, int amount) : GameActorCommand(actor), m_Amount{ amount } {}
+		virtual ~ChangeHealthCommand() = default;
+		void Execute() override
+		{
+			GetGameActor()->GetComponent<PlayerComponent>()->TakeDamage(m_Amount);
+		}
+
+	private:
+		int m_Amount;
+	};
 }

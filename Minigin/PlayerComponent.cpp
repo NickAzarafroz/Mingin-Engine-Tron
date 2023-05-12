@@ -3,6 +3,7 @@ using namespace dae;
 
 void PlayerComponent::Start()
 {
+	m_Health = 3;
 }
 
 void PlayerComponent::Update(float)

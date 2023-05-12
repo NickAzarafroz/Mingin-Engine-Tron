@@ -1,17 +1,22 @@
 #include "LiveDisplayComponent.h"
 #include "TextComponent.h"
+#include "PlayerComponent.h"
 using namespace dae;
 
 LiveDisplayComponent::LiveDisplayComponent()
-	: m_HealthPoints{ 500 }
 {
-
+  
 }
 
 void LiveDisplayComponent::Start()
 {
     m_pText = m_pGameObject->GetComponent<TextComponent>();
-    m_pText->SetText("HealthPoints: " + std::to_string(m_HealthPoints));
+    m_pPlayer = m_pGameObject->GetComponent<PlayerComponent>();
+
+    m_pPlayer->healthChanged.AddObserver(this);
+    m_HealthPoints = m_pPlayer->GetHealth();
+
+    m_pText->SetText("HealthPoints " + std::to_string(m_HealthPoints));
 }
 
 void LiveDisplayComponent::Update(float)
@@ -23,16 +28,21 @@ void LiveDisplayComponent::Render() const
     m_pText->Render();
 }
 
-int dae::LiveDisplayComponent::DecreaseLive()
-{
-    if(m_HealthPoints > 0)
-    {
-        return --m_HealthPoints;
-    }
-    return 0;
-}
-
 LiveDisplayComponent::~LiveDisplayComponent()
 {
-    
+    if(m_pPlayer)
+    {
+        m_pPlayer->healthChanged.RemoveObserver(this);
+    }
+}
+
+void LiveDisplayComponent::HandleEvent()
+{
+    --m_HealthPoints;
+    m_pText->SetText("HealthPoints " + std::to_string(m_HealthPoints));
+}
+
+void LiveDisplayComponent::OnSubjectDestroy()
+{
+
 }
