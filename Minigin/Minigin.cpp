@@ -54,8 +54,8 @@ dae::Minigin::Minigin(const std::string &dataPath)
 		"DigDug",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		448,
-		576,
+		600,
+		732,
 		SDL_WINDOW_OPENGL
 	);
 	if (g_window == nullptr) 

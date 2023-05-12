@@ -28,7 +28,7 @@ namespace dae
 		~GridComponent();
 
 	private:
-		const int m_Rows{ 14 };
+		const int m_Rows{ 18 };
 		const int m_Cols{ 18 };
 
 		float m_CellWidth;

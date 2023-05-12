@@ -81,7 +81,7 @@ void load()
 	goRoundText->AddComponent<dae::TextComponent>()->SetText("ROUND");
 	goRoundText->GetComponent<dae::TextComponent>()->SetFont(pDigDugFont);
 	goRoundText->GetComponent<dae::TextComponent>()->SetFontColor(255, 255, 255);
-	goRoundText->SetLocalPosition(glm::vec3(360.f, 520.f, 0.f));
+	goRoundText->SetLocalPosition(glm::vec3(360.f, 680.f, 0.f));
 	//--------------------------------------------------------------------------
 
 	//Player 1 Text
@@ -104,7 +104,7 @@ void load()
 	//Player
 	//--------------------------------------------------------------------------
 	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("DigDugPlayer.png");
-	goPlayer->SetLocalPosition(glm::vec3(32.f, 32.f, 0.0f));
+	goPlayer->SetLocalPosition(glm::vec3(0.f, 96.f, 0.0f));
 	//---------------------------------------------------------------------------
 
 	//Enemy
