@@ -38,7 +38,7 @@ void load()
 #endif
 	
 	auto& ss = dae::ServiceLocator::GetSoundSystem();
-	ss.Play(10, 100);
+	ss.Play(0, 10);
 
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
 	auto& input = dae::InputManager::GetInstance();
