@@ -11,6 +11,10 @@
 #include <chrono>
 #include <iostream>
 
+#include "ServiceLocator.h"
+#include "LoggingSoundSystem.h"
+#include "PrimarySoundSystem.h"
+
 SDL_Window* g_window{};
 
 void PrintSDLVersion()
@@ -80,9 +84,16 @@ void dae::Minigin::Run(const std::function<void()>& load)
 {
 	load();
 
+#if _DEBUG
+	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::LoggingSoundSystem>(std::make_unique<dae::PrimarySoundSystem>()));
+#else
+	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::PrimarySoundSystem>());
+#endif
+
 	auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
+	auto& soundSystem = ServiceLocator::GetSoundSystem();
 
 	// todo: this update loop could use some work.
 
@@ -93,6 +104,8 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	const float msPerFrame{ 1000.f / capFrames };
 
 	bool doContinue = true;
+	soundSystem.Init();
+	soundSystem.Play(0, 20.f);
 	sceneManager.Start();
 	auto lastTime = high_resolution_clock::now();
 	while (doContinue)
@@ -101,6 +114,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		const float deltaTime = duration<float>(currentTime - lastTime).count();
 
 		doContinue = input.ProcessInput();
+		if (!doContinue) soundSystem.Release();
 		sceneManager.Update(deltaTime);
 		renderer.Render();
 

@@ -25,21 +25,8 @@
 #include "AllCommands.h"
 #include "XBox360Controller.h"
 
-#include "ServiceLocator.h"
-#include "LoggingSoundSystem.h"
-#include "PrimarySoundSystem.h"
-
 void load()
 {
-#if _DEBUG
-	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::LoggingSoundSystem>(std::make_unique<dae::PrimarySoundSystem>()));
-#else
-	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::PrimarySoundSystem>());
-#endif
-	
-	auto& ss = dae::ServiceLocator::GetSoundSystem();
-	ss.Play(0, 10);
-
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
 	auto& input = dae::InputManager::GetInstance();
 

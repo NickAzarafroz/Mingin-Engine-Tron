@@ -24,6 +24,7 @@ namespace dae
 
 			// Create a new thread to process sound requests
 			m_SoundThread = std::jthread(&PrimarySoundSystem::SoundThread, this);
+			m_pAudio = std::make_unique<AudioClip>();
 		}
 
 		void Update() override
@@ -50,13 +51,19 @@ namespace dae
 			m_CV.notify_one();
 		}
 
+		void Release() override
+		{
+			m_DoContinue = false;
+		}
+
 	private:
 		static const int MAX_PENDING = 16;
 
 		static SoundPlay m_Pending[MAX_PENDING];
 		static int m_Head;
 		static int m_Tail;
-		AudioClip* m_pAudio;
+		static bool m_DoContinue;
+		std::unique_ptr<AudioClip> m_pAudio;
 
 		std::jthread m_SoundThread;
 		std::mutex m_Mutex;
@@ -64,7 +71,7 @@ namespace dae
 
 		void SoundThread()
 		{
-			while (true)
+			while (m_DoContinue)
 			{
 				// Check the ring buffer for pending sound requests
 				if (m_Head != m_Tail)
@@ -91,4 +98,5 @@ namespace dae
 	SoundPlay PrimarySoundSystem::m_Pending[MAX_PENDING];
 	int PrimarySoundSystem::m_Head = 0;
 	int PrimarySoundSystem::m_Tail = 0;
+	bool PrimarySoundSystem::m_DoContinue = true;
 }

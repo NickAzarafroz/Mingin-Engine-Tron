@@ -16,7 +16,6 @@ namespace dae
         void Play();
 
     private:
-        std::string m_FilePath;
         Mix_Chunk* m_pMixChunk{};
 	};
 }

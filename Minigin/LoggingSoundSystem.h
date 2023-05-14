@@ -11,20 +11,26 @@ namespace dae
 
 		virtual void Init() override 
 		{
+			std::cout << "Initialise Soundsystem\n";
 			m_pReal_SS->Init();
-			std::cout << "Initialise Sound\n";
 		}
 
 		virtual void Update() override 
 		{
-			m_pReal_SS->Update();
 			std::cout << "Updating ...\n";
+			m_pReal_SS->Update();
 		}
 
 		void Play(const Sound_ID id, const float volume) override 
 		{
-			m_pReal_SS->Play(id, volume);
 			std::cout << "Playing " << id << " at volume " << volume << std::endl;
+			m_pReal_SS->Play(id, volume);
+		}
+
+		virtual void Release() override 
+		{
+			std::cout << "Release ...\n";
+			m_pReal_SS->Release();
 		}
 
 	private:
