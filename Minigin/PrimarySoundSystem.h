@@ -1,11 +1,13 @@
 #pragma once
 #include "SoundSystem.h"
+#include "AudioClip.h"
+#include <cassert>
 namespace dae
 {
-	struct PlayMessage
+	struct SoundPlay
 	{
 		Sound_ID id;
-		int volume;
+		float volume;
 	};
 
 	class PrimarySoundSystem final : public SoundSystem
@@ -22,7 +24,12 @@ namespace dae
 			// If there are no pending requests, do nothing.
 			if (m_Head == m_Tail) return;
 
-			// lots of sdl_mixer code
+			if(!m_pAudio->IsLoaded())
+			{
+				m_pAudio->Load(m_Pending[m_Head].id);
+				m_pAudio->SetVolume(m_Pending[m_Head].volume);
+				m_pAudio->Play();
+			}
 
 			m_Head = (m_Head + 1) % MAX_PENDING;
 		}
@@ -40,8 +47,13 @@ namespace dae
 	private:
 		static const int MAX_PENDING = 16;
 
-		static PlayMessage m_Pending[MAX_PENDING];
+		static SoundPlay m_Pending[MAX_PENDING];
 		static int m_Head;
 		static int m_Tail;
+		AudioClip* m_pAudio;
 	};
+
+	SoundPlay PrimarySoundSystem::m_Pending[MAX_PENDING];
+	int PrimarySoundSystem::m_Head = 0;
+	int PrimarySoundSystem::m_Tail = 0;
 }

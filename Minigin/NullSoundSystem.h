@@ -5,6 +5,8 @@ namespace dae
 {
 	class NullSoundSystem final : public SoundSystem
 	{
-		void Play(const Sound_id, const float) override {}
+		virtual void Init() override {}
+		virtual void Update() override {}
+		virtual void Play(const Sound_ID, const float) override {}
 	};
 }

@@ -9,7 +9,19 @@ namespace dae
 		LoggingSoundSystem(std::unique_ptr<SoundSystem>&& ss) : m_pReal_SS(std::move(ss)) {}
 		virtual ~LoggingSoundSystem() = default;
 
-		void Play(const Sound_id id, const float volume) override 
+		virtual void Init() override 
+		{
+			m_pReal_SS->Init();
+			std::cout << "Initialise Sound\n";
+		}
+
+		virtual void Update() override 
+		{
+			m_pReal_SS->Update();
+			std::cout << "Updating ...\n";
+		}
+
+		void Play(const Sound_ID id, const float volume) override 
 		{
 			m_pReal_SS->Play(id, volume);
 			std::cout << "Playing " << id << " at volume " << volume << std::endl;
