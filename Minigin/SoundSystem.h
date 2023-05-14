@@ -1,12 +1,14 @@
 #pragma once
 namespace dae
 {
-	using Sound_id = unsigned short;
+	using Sound_ID = unsigned short;
 
 	class SoundSystem
 	{
 	public:
 		virtual ~SoundSystem() = default;
-		virtual void Play(const Sound_id id, const float volume) = 0;
+		virtual void Init() = 0;
+		virtual void Update() = 0;
+		virtual void Play(const Sound_ID id, const float volume) = 0;
 	};
 }

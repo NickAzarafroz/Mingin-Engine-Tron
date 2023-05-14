@@ -114,7 +114,7 @@
     <ClInclude Include="AllCommands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EventSystem.h">
+    <ClInclude Include="EventManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LiveDisplayComponent.h">

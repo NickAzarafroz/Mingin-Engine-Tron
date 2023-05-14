@@ -13,6 +13,7 @@ namespace dae
 		{
 			m_pSS_Instance = ss == nullptr ? std::make_unique<NullSoundSystem>() : std::move(ss);
 		}
+
 	private:
 		static std::unique_ptr<SoundSystem> m_pSS_Instance;
 	};
