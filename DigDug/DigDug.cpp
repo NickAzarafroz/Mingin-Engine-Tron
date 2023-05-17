@@ -117,7 +117,7 @@ void load()
 	//Grid
 	//---------------------------------------------------------------------------
 	goGrid->AddComponent<dae::GridComponent>();
-	goGrid->AddComponent<dae::TextureComponent>()->SetTexture("Grid[x].png");
+	goGrid->AddComponent<dae::TextureComponent>();
 	goGrid->GetComponent<dae::GridComponent>()->Initialize(32.f, 32.f);
 	//---------------------------------------------------------------------------
 
@@ -145,6 +145,7 @@ void load()
 
 
 	scene.Add(goBackground);
+	scene.Add(goGrid);
 	//scene.Add(goLogo);
 	scene.Add(goHighScoreText);
 	scene.Add(goRoundText);
@@ -152,7 +153,6 @@ void load()
 	scene.Add(goFPS);
 	scene.Add(goPlayer);
 	scene.Add(goEnemy);
-	scene.Add(goGrid);
 	scene.Add(goHealth);
 }
 

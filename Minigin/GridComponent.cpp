@@ -14,11 +14,12 @@ void GridComponent::Update(float)
 
 void GridComponent::Render() const
 {
+
 	for (int row{0}; row < m_Rows; ++row)
 	{
 		for (int col{0}; col < m_Cols; ++col)
 		{
-			m_pTexture->SetPosition(static_cast<float>(col * 32), static_cast<float>(row * 32));
+			m_pTexture->SetPosition(static_cast<float>(col * 32), static_cast<float>(row * 32 + 96));
 			m_pTexture->Render();
 		}
 	}
@@ -36,8 +37,8 @@ void GridComponent::Initialize(float cellWidth, float cellHeight)
 			Cell c;
 			c.width = cellWidth;
 			c.height = cellHeight;
-			c.localPosition = glm::vec2{ col * cellWidth, row * cellHeight };
-			c.centerPosition = glm::vec2{ c.localPosition.x + cellWidth / 2, c.localPosition.y + cellHeight / 2 };
+			c.localPosition = glm::vec2{ col * cellWidth, row * cellHeight + 96.f};
+			c.centerPosition = glm::vec2{ c.localPosition.x + cellWidth / 2, c.localPosition.y + cellHeight / 2};
 			m_Cells.push_back(c);
 		}
 	}
@@ -45,7 +46,7 @@ void GridComponent::Initialize(float cellWidth, float cellHeight)
 
 Cell GridComponent::GetCell(glm::vec2 localPosition) const
 {
-	int row = static_cast<int>(localPosition.y / m_CellHeight);
+	int row = static_cast<int>((localPosition.y - 96.f) / m_CellHeight);
 	int col = static_cast<int>(localPosition.x / m_CellWidth);
 
 	if (row >= 0 && row < m_Rows && col >= 0 && col < m_Cols)
@@ -60,7 +61,7 @@ Cell GridComponent::GetCell(glm::vec2 localPosition) const
 
 std::pair<Cell, bool> dae::GridComponent::GetDestinationCell(glm::vec2 localPosition, glm::vec2 dir)
 {
-	int row = static_cast<int>(localPosition.y / m_CellHeight);
+	int row = static_cast<int>((localPosition.y - 96.f) / m_CellHeight);
 	int col = static_cast<int>(localPosition.x / m_CellWidth);
 
 	int newRow = row + static_cast<int>(dir.y);
