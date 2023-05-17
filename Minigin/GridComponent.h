@@ -24,12 +24,12 @@ namespace dae
 
 		void Initialize(float cellWidth, float cellHeight);
 		Cell GetCell(glm::vec2 localPosition) const;
-		Cell GetDestinationCell(glm::vec2 localPosition, glm::vec2 dir);
+		std::pair<Cell, bool> GetDestinationCell(glm::vec2 localPosition, glm::vec2 dir);
 		~GridComponent();
 
 	private:
 		const int m_Rows{ 18 };
-		const int m_Cols{ 18 };
+		const int m_Cols{ 14 };
 
 		float m_CellWidth;
 		float m_CellHeight;
