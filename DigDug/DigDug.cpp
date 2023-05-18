@@ -118,7 +118,7 @@ void load()
 	//---------------------------------------------------------------------------
 	goGrid->AddComponent<dae::GridComponent>();
 	goGrid->AddComponent<dae::TextureComponent>();
-	goGrid->GetComponent<dae::GridComponent>()->Initialize(32.f, 32.f);
+	goGrid->GetComponent<dae::GridComponent>()->Initialize(32.f, 32.f, "../Data/LevelDigDug.json");
 	//---------------------------------------------------------------------------
 
 	//Health Displayer

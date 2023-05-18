@@ -2,18 +2,21 @@
 #include "BaseComponent.h"
 #include "glm/glm.hpp"
 #include <vector>
+#include <string>
 namespace dae
 {
+	class TextureComponent;
+	class GameObject;
+
 	struct Cell
 	{
-		float height;
-		float width;
+		float height{};
+		float width{};
+
 		glm::vec2 centerPosition{};
 		glm::vec2 localPosition{};
 	};
 
-	class TextureComponent;
-	class GameObject;
 	class GridComponent : public BaseComponent
 	{
 	public:
@@ -22,7 +25,7 @@ namespace dae
 		virtual void Update(float elapsedSec) override;
 		virtual void Render() const override;
 
-		void Initialize(float cellWidth, float cellHeight);
+		void Initialize(float cellWidth, float cellHeight, const std::string& filename = 0);
 		Cell GetCell(glm::vec2 localPosition) const;
 		std::pair<Cell, bool> GetDestinationCell(glm::vec2 localPosition, glm::vec2 dir);
 		~GridComponent();
@@ -36,6 +39,7 @@ namespace dae
 
 		TextureComponent* m_pTexture;
 		std::vector<Cell> m_Cells;
+		std::vector<int> m_TextureIDs;
 	};
 }
 

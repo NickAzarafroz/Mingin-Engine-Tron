@@ -1,7 +1,6 @@
 #pragma once
 #include "SoundSystem.h"
 #include "AudioClip.h"
-#include <cassert>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
