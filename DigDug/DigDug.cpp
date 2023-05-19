@@ -116,8 +116,15 @@ void load()
 
 	//Grid
 	//---------------------------------------------------------------------------
-	goGrid->AddComponent<dae::GridComponent>();
 	goGrid->AddComponent<dae::TextureComponent>();
+	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[1].png");
+	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[2].png");
+	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[3].png");
+	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[4].png");
+	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[5].png");
+	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[6].png");
+	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[7].png");
+	goGrid->AddComponent<dae::GridComponent>();
 	goGrid->GetComponent<dae::GridComponent>()->Initialize(32.f, 32.f, "../Data/LevelDigDug.json");
 	//---------------------------------------------------------------------------
 

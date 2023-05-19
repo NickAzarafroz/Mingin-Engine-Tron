@@ -18,6 +18,10 @@ namespace dae
 
 		void SetPosition(float x, float y);
 		void SetTexture(const std::string& filename);
+
+		void AddTexture(const std::string& filename);
+		void SetActiveTexture(int index);
+
 		std::shared_ptr<Texture2D> GetTexture();
 		Transform GetPosition();
 		~TextureComponent();
@@ -25,5 +29,8 @@ namespace dae
 	private:
 		Transform m_transform{};
 		std::shared_ptr<Texture2D> m_texture{};
+
+		std::vector<std::shared_ptr<Texture2D>> m_Textures;
+		int m_ActiveTextureIndex;
 	};
 }

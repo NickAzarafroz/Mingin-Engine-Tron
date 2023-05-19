@@ -12,7 +12,8 @@ void TextureComponent::Render() const
 	//const auto& transform = m_pGameObject->GetComponent<TransformComponent>();
 	//const auto& pos = transform->GetPosition();
 
-	Renderer::GetInstance().RenderTexture(*m_texture, m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y);
+	// Render the active texture at the GameObject's position
+	Renderer::GetInstance().RenderTexture(*m_Textures[m_ActiveTextureIndex], m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y);
 };
 
 void TextureComponent::SetPosition(float x, float y)
@@ -23,12 +24,32 @@ void TextureComponent::SetPosition(float x, float y)
 
 void TextureComponent::SetTexture(const std::string& filename)
 {
-	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
+	m_Textures.push_back(ResourceManager::GetInstance().LoadTexture(filename));
+}
+
+void TextureComponent::AddTexture(const std::string& filename)
+{
+	// Load the texture and store it in the collection
+	m_Textures.push_back(ResourceManager::GetInstance().LoadTexture(filename));
+}
+
+void TextureComponent::SetActiveTexture(int index)
+{
+	if (index >= 0 && index < m_Textures.size())
+	{
+		// Set the active texture for rendering
+		m_ActiveTextureIndex = index;
+	}
 }
 
 std::shared_ptr<Texture2D> dae::TextureComponent::GetTexture()
 {
-	return m_texture;
+	if (m_ActiveTextureIndex >= 0 && m_ActiveTextureIndex < m_Textures.size())
+	{
+		return m_Textures[m_ActiveTextureIndex];
+	}
+
+	return nullptr;
 }
 
 Transform TextureComponent::GetPosition()

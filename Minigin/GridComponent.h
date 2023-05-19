@@ -3,6 +3,7 @@
 #include "glm/glm.hpp"
 #include <vector>
 #include <string>
+#include <memory>
 namespace dae
 {
 	class TextureComponent;
@@ -15,6 +16,8 @@ namespace dae
 
 		glm::vec2 centerPosition{};
 		glm::vec2 localPosition{};
+
+		int ID;
 	};
 
 	class GridComponent : public BaseComponent
@@ -25,7 +28,7 @@ namespace dae
 		virtual void Update(float elapsedSec) override;
 		virtual void Render() const override;
 
-		void Initialize(float cellWidth, float cellHeight, const std::string& filename = 0);
+		void Initialize(float cellWidth, float cellHeight, const std::string& filename);
 		Cell GetCell(glm::vec2 localPosition) const;
 		std::pair<Cell, bool> GetDestinationCell(glm::vec2 localPosition, glm::vec2 dir);
 		~GridComponent();
@@ -42,5 +45,3 @@ namespace dae
 		std::vector<int> m_TextureIDs;
 	};
 }
-
-

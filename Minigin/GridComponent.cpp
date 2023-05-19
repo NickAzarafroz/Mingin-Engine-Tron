@@ -6,13 +6,12 @@
 #include "include/rapidjson/istreamwrapper.h"
 #include "include/rapidjson/document.h"
 #include <fstream>
-#include <Windows.h>
+
 using namespace dae;
 
 void GridComponent::Start()
 {
 	m_pTexture = m_pGameObject->GetComponent<TextureComponent>();
-	m_pTexture->SetTexture("../Data/Grid[x].png");
 }
 
 void GridComponent::Update(float)
@@ -21,18 +20,70 @@ void GridComponent::Update(float)
 
 void GridComponent::Render() const
 {
-	for (int row{ 0 }; row < m_Rows; ++row)
+	for (int i = 0; i < static_cast<int>(m_Cells.size()); i++)
 	{
-		for (int col{ 0 }; col < m_Cols; ++col)
+		switch (m_Cells[i].ID)
 		{
-			m_pTexture->SetPosition(static_cast<float>(col * 32), static_cast<float>(row * 32 + 96));
+		case 1:
+			m_pTexture->SetActiveTexture(0);
+			m_pTexture->SetPosition(m_Cells[i].localPosition.x, m_Cells[i].localPosition.y);
 			m_pTexture->Render();
+			break;
+		case 2:
+			m_pTexture->SetActiveTexture(1);
+			m_pTexture->SetPosition(m_Cells[i].localPosition.x, m_Cells[i].localPosition.y);
+			m_pTexture->Render();
+			break;
+		case 3:
+			m_pTexture->SetActiveTexture(2);
+			m_pTexture->SetPosition(m_Cells[i].localPosition.x, m_Cells[i].localPosition.y);
+			m_pTexture->Render();
+			break;
+		case 4:
+			m_pTexture->SetActiveTexture(3);
+			m_pTexture->SetPosition(m_Cells[i].localPosition.x, m_Cells[i].localPosition.y);
+			m_pTexture->Render();
+			break;
+		case 5:
+			m_pTexture->SetActiveTexture(4);
+			m_pTexture->SetPosition(m_Cells[i].localPosition.x, m_Cells[i].localPosition.y);
+			m_pTexture->Render();
+			break;
+		case 6:
+			m_pTexture->SetActiveTexture(5);
+			m_pTexture->SetPosition(m_Cells[i].localPosition.x, m_Cells[i].localPosition.y);
+			m_pTexture->Render();
+			break;
+		case 7:
+			m_pTexture->SetActiveTexture(6);
+			m_pTexture->SetPosition(m_Cells[i].localPosition.x, m_Cells[i].localPosition.y);
+			m_pTexture->Render();
+			break;
+		default:
+			break;
 		}
 	}
 }
 
 void GridComponent::Initialize(float cellWidth, float cellHeight, const std::string& filename)
 {
+	m_CellWidth = cellWidth;
+	m_CellHeight = cellHeight;
+
+	for (int row{ 0 }; row < m_Rows; ++row)
+	{
+		for (int col{ 0 }; col < m_Cols; ++col)
+		{
+			Cell c;
+			c.width = cellWidth;
+			c.height = cellHeight;
+			c.localPosition = glm::vec2{ col * cellWidth, row * cellHeight + 96.f};
+			c.centerPosition = glm::vec2{ c.localPosition.x + cellWidth / 2, c.localPosition.y + cellHeight / 2};
+
+			m_Cells.push_back(c);
+		}
+	}
+
 	using rapidjson::Document;
 	Document jsonDoc;
 
@@ -50,21 +101,9 @@ void GridComponent::Initialize(float cellWidth, float cellHeight, const std::str
 		m_TextureIDs.push_back(textureID.GetInt());
 	}
 
-	m_CellWidth = cellWidth;
-	m_CellHeight = cellHeight;
-
-	for (int row{ 0 }; row < m_Rows; ++row)
+	for (int i{}; i < static_cast<int>(m_TextureIDs.size()); ++i)
 	{
-		for (int col{ 0 }; col < m_Cols; ++col)
-		{
-			Cell c;
-			c.width = cellWidth;
-			c.height = cellHeight;
-			c.localPosition = glm::vec2{ col * cellWidth, row * cellHeight + 96.f};
-			c.centerPosition = glm::vec2{ c.localPosition.x + cellWidth / 2, c.localPosition.y + cellHeight / 2};
-
-			m_Cells.push_back(c);
-		}
+		m_Cells[i].ID = m_TextureIDs[i];
 	}
 }
 
