@@ -13,12 +13,12 @@ namespace dae
 		virtual void Update(float elapsedSec) override;
 		virtual void Render() const override;
 
-		void SetPosition(float x, float y);
+		void SetPosition(float x, float y, float z);
 		const glm::vec3& GetPosition() const;
 
 		~TransformComponent();
 
 	private:
-		glm::vec3 m_transform{};
+		glm::vec3 m_Transform{};
 	};
 }

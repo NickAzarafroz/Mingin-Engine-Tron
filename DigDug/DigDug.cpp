@@ -74,7 +74,8 @@ void load()
 	goHighScoreText->AddComponent<dae::TextComponent>()->SetText("HIGH SCORE");
 	goHighScoreText->GetComponent<dae::TextComponent>()->SetFont(pDigDugFont);
 	goHighScoreText->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 0);
-	goHighScoreText->SetLocalPosition(glm::vec3(140.f, 30.f, 0.f));
+
+	goHighScoreText->AddComponent<dae::TransformComponent>()->SetPosition(140.f, 30.f, 0.f);
 	//--------------------------------------------------------------------------
 
 	//Round Text
@@ -82,7 +83,8 @@ void load()
 	goRoundText->AddComponent<dae::TextComponent>()->SetText("ROUND");
 	goRoundText->GetComponent<dae::TextComponent>()->SetFont(pDigDugFont);
 	goRoundText->GetComponent<dae::TextComponent>()->SetFontColor(255, 255, 255);
-	goRoundText->SetLocalPosition(glm::vec3(360.f, 680.f, 0.f));
+
+	goRoundText->AddComponent<dae::TransformComponent>()->SetPosition(360.f, 680.f, 0.f);
 	//--------------------------------------------------------------------------
 
 	//Player 1 Text
@@ -90,7 +92,8 @@ void load()
 	goPlayer1Text->AddComponent<dae::TextComponent>()->SetText("P1");
 	goPlayer1Text->GetComponent<dae::TextComponent>()->SetFont(pDigDugFont);
 	goPlayer1Text->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 0);
-	goPlayer1Text->SetLocalPosition(glm::vec3(60.f, 30.f, 0.f));
+
+	goPlayer1Text->AddComponent<dae::TransformComponent>()->SetPosition(60.f, 30.f, 0.f);
 	//--------------------------------------------------------------------------
 
 	//FPS
@@ -99,19 +102,20 @@ void load()
 	goFPS->AddComponent<dae::TextComponent>();
 	goFPS->GetComponent<dae::TextComponent>()->SetFont(pDigDugFont);
 	goFPS->GetComponent<dae::TextComponent>()->SetFontColor(0, 255, 0);
-	goFPS->SetLocalPosition(glm::vec3(5.f, 5.f, 0.f));
+
+	goFPS->AddComponent<dae::TransformComponent>()->SetPosition(5.f, 5.f, 0.f);
 	//--------------------------------------------------------------------------
 
 	//Player
 	//--------------------------------------------------------------------------
 	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("DigDugPlayer.png");
-	goPlayer->SetLocalPosition(glm::vec3(0.f, 96.f, 0.0f));
+	goPlayer->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 96.f, 0.0f);
 	//---------------------------------------------------------------------------
 
 	//Enemy
 	//---------------------------------------------------------------------------
 	goEnemy->AddComponent<dae::TextureComponent>()->SetTexture("DigDugEnemy.png");
-	goEnemy->SetLocalPosition(glm::vec3(320.f, 270.f, 0.0f));
+	goEnemy->AddComponent<dae::TransformComponent>()->SetPosition(320.f, 270.f, 0.0f);
 	//---------------------------------------------------------------------------
 
 	//Grid
@@ -124,6 +128,7 @@ void load()
 	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[5].png");
 	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[6].png");
 	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[7].png");
+
 	goGrid->AddComponent<dae::GridComponent>();
 	goGrid->GetComponent<dae::GridComponent>()->Initialize(32.f, 32.f, "../Data/LevelDigDug.json");
 	//---------------------------------------------------------------------------
@@ -132,9 +137,10 @@ void load()
 	//---------------------------------------------------------------------------
 	goHealth->AddComponent<dae::TextComponent>()->SetFont(pDigDugFont);
 	goHealth->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 255);
+
 	goHealth->AddComponent<dae::LiveDisplayComponent>();
 	goHealth->AddComponent<dae::PlayerComponent>();
-	goHealth->SetLocalPosition(glm::vec3{ 0.f, 700.f, 0.f });
+	goHealth->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 700.f, 0.f);
 	//---------------------------------------------------------------------------
 
 	auto gridRight = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());

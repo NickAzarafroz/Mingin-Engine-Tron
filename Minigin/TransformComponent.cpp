@@ -7,15 +7,18 @@ void TransformComponent::Update(float) {};
 
 void TransformComponent::Render() const {};
 
-void TransformComponent::SetPosition(float x, float y)
+void TransformComponent::SetPosition(float x, float y, float z)
 {
-	m_transform.x = x;
-	m_transform.y = y;
+	m_Transform.x = x;
+	m_Transform.y = y;
+	m_Transform.z = z;
+
+	m_pGameObject->SetLocalPosition(glm::vec3{ x, y, z });
 }
 
 const glm::vec3& TransformComponent::GetPosition() const
 {
-	return m_transform;
+	return m_Transform;
 }
 
 TransformComponent::~TransformComponent()
