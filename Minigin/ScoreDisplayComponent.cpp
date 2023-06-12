@@ -24,6 +24,14 @@ void ScoreDisplayComponent::Render() const
     m_pText->Render();
 }
 
+void dae::ScoreDisplayComponent::ReceiveMessage(int message)
+{
+    if(message == 0)
+    {
+        std::cout << "ScoreDisplayComponent: Message received\n";
+    }
+}
+
 int dae::ScoreDisplayComponent::IncreaseScore()
 {
     return ++m_Score;

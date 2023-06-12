@@ -28,6 +28,14 @@ void LiveDisplayComponent::Render() const
     m_pText->Render();
 }
 
+void dae::LiveDisplayComponent::ReceiveMessage(int message)
+{
+    if(message == 0)
+    {
+        std::cout << "LiveDisplayComponent: Message received\n";
+    }
+}
+
 LiveDisplayComponent::~LiveDisplayComponent()
 {
     if(m_pPlayer)

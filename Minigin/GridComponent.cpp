@@ -65,6 +65,14 @@ void GridComponent::Render() const
 	}
 }
 
+void dae::GridComponent::ReceiveMessage(int message)
+{
+	if(message == 0)
+	{
+		std::cout << "GridComponent: Message received\n";
+	}
+}
+
 void GridComponent::Initialize(float cellWidth, float cellHeight, const std::string& filename)
 {
 	m_CellWidth = cellWidth;

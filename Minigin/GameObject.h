@@ -15,6 +15,8 @@ namespace dae
 		void Update(float elapsedSec);
 		void Render() const;
 
+		void SendMessageID(int message);
+
 		float GetElapsedSec() { return m_ElapsedSec; };
 
 		void SetLocalPosition(const glm::vec3& pos);

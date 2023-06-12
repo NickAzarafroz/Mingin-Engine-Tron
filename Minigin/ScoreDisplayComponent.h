@@ -12,6 +12,7 @@ namespace dae
 		virtual void Start();
 		virtual void Update(float elapsedSec) override;
 		virtual void Render() const override;
+		virtual void ReceiveMessage(int message) override;
 		int IncreaseScore();
 		~ScoreDisplayComponent();
 

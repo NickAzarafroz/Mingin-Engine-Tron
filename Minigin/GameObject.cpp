@@ -41,6 +41,14 @@ void dae::GameObject::Render() const
 	}*/
 }
 
+void dae::GameObject::SendMessageID(int message)
+{
+	for (const auto& component : m_pComponents)
+	{
+		component->ReceiveMessage(message);
+	}
+}
+
 void dae::GameObject::SetLocalPosition(const glm::vec3& pos)
 {
 	m_LocalPosition = pos;

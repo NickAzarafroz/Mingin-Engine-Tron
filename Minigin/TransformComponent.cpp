@@ -7,6 +7,14 @@ void TransformComponent::Update(float) {};
 
 void TransformComponent::Render() const {};
 
+void dae::TransformComponent::ReceiveMessage(int message)
+{
+	if(message == 0)
+	{
+		std::cout << "TransformComponent: Message received\n";
+	}
+}
+
 void TransformComponent::SetPosition(float x, float y, float z)
 {
 	m_Transform.x = x;

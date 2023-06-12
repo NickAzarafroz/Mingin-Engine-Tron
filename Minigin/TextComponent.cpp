@@ -50,6 +50,14 @@ void TextComponent::Render() const
 	}
 }
 
+void dae::TextComponent::ReceiveMessage(int message)
+{
+	if(message == 0)
+	{
+		std::cout << "TextComponent: Message received\n";
+	}
+}
+
 void TextComponent::SetText(const std::string& text)
 {
 	m_text = text;

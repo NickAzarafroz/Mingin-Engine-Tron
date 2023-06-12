@@ -17,6 +17,7 @@ namespace dae
 		virtual void Start();
 		virtual void Update(float elapsedSec) override;
 		virtual void Render() const override;
+		virtual void ReceiveMessage(int message) override;
 		void SetText(const std::string& text);
 		void SetFont(const std::shared_ptr<Font>& font);
 		void SetFontColor(Uint8 r, Uint8 g, Uint8 b);

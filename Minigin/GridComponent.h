@@ -27,6 +27,7 @@ namespace dae
 		virtual void Start() override;
 		virtual void Update(float elapsedSec) override;
 		virtual void Render() const override;
+		virtual void ReceiveMessage(int message) override;
 
 		void Initialize(float cellWidth, float cellHeight, const std::string& filename);
 		Cell GetCell(glm::vec2 localPosition) const;

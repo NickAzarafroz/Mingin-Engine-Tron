@@ -14,7 +14,15 @@ void TextureComponent::Render() const
 
 	// Render the active texture at the GameObject's position
 	Renderer::GetInstance().RenderTexture(*m_Textures[m_ActiveTextureIndex], m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y);
-};
+}
+
+void dae::TextureComponent::ReceiveMessage(int message)
+{
+	if(message == 0)
+	{
+		std::cout << "TextureComponent: Message received\n";
+	}
+}
 
 void TextureComponent::SetPosition(float x, float y)
 {

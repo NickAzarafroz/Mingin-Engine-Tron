@@ -22,6 +22,14 @@ void dae::RotateComponent::Render() const
 {
 }
 
+void dae::RotateComponent::ReceiveMessage(int message)
+{
+	if(message == 0)
+	{
+		std::cout << "RotateComponent: Message Received\n";
+	}
+}
+
 void dae::RotateComponent::SetRadius(float radius)
 {
 	m_Radius = radius;

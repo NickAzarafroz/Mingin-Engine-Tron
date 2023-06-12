@@ -34,6 +34,14 @@ void FPSComponent::Render() const
     m_pText->Render();
 }
 
+void FPSComponent::ReceiveMessage(int message)
+{
+    if(message == 0)
+    {
+        std::cout << "FPSComponent: Message received\n";
+    }
+}
+
 FPSComponent::~FPSComponent()
 {
 

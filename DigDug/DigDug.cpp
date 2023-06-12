@@ -156,6 +156,7 @@ void load()
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_W, std::move(gridUp));
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_P, std::move(decreaseHealth));
 
+	goPlayer->SendMessageID(0);
 
 	scene.Add(goBackground);
 	scene.Add(goGrid);
