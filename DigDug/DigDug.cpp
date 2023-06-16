@@ -158,15 +158,15 @@ void load()
 
 	goPlayer->SendMessageID(0);
 
+	goEnemy->SetParent(goPlayer.get(), true);
+
 	scene.Add(goBackground);
 	scene.Add(goGrid);
-	//scene.Add(goLogo);
 	scene.Add(goHighScoreText);
 	scene.Add(goRoundText);
 	scene.Add(goPlayer1Text);
 	scene.Add(goFPS);
 	scene.Add(goPlayer);
-	scene.Add(goEnemy);
 	scene.Add(goHealth);
 }
 

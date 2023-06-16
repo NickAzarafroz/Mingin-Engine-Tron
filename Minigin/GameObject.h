@@ -8,7 +8,8 @@
 
 namespace dae
 {
-	class GameObject final
+	class Scene;
+	class GameObject final : public std::enable_shared_from_this<GameObject>
 	{
 	public:
 		void Start();
@@ -21,26 +22,20 @@ namespace dae
 
 		void SetLocalPosition(const glm::vec3& pos);
 		const glm::vec3& GetLocalPosition();
-
 		void UpdateWorldPosition();
 		const glm::vec3& GetWorldPosition();
-
 		void SetPositionDirty();
 
+		void SetScene(Scene* pScene);
+
 		void SetParent(GameObject* pParent, bool keepWorldPosition);
+		void RemoveGameObject();	
 		void GetAllChildren();
 
-		template <typename T>
-		T* AddComponent();
-
-		template <typename T>
-		void RemoveComponent();
-
-		template <typename T>
-		T* GetComponent() const;
-
-		template <typename T>
-		bool HasComponent() const;
+		template <typename T> T* AddComponent();
+		template <typename T> void RemoveComponent();
+		template <typename T> T* GetComponent() const;
+		template <typename T> bool HasComponent() const;
 
 		GameObject() = default;
 		~GameObject();
@@ -50,8 +45,8 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		void AddChild(GameObject* pChild);
-		void RemoveChild(GameObject* pChild);
+		void AddChild(std::shared_ptr<GameObject> pChild);
+		void RemoveChild(std::shared_ptr<GameObject> pChild);
 
 		glm::vec3 m_LocalPosition;
 		glm::vec3 m_WorldPosition;
@@ -60,7 +55,9 @@ namespace dae
 		std::vector<std::shared_ptr<BaseComponent>> m_pComponents;
 
 		GameObject* m_pParent{};
-		std::vector<GameObject*> m_pChildren;
+		std::vector<std::shared_ptr<GameObject>> m_pChildren;
+
+		Scene* m_pScene{};
 
 		float m_ElapsedSec;
 	};

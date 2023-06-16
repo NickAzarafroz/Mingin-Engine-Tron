@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
+#include "Scene.h"
 #include <iostream>
 
 dae::GameObject::~GameObject() = default;
@@ -11,6 +12,11 @@ void dae::GameObject::Start()
 	{
 		component->Start();
 	}
+
+	for (const auto& child : m_pChildren)
+	{
+		child->Start();
+	}
 }
 
 void dae::GameObject::Update(float elapsedSec)
@@ -20,10 +26,10 @@ void dae::GameObject::Update(float elapsedSec)
 		component->Update(elapsedSec);
 	}
 
-	/*for (const auto& child : m_pChildren)
+	for (const auto& child : m_pChildren)
 	{
 		child->Update(elapsedSec);
-	}*/
+	}
 
 	m_ElapsedSec = elapsedSec;
 }
@@ -35,10 +41,10 @@ void dae::GameObject::Render() const
 		component->Render();
 	}
 
-	/*for (const auto& child : m_pChildren)
+	for (const auto& child : m_pChildren)
 	{
 		child->Render();
-	}*/
+	}
 }
 
 void dae::GameObject::SendMessageID(int message)
@@ -97,6 +103,11 @@ void dae::GameObject::SetPositionDirty()
 	}
 }
 
+void dae::GameObject::SetScene(Scene* pScene)
+{
+	m_pScene = pScene;
+}
+
 void dae::GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 {
 	if(pParent == nullptr)
@@ -108,58 +119,45 @@ void dae::GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 		if(keepWorldPosition)
 		{
 			SetLocalPosition(GetLocalPosition() - pParent->GetWorldPosition());
-			SetPositionDirty();
 		}
+		SetPositionDirty();
 	}
 
 	if (m_pParent)
 	{
-		m_pParent->RemoveChild(this);
+		m_pParent->RemoveChild(shared_from_this());
 	}
 
 	m_pParent = pParent;
 
 	if (m_pParent)
 	{
-		m_pParent->AddChild(this);
+		m_pParent->AddChild(shared_from_this());
 	}
-
-	/*if(m_pParent == nullptr)
-	{
-		m_pParent = pParent;
-		m_pParent->AddChild(this);
-	}
-	else
-	{
-		m_pParent->RemoveChild(this);
-		m_pParent = pParent;
-		m_pParent->AddChild(this);
-	}*/
 }
 
-void dae::GameObject::AddChild(GameObject* pChild)
+void dae::GameObject::RemoveGameObject()
 {
-	if (pChild->m_pParent) 
+	if(m_pParent)
 	{
-		pChild->m_pParent->RemoveChild(pChild);
+		m_pParent->RemoveChild(shared_from_this());
 	}
 
-	pChild->m_pParent = this;
-
-	m_pChildren.push_back(pChild);
+	m_pScene->Remove(shared_from_this());
 }
 
-void dae::GameObject::RemoveChild(GameObject* pChild)
+void dae::GameObject::AddChild(std::shared_ptr<GameObject> pChild)
 {
-	for(size_t idx{}; idx < m_pChildren.size(); ++idx)
-	{
-		if(m_pChildren[idx] == pChild)
-		{
-			m_pChildren.erase(m_pChildren.begin() + idx);
-		}
-	}
+	pChild->m_pParent->m_pChildren.emplace_back(pChild);
+}
 
-	pChild->m_pParent = nullptr;
+void dae::GameObject::RemoveChild(std::shared_ptr<GameObject> pChild)
+{
+	auto it = std::find(m_pChildren.begin(), m_pChildren.end(), pChild);
+	if (it != m_pChildren.end())
+	{
+		m_pChildren.erase(it);
+	}
 }
 
 void dae::GameObject::GetAllChildren()
