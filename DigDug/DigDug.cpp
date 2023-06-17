@@ -33,16 +33,16 @@ void load()
 	auto pDigDugFont = dae::ResourceManager::GetInstance().LoadFont("DigDug_Font.ttf", 14);
 	auto pFontFpsText = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 
-	auto goBackground = std::make_shared<dae::GameObject>();
-	auto goLogo = std::make_shared<dae::GameObject>();
-	auto goHighScoreText = std::make_shared<dae::GameObject>();
-	auto goRoundText = std::make_shared<dae::GameObject>();
-	auto goPlayer1Text = std::make_shared<dae::GameObject>();
-	auto goFPS = std::make_shared<dae::GameObject>();
-	auto goPlayer = std::make_shared<dae::GameObject>();
-	auto goEnemy = std::make_shared<dae::GameObject>();
-	auto goGrid = std::make_shared<dae::GameObject>();
-	auto goHealth = std::make_shared<dae::GameObject>();
+	auto goBackground = std::make_shared<dae::GameObject>(&scene);
+	auto goLogo = std::make_shared<dae::GameObject>(&scene);
+	auto goHighScoreText = std::make_shared<dae::GameObject>(&scene);
+	auto goRoundText = std::make_shared<dae::GameObject>(&scene);
+	auto goPlayer1Text = std::make_shared<dae::GameObject>(&scene);
+	auto goFPS = std::make_shared<dae::GameObject>(&scene);
+	auto goPlayer = std::make_shared<dae::GameObject>(&scene);
+	auto goEnemy = std::make_shared<dae::GameObject>(&scene);
+	auto goGrid = std::make_shared<dae::GameObject>(&scene);
+	auto goHealth = std::make_shared<dae::GameObject>(&scene);
 
 	auto p0 = std::make_unique<dae::XBox360Controller>(0);
 
@@ -160,14 +160,14 @@ void load()
 
 	goEnemy->SetParent(goPlayer.get(), true);
 
-	scene.Add(goBackground);
-	scene.Add(goGrid);
-	scene.Add(goHighScoreText);
-	scene.Add(goRoundText);
-	scene.Add(goPlayer1Text);
-	scene.Add(goFPS);
-	scene.Add(goPlayer);
-	scene.Add(goHealth);
+	goBackground->AddGameObject();
+	goGrid->AddGameObject();
+	goHighScoreText->AddGameObject();
+	goRoundText->AddGameObject();
+	goPlayer1Text->AddGameObject();
+	goFPS->AddGameObject();
+	goPlayer->AddGameObject();
+	goHealth->AddGameObject();
 }
 
 int main(int, char*[]) 

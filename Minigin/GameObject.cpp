@@ -4,6 +4,14 @@
 #include "Scene.h"
 #include <iostream>
 
+dae::GameObject::GameObject(Scene* pScene)
+	: m_LocalPosition{}, m_WorldPosition{}, m_PositionIsDirty{},
+	  m_pComponents{}, m_pParent{}, m_pChildren{}, m_pScene{pScene},
+	  m_ElapsedSec{}
+{
+	
+}
+
 dae::GameObject::~GameObject() = default;
 
 void dae::GameObject::Start()
@@ -103,11 +111,6 @@ void dae::GameObject::SetPositionDirty()
 	}
 }
 
-void dae::GameObject::SetScene(Scene* pScene)
-{
-	m_pScene = pScene;
-}
-
 void dae::GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 {
 	if(pParent == nullptr)
@@ -144,6 +147,11 @@ void dae::GameObject::RemoveGameObject()
 	}
 
 	m_pScene->Remove(shared_from_this());
+}
+
+void dae::GameObject::AddGameObject()
+{
+	m_pScene->Add(shared_from_this());
 }
 
 void dae::GameObject::AddChild(std::shared_ptr<GameObject> pChild)

@@ -26,10 +26,9 @@ namespace dae
 		const glm::vec3& GetWorldPosition();
 		void SetPositionDirty();
 
-		void SetScene(Scene* pScene);
-
 		void SetParent(GameObject* pParent, bool keepWorldPosition);
 		void RemoveGameObject();	
+		void AddGameObject();
 		void GetAllChildren();
 
 		template <typename T> T* AddComponent();
@@ -37,7 +36,7 @@ namespace dae
 		template <typename T> T* GetComponent() const;
 		template <typename T> bool HasComponent() const;
 
-		GameObject() = default;
+		GameObject(Scene* pScene);
 		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -54,10 +53,10 @@ namespace dae
 
 		std::vector<std::shared_ptr<BaseComponent>> m_pComponents;
 
-		GameObject* m_pParent{};
+		GameObject* m_pParent;
 		std::vector<std::shared_ptr<GameObject>> m_pChildren;
 
-		Scene* m_pScene{};
+		Scene* m_pScene;
 
 		float m_ElapsedSec;
 	};
