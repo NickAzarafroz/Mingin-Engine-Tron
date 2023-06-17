@@ -12,12 +12,18 @@ namespace dae
 	class GameObject final : public std::enable_shared_from_this<GameObject>
 	{
 	public:
+		GameObject(Scene* pScene);
+		~GameObject();
+
+		GameObject(const GameObject& other) = delete;
+		GameObject(GameObject&& other) = delete;
+		GameObject& operator=(const GameObject& other) = delete;
+		GameObject& operator=(GameObject&& other) = delete;
+
 		void Start();
 		void Update(float elapsedSec);
 		void Render() const;
-
 		void SendMessageID(int message);
-
 		float GetElapsedSec() { return m_ElapsedSec; };
 
 		void SetLocalPosition(const glm::vec3& pos);
@@ -35,13 +41,6 @@ namespace dae
 		template <typename T> void RemoveComponent();
 		template <typename T> T* GetComponent() const;
 		template <typename T> bool HasComponent() const;
-
-		GameObject(Scene* pScene);
-		~GameObject();
-		GameObject(const GameObject& other) = delete;
-		GameObject(GameObject&& other) = delete;
-		GameObject& operator=(const GameObject& other) = delete;
-		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
 		void AddChild(std::shared_ptr<GameObject> pChild);

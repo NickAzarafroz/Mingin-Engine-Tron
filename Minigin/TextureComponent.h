@@ -12,18 +12,23 @@ namespace dae
 	{
 	public:
 		TextureComponent() = default;
+		~TextureComponent();
+
+		TextureComponent(const TextureComponent& other) = delete;
+		TextureComponent(TextureComponent&& other) = delete;
+		TextureComponent& operator=(const TextureComponent& other) = delete;
+		TextureComponent& operator=(TextureComponent&& other) = delete;
+
 		virtual void Render() const override;
 		virtual void ReceiveMessage(int message) override;
 
 		void SetPosition(float x, float y);
 		void SetTexture(const std::string& filename);
-
 		void AddTexture(const std::string& filename);
 		void SetActiveTexture(int index);
 
 		std::shared_ptr<Texture2D> GetTexture();
 		Transform GetPosition();
-		~TextureComponent();
 
 	private:
 		Transform m_transform{};

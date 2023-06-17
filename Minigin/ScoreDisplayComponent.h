@@ -9,11 +9,17 @@ namespace dae
 	{
 	public:
 		ScoreDisplayComponent();
+		~ScoreDisplayComponent();
+
+		ScoreDisplayComponent(const ScoreDisplayComponent& other) = delete;
+		ScoreDisplayComponent(ScoreDisplayComponent&& other) = delete;
+		ScoreDisplayComponent& operator=(const ScoreDisplayComponent& other) = delete;
+		ScoreDisplayComponent& operator=(ScoreDisplayComponent&& other) = delete;
+
 		virtual void Start();
 		virtual void Render() const override;
 		virtual void ReceiveMessage(int message) override;
 		int IncreaseScore();
-		~ScoreDisplayComponent();
 
 	private:
 		int m_Score;

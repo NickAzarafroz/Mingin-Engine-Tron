@@ -14,13 +14,20 @@ namespace dae
 	{
 	public:
 		TextComponent();
+		~TextComponent();
+
+		TextComponent(const TextComponent& other) = delete;
+		TextComponent(TextComponent&& other) = delete;
+		TextComponent& operator=(const TextComponent& other) = delete;
+		TextComponent& operator=(TextComponent&& other) = delete;
+
 		virtual void Update(float elapsedSec) override;
 		virtual void Render() const override;
 		virtual void ReceiveMessage(int message) override;
+
 		void SetText(const std::string& text);
 		void SetFont(const std::shared_ptr<Font>& font);
 		void SetFontColor(Uint8 r, Uint8 g, Uint8 b);
-		~TextComponent();
 
 	private:
 		bool m_needsUpdate;

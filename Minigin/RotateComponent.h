@@ -8,6 +8,12 @@ namespace dae
 	{
 	public:
 		RotateComponent() = default;
+		~RotateComponent();
+
+		RotateComponent(const RotateComponent& other) = delete;
+		RotateComponent(RotateComponent&& other) = delete;
+		RotateComponent& operator=(const RotateComponent& other) = delete;
+		RotateComponent& operator=(RotateComponent&& other) = delete;
 
 		virtual void Start();
 		virtual void Update(float elapsedSec) override;
@@ -15,8 +21,6 @@ namespace dae
 
 		void SetRadius(float radius);
 		void SetSpeed(float speed);
-
-		~RotateComponent();
 
 	private:
 		//TransformComponent* m_pTransform{};

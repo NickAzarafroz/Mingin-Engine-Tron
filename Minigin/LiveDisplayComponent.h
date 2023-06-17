@@ -11,10 +11,16 @@ namespace dae
 	{
 	public:
 		LiveDisplayComponent();
+		~LiveDisplayComponent();
+
+		LiveDisplayComponent(const LiveDisplayComponent& other) = delete;
+		LiveDisplayComponent(LiveDisplayComponent&& other) = delete;
+		LiveDisplayComponent& operator=(const LiveDisplayComponent& other) = delete;
+		LiveDisplayComponent& operator=(LiveDisplayComponent&& other) = delete;
+
 		virtual void Start();
 		virtual void Render() const override;
 		virtual void ReceiveMessage(int message) override;
-		~LiveDisplayComponent();
 
 	private:
 		int m_HealthPoints{};

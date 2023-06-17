@@ -24,6 +24,13 @@ namespace dae
 	{
 	public:
 		GridComponent() = default;
+		~GridComponent();
+
+		GridComponent(const GridComponent& other) = delete;
+		GridComponent(GridComponent&& other) = delete;
+		GridComponent& operator=(const GridComponent& other) = delete;
+		GridComponent& operator=(GridComponent&& other) = delete;
+
 		virtual void Start() override;
 		virtual void Render() const override;
 		virtual void ReceiveMessage(int message) override;
@@ -31,7 +38,6 @@ namespace dae
 		void Initialize(float cellWidth, float cellHeight, const std::string& filename);
 		Cell GetCell(glm::vec2 localPosition) const;
 		std::pair<Cell, bool> GetDestinationCell(glm::vec2 localPosition, glm::vec2 dir);
-		~GridComponent();
 
 	private:
 		const int m_Rows{ 18 };

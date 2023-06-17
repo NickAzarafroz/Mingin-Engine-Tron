@@ -7,12 +7,18 @@ namespace dae
 	{
 	public:
 		PlayerComponent() = default;
+		~PlayerComponent();
+
+		PlayerComponent(const PlayerComponent& other) = delete;
+		PlayerComponent(PlayerComponent&& other) = delete;
+		PlayerComponent& operator=(const PlayerComponent& other) = delete;
+		PlayerComponent& operator=(PlayerComponent&& other) = delete;
+
 		virtual void Start() override;
 		virtual void ReceiveMessage(int message) override;
 
 		int GetHealth() const;
 		void TakeDamage(int amount);
-		~PlayerComponent();
 
 		Subject<> healthChanged;
 

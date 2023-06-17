@@ -10,11 +10,17 @@ namespace dae
 	{
 	public:
 		FPSComponent();
+		~FPSComponent();
+
+		FPSComponent(const FPSComponent& other) = delete;
+		FPSComponent(FPSComponent&& other) = delete;
+		FPSComponent& operator=(const FPSComponent& other) = delete;
+		FPSComponent& operator=(FPSComponent&& other) = delete;
+
 		virtual void Start() override;
 		virtual void Update(float elapsedSec) override;
 		virtual void Render() const override;
 		virtual void ReceiveMessage(int message) override;
-		~FPSComponent();
 
 	private:
 		int m_Fps{};
