@@ -25,7 +25,6 @@ namespace dae
 	public:
 		GridComponent() = default;
 		virtual void Start() override;
-		virtual void Update(float elapsedSec) override;
 		virtual void Render() const override;
 		virtual void ReceiveMessage(int message) override;
 

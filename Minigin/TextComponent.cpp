@@ -14,10 +14,6 @@ TextComponent::TextComponent()
 	
 }
 
-void TextComponent::Start()
-{
-}
-
 void TextComponent::Update(float)
 {
 	if (m_needsUpdate)

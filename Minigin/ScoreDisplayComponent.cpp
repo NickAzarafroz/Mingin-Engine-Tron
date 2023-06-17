@@ -14,11 +14,6 @@ void ScoreDisplayComponent::Start()
     m_pText->SetText("Score: " + std::to_string(m_Score));
 }
 
-void ScoreDisplayComponent::Update(float)
-{
-
-}
-
 void ScoreDisplayComponent::Render() const
 {
     m_pText->Render();

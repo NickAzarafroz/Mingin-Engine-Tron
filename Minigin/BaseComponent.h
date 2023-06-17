@@ -5,13 +5,21 @@ namespace dae
 	class BaseComponent
 	{
 	public:
-		virtual void Start() = 0;
-		virtual void Update(float elapsedSec) = 0;
-		virtual void Render() const = 0;
-		virtual void ReceiveMessage(int message) = 0;
+		BaseComponent() = default;
+		virtual ~BaseComponent() = default;
 
-		void SetGameObject(GameObject& gameObject) { m_pGameObject = &gameObject; };
-		virtual ~BaseComponent();
+		BaseComponent(const BaseComponent& other) = delete;
+		BaseComponent(BaseComponent&& other) = delete;
+		BaseComponent& operator=(const BaseComponent& other) = delete;
+		BaseComponent& operator=(BaseComponent&& other) = delete;
+
+		virtual void Start() {};
+		virtual void Update(float) {};
+		virtual void Render() const {};
+		virtual void ReceiveMessage(int) {};
+
+		void SetGameObject(GameObject& gameObject);
+		GameObject* GetGameObject() const;
 
 	protected:
 		GameObject* m_pGameObject{ nullptr };

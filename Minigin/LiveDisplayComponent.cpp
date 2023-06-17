@@ -19,10 +19,6 @@ void LiveDisplayComponent::Start()
     m_pText->SetText("HealthPoints " + std::to_string(m_HealthPoints));
 }
 
-void LiveDisplayComponent::Update(float)
-{
-}
-
 void LiveDisplayComponent::Render() const
 {
     m_pText->Render();

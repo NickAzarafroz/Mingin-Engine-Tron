@@ -18,10 +18,6 @@ void dae::RotateComponent::Update(float elapsedSec)
 	m_Angle += m_Speed * elapsedSec;
 }
 
-void dae::RotateComponent::Render() const
-{
-}
-
 void dae::RotateComponent::ReceiveMessage(int message)
 {
 	if(message == 0)

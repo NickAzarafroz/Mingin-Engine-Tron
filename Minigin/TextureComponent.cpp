@@ -3,10 +3,6 @@
 #include "Renderer.h"
 using namespace dae;
 
-void TextureComponent::Start(){}
-
-void TextureComponent::Update(float) {};
-
 void TextureComponent::Render() const 
 {
 	//const auto& transform = m_pGameObject->GetComponent<TransformComponent>();

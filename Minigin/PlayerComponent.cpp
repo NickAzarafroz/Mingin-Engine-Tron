@@ -7,14 +7,6 @@ void PlayerComponent::Start()
 	m_Health = 3;
 }
 
-void PlayerComponent::Update(float)
-{
-}
-
-void PlayerComponent::Render() const
-{
-}
-
 void dae::PlayerComponent::ReceiveMessage(int message)
 {
 	if(message == 0)

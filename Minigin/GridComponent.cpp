@@ -14,10 +14,6 @@ void GridComponent::Start()
 	m_pTexture = m_pGameObject->GetComponent<TextureComponent>();
 }
 
-void GridComponent::Update(float)
-{
-}
-
 void GridComponent::Render() const
 {
 	for (int i = 0; i < static_cast<int>(m_Cells.size()); i++)

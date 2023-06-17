@@ -8,10 +8,6 @@ namespace dae
 	{
 	public:
 		TransformComponent() = default;
-
-		virtual void Start();
-		virtual void Update(float elapsedSec) override;
-		virtual void Render() const override;
 		virtual void ReceiveMessage(int message) override;
 
 		void SetPosition(float x, float y, float z);

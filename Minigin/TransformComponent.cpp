@@ -1,12 +1,6 @@
 #include "TransformComponent.h"
 using namespace dae;
 
-void TransformComponent::Start() {};
-
-void TransformComponent::Update(float) {};
-
-void TransformComponent::Render() const {};
-
 void dae::TransformComponent::ReceiveMessage(int message)
 {
 	if(message == 0)
