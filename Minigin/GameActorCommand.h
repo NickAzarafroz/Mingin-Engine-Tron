@@ -7,7 +7,12 @@ namespace dae
 	{
 	public:
 		GameActorCommand(GameObject* pActor) : m_pActor{ pActor } {};
-		virtual ~GameActorCommand() {};
+		virtual ~GameActorCommand() = default;
+
+		GameActorCommand(const GameActorCommand& other) = delete;
+		GameActorCommand(GameActorCommand&& other) = delete;
+		GameActorCommand& operator=(const GameActorCommand& other) = delete;
+		GameActorCommand& operator=(GameActorCommand&& other) = delete;
 
 	protected:
 		GameObject* GetGameActor() const { return m_pActor; }

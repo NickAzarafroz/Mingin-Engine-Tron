@@ -44,7 +44,7 @@ void load()
 	auto goGrid = std::make_shared<dae::GameObject>(&scene);
 	auto goHealth = std::make_shared<dae::GameObject>(&scene);
 
-	auto p0 = std::make_unique<dae::XBox360Controller>(0);
+	//auto p0 = std::make_unique<dae::XBox360Controller>(0);
 
 	/*auto moveRightCommand = std::make_unique<dae::MoveCommand>(goPlayer.get(), 50.f, glm::vec2{ 1.f, 0.f });
 	auto moveLeftCommand = std::make_unique<dae::MoveCommand>(goPlayer.get(), 50.f, glm::vec2{ -1.f, 0.f });

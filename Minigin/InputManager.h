@@ -17,6 +17,8 @@ namespace dae
 		void AddController(std::unique_ptr<XBox360Controller> controller);
 		void BindCommandController(unsigned controllerIndex, XBox360Controller::ControllerButton button, std::unique_ptr<Command> command);
 		void BindCommandKeyBoard(SDL_Scancode keyBoardkey, std::unique_ptr<Command> command);
+		void UnbindCommandController(unsigned controllerIndex, XBox360Controller::ControllerButton button);
+		void UnbindCommandKeyBoard(SDL_Scancode keyBoardkey);
 
 	private:
 		//XINPUT_STATE m_CurrentState;

@@ -64,7 +64,7 @@ bool dae::InputManager::ProcessInput()
 
 void dae::InputManager::AddController(std::unique_ptr<XBox360Controller> controller)
 {
-	m_Controllers.push_back(std::move(controller));
+	m_Controllers.emplace_back(std::move(controller));
 }
 
 void dae::InputManager::BindCommandController(unsigned controllerIndex, XBox360Controller::ControllerButton button, std::unique_ptr<Command> command)
@@ -75,4 +75,28 @@ void dae::InputManager::BindCommandController(unsigned controllerIndex, XBox360C
 void dae::InputManager::BindCommandKeyBoard(SDL_Scancode keyBoardkey, std::unique_ptr<Command> command)
 {
 	m_KeyBoardCommands[keyBoardkey] = std::move(command);
+}
+
+void dae::InputManager::UnbindCommandController(unsigned controllerIndex, XBox360Controller::ControllerButton button)
+{
+	for (auto it = m_ConsoleCommands.begin(); it != m_ConsoleCommands.end(); ++it)
+	{
+		if (it->first.first == controllerIndex && it->first.second == button)
+		{
+			m_ConsoleCommands.erase(it);
+			break;
+		}
+	}
+}
+
+void dae::InputManager::UnbindCommandKeyBoard(SDL_Scancode keyBoardkey)
+{
+	for(auto it = m_KeyBoardCommands.begin(); it != m_KeyBoardCommands.end(); ++it)
+	{
+		if(it->first == keyBoardkey)
+		{
+			m_KeyBoardCommands.erase(it);
+			break;
+		}
+	}
 }
