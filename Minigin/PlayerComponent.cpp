@@ -7,7 +7,7 @@ void PlayerComponent::Start()
 	m_Health = 3;
 }
 
-void dae::PlayerComponent::ReceiveMessage(int message)
+void PlayerComponent::ReceiveMessage(int message)
 {
 	if(message == 0)
 	{
@@ -15,12 +15,12 @@ void dae::PlayerComponent::ReceiveMessage(int message)
 	}
 }
 
-int dae::PlayerComponent::GetHealth() const
+int PlayerComponent::GetHealth() const
 {
 	return m_Health;
 }
 
-void dae::PlayerComponent::TakeDamage(int amount)
+void PlayerComponent::TakeDamage(int amount)
 {
 	m_Health -= amount;
 
