@@ -1,6 +1,7 @@
 #pragma once
 #include "GameActorCommand.h"
 #include "PlayerComponent.h"
+#include "TextureComponent.h"
 namespace dae
 {
 	class MoveCommand : public GameActorCommand
@@ -54,6 +55,8 @@ namespace dae
 
 			if(m_TempDir.x == 1.f)																		// If the player is close enough snap him to the destination position and start again ...
 			{
+				GetGameActor()->GetComponent<TextureComponent>()->SetFlipped(false);
+
 				if(distanceX < 1.f)
 				{
 					x = m_DestinationCell.localPosition.x;
@@ -62,6 +65,8 @@ namespace dae
 			}
 			else if(m_TempDir.x == -1.f)
 			{
+				GetGameActor()->GetComponent<TextureComponent>()->SetFlipped(true);
+
 				if (distanceX < 1.f)
 				{
 					x = m_DestinationCell.localPosition.x;

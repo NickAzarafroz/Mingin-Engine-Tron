@@ -9,7 +9,7 @@ void TextureComponent::Render() const
 	//const auto& pos = transform->GetPosition();
 
 	// Render the active texture at the GameObject's position
-	Renderer::GetInstance().RenderTexture(*m_Textures[m_ActiveTextureIndex], m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y);
+	Renderer::GetInstance().RenderTexture(*m_Textures[m_ActiveTextureIndex], m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y, m_IsFlipped);
 }
 
 void dae::TextureComponent::ReceiveMessage(int message)

@@ -25,6 +25,7 @@ namespace dae
 		TextObject& operator=(TextObject&& other) = delete;
 	private:
 		bool m_needsUpdate;
+		bool m_flip{ false };
 		std::string m_text;
 		Transform m_transform{};
 		std::shared_ptr<Font> m_font;

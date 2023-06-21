@@ -27,6 +27,9 @@ namespace dae
 		void AddTexture(const std::string& filename);
 		void SetActiveTexture(int index);
 
+		void SetFlipped(bool flip) { m_IsFlipped = flip; };
+		bool GetFlipped() { return m_IsFlipped; };
+
 		std::shared_ptr<Texture2D> GetTexture();
 		Transform GetPosition();
 
@@ -36,5 +39,6 @@ namespace dae
 
 		std::vector<std::shared_ptr<Texture2D>> m_Textures;
 		int m_ActiveTextureIndex;
+		bool m_IsFlipped;
 	};
 }

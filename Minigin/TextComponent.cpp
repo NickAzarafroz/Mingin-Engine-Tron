@@ -42,7 +42,7 @@ void TextComponent::Render() const
 		//const auto& transform = m_pGameObject->GetComponent<TransformComponent>();
 		//const auto& pos = transform->GetPosition();
 
-		Renderer::GetInstance().RenderTexture(*m_textTexture, m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y);
+		Renderer::GetInstance().RenderTexture(*m_textTexture, m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y, m_flip);
 	}
 }
 
