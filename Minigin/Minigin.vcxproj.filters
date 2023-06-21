@@ -257,8 +257,5 @@
     <ClCompile Include="AudioClip.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
-    <ClCompile Include="Subject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
