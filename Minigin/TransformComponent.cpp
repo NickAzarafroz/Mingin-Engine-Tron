@@ -23,6 +23,16 @@ const glm::vec3& TransformComponent::GetPosition() const
 	return m_Transform;
 }
 
+void TransformComponent::SetRotation(float rotation)
+{
+	m_Rotation = rotation;
+}
+
+float TransformComponent::GetRotation() const
+{
+	return m_Rotation;
+}
+
 TransformComponent::~TransformComponent()
 {
 

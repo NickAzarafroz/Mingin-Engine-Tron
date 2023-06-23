@@ -56,6 +56,7 @@ namespace dae
 			if(m_TempDir.x == 1.f)																		// If the player is close enough snap him to the destination position and start again ...
 			{
 				GetGameActor()->GetComponent<TextureComponent>()->SetFlipped(false);
+				GetGameActor()->GetComponent<TextureComponent>()->SetAngle(0.f);
 
 				if(distanceX < 1.f)
 				{
@@ -66,6 +67,7 @@ namespace dae
 			else if(m_TempDir.x == -1.f)
 			{
 				GetGameActor()->GetComponent<TextureComponent>()->SetFlipped(true);
+				GetGameActor()->GetComponent<TextureComponent>()->SetAngle(0.f);
 
 				if (distanceX < 1.f)
 				{
@@ -76,6 +78,16 @@ namespace dae
 
 			if (m_TempDir.y == 1.f)
 			{
+				if (m_TempDir.x == -1.f) 
+				{
+					GetGameActor()->GetComponent<TextureComponent>()->SetFlipped(true);
+				}
+				else
+				{
+					GetGameActor()->GetComponent<TextureComponent>()->SetAngle(90.f);
+					GetGameActor()->GetComponent<TextureComponent>()->SetFlipped(false);
+				}
+
 				if (distanceY < 1.f)
 				{
 					y = m_DestinationCell.localPosition.y;
@@ -84,6 +96,16 @@ namespace dae
 			}
 			else if (m_TempDir.y == -1.f)
 			{
+				if (m_TempDir.x == -1.f) 
+				{
+					GetGameActor()->GetComponent<TextureComponent>()->SetFlipped(true);
+				}
+				else
+				{
+					GetGameActor()->GetComponent<TextureComponent>()->SetAngle(-90.f);
+					GetGameActor()->GetComponent<TextureComponent>()->SetFlipped(false);
+				}
+
 				if (distanceY < 1.f)
 				{
 					y = m_DestinationCell.localPosition.y;
