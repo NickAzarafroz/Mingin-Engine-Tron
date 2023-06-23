@@ -40,8 +40,8 @@ namespace dae
 		std::pair<Cell, bool> GetDestinationCell(glm::vec2 localPosition, glm::vec2 dir);
 
 	private:
-		const int m_Rows{ 18 };
-		const int m_Cols{ 14 };
+		const int m_Rows{ 14 };
+		const int m_Cols{ 20 };
 
 		float m_CellWidth;
 		float m_CellHeight;

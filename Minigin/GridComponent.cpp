@@ -20,38 +20,13 @@ void GridComponent::Render() const
 	{
 		switch (m_Cells[i].ID)
 		{
-		case 1:
+		case 0:
 			m_pTexture->SetActiveTexture(0);
 			m_pTexture->SetPosition(m_Cells[i].localPosition.x, m_Cells[i].localPosition.y);
 			m_pTexture->Render();
 			break;
-		case 2:
+		case 1:
 			m_pTexture->SetActiveTexture(1);
-			m_pTexture->SetPosition(m_Cells[i].localPosition.x, m_Cells[i].localPosition.y);
-			m_pTexture->Render();
-			break;
-		case 3:
-			m_pTexture->SetActiveTexture(2);
-			m_pTexture->SetPosition(m_Cells[i].localPosition.x, m_Cells[i].localPosition.y);
-			m_pTexture->Render();
-			break;
-		case 4:
-			m_pTexture->SetActiveTexture(3);
-			m_pTexture->SetPosition(m_Cells[i].localPosition.x, m_Cells[i].localPosition.y);
-			m_pTexture->Render();
-			break;
-		case 5:
-			m_pTexture->SetActiveTexture(4);
-			m_pTexture->SetPosition(m_Cells[i].localPosition.x, m_Cells[i].localPosition.y);
-			m_pTexture->Render();
-			break;
-		case 6:
-			m_pTexture->SetActiveTexture(5);
-			m_pTexture->SetPosition(m_Cells[i].localPosition.x, m_Cells[i].localPosition.y);
-			m_pTexture->Render();
-			break;
-		case 7:
-			m_pTexture->SetActiveTexture(6);
 			m_pTexture->SetPosition(m_Cells[i].localPosition.x, m_Cells[i].localPosition.y);
 			m_pTexture->Render();
 			break;

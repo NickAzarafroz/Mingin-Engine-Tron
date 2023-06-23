@@ -33,10 +33,8 @@ void load()
 	auto pDigDugFont = dae::ResourceManager::GetInstance().LoadFont("DigDug_Font.ttf", 14);
 	auto pFontFpsText = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 
-	auto goBackground = std::make_shared<dae::GameObject>(&scene);
 	auto goLogo = std::make_shared<dae::GameObject>(&scene);
 	auto goHighScoreText = std::make_shared<dae::GameObject>(&scene);
-	auto goRoundText = std::make_shared<dae::GameObject>(&scene);
 	auto goPlayer1Text = std::make_shared<dae::GameObject>(&scene);
 	auto goFPS = std::make_shared<dae::GameObject>(&scene);
 	auto goPlayer = std::make_shared<dae::GameObject>(&scene);
@@ -58,11 +56,6 @@ void load()
 	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadUp, std::move(moveUpCommand));
 	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadDown, std::move(moveDownCommand));*/
 
-	//Background Texture Top
-	//-----------------------------------------------------------------------
-	goBackground->AddComponent<dae::TextureComponent>()->SetTexture("DigDugBG.png");
-	//--------------------------------------------------------------------------
-
 	//Logo Texture
 	//-----------------------------------------------------------------------
 	//goLogo->AddComponent<dae::TextureComponent>()->SetTexture("logo.tga");
@@ -76,15 +69,6 @@ void load()
 	goHighScoreText->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 0);
 
 	goHighScoreText->AddComponent<dae::TransformComponent>()->SetPosition(140.f, 30.f, 0.f);
-	//--------------------------------------------------------------------------
-
-	//Round Text
-	//--------------------------------------------------------------------------
-	goRoundText->AddComponent<dae::TextComponent>()->SetText("ROUND");
-	goRoundText->GetComponent<dae::TextComponent>()->SetFont(pDigDugFont);
-	goRoundText->GetComponent<dae::TextComponent>()->SetFontColor(255, 255, 255);
-
-	goRoundText->AddComponent<dae::TransformComponent>()->SetPosition(360.f, 680.f, 0.f);
 	//--------------------------------------------------------------------------
 
 	//Player 1 Text
@@ -108,26 +92,21 @@ void load()
 
 	//Player
 	//--------------------------------------------------------------------------
-	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("DigDugPlayer.png");
+	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("RedTank.png");
 	goPlayer->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 96.f, 0.0f);
 	//---------------------------------------------------------------------------
 
 	//Enemy
 	//---------------------------------------------------------------------------
-	goEnemy->AddComponent<dae::TextureComponent>()->SetTexture("DigDugEnemy.png");
+	goEnemy->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
 	goEnemy->AddComponent<dae::TransformComponent>()->SetPosition(320.f, 270.f, 0.0f);
 	//---------------------------------------------------------------------------
 
 	//Grid
 	//---------------------------------------------------------------------------
 	goGrid->AddComponent<dae::TextureComponent>();
-	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[1].png");
-	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[2].png");
-	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[3].png");
-	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[4].png");
-	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[5].png");
-	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[6].png");
-	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("Grid[7].png");
+	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("path.png");
+	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("wall.png");
 
 	goGrid->AddComponent<dae::GridComponent>();
 	goGrid->GetComponent<dae::GridComponent>()->Initialize(32.f, 32.f, "../Data/LevelDigDug.json");
@@ -140,7 +119,7 @@ void load()
 
 	goHealth->AddComponent<dae::LiveDisplayComponent>();
 	goHealth->AddComponent<dae::PlayerComponent>();
-	goHealth->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 700.f, 0.f);
+	goHealth->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 50.f, 0.f);
 	//---------------------------------------------------------------------------
 
 	auto gridRight = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
@@ -158,16 +137,13 @@ void load()
 
 	goPlayer->SendMessageID(0);
 
-	goEnemy->SetParent(goPlayer.get(), true);
-
-	goBackground->AddGameObject();
 	goGrid->AddGameObject();
 	goHighScoreText->AddGameObject();
-	goRoundText->AddGameObject();
 	goPlayer1Text->AddGameObject();
 	goFPS->AddGameObject();
 	goPlayer->AddGameObject();
 	goHealth->AddGameObject();
+	goEnemy->AddGameObject();
 }
 
 int main(int, char*[]) 
