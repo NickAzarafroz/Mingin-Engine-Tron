@@ -41,6 +41,7 @@ void load()
 	auto goEnemy = std::make_shared<dae::GameObject>(&scene);
 	auto goGrid = std::make_shared<dae::GameObject>(&scene);
 	auto goHealth = std::make_shared<dae::GameObject>(&scene);
+	auto goPlayerTurret = std::make_shared<dae::GameObject>(&scene);
 
 	//auto p0 = std::make_unique<dae::XBox360Controller>(0);
 
@@ -122,6 +123,12 @@ void load()
 	goHealth->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 50.f, 0.f);
 	//---------------------------------------------------------------------------
 
+	//Player Turret
+	//-----------------------------------------------------------------------------------
+	goPlayerTurret->AddComponent<dae::TextureComponent>()->AddTexture("RedTankGun.png");
+	goPlayerTurret->AddComponent<dae::TransformComponent>()->SetPosition(-5.f, 88.f, 0.f);
+	//-----------------------------------------------------------------------------------
+
 	auto gridRight = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
 	auto gridLeft = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ -1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
 	auto gridUp = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, -1.f }, goGrid->GetComponent<dae::GridComponent>());
@@ -136,6 +143,8 @@ void load()
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_P, std::move(decreaseHealth));
 
 	goPlayer->SendMessageID(0);
+
+	goPlayerTurret->SetParent(goPlayer.get(), true);
 
 	goGrid->AddGameObject();
 	goHighScoreText->AddGameObject();

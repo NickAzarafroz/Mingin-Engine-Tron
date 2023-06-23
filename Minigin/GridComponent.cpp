@@ -112,11 +112,20 @@ std::pair<Cell, bool> dae::GridComponent::GetDestinationCell(glm::vec2 localPosi
 	if (newRow >= 0 && newRow < m_Rows && newCol >= 0 && newCol < m_Cols)
 	{
 		int index = newRow * m_Cols + newCol;
-		return std::make_pair(m_Cells[index], true);
+
+		if(m_Cells[index].ID == 0)
+		{
+			return std::make_pair(m_Cells[index], true);
+		}
+		else
+		{
+			std::cout << "Wall";
+			return std::make_pair(Cell{}, false);
+		}
 	}
 	else
 	{
-		std::cout << "IsgoingTobeoutofrange";
+		std::cout << "OutOfMap";
 		return std::make_pair(Cell{}, false);
 	}
 }
