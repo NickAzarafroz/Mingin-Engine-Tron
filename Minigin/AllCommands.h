@@ -2,6 +2,8 @@
 #include "GameActorCommand.h"
 #include "PlayerComponent.h"
 #include "TextureComponent.h"
+#include "MovementComponent.h"
+#include "SceneManager.h"
 namespace dae
 {
 	class MoveCommand : public GameActorCommand
@@ -146,5 +148,34 @@ namespace dae
 
 	private:
 		int m_Amount;
+	};
+
+	class SpawnBulletCommand : public GameActorCommand
+	{
+	public:
+		SpawnBulletCommand(GameObject* actor) : GameActorCommand(actor) {}
+		virtual ~SpawnBulletCommand() = default;
+		void Execute() override
+		{
+			if (m_DoOnce)
+			{
+				auto& scene = SceneManager::GetInstance().GetScene();
+
+				m_GoBullet = std::make_shared<GameObject>(&scene);
+				m_GoBullet->AddComponent<TextureComponent>()->AddTexture("BulletPlayer.png");
+				m_GoBullet->AddComponent<TransformComponent>()->SetPosition(GetGameActor()->GetLocalPosition().x + 8.f,
+																			GetGameActor()->GetLocalPosition().y + 8.f,
+																			GetGameActor()->GetLocalPosition().z);
+				m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(100.f, 1.f, 0.f);
+				m_GoBullet->AddGameObject();
+				m_GoBullet->Start();
+				m_DoOnce = false;
+			}
+		}
+
+	private:
+		bool m_DoOnce{ true };
+		std::vector<std::shared_ptr<GameObject>> m_GoBullets{};
+		std::shared_ptr<GameObject> m_GoBullet{};
 	};
 }

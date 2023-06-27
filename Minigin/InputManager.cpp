@@ -28,11 +28,11 @@ bool dae::InputManager::ProcessInput()
 	
 	for(const auto& [keyBoardKey, command] : m_KeyBoardCommands)
 	{
-		if(pStates[keyBoardKey])
+		if(pStates[keyBoardKey] && command.first == 0)
 		{
 			if (!commandExecuted)
 			{
-				command->Execute();
+				command.second->Execute();
 				commandExecuted = true;
 			}
 		}
@@ -47,9 +47,13 @@ bool dae::InputManager::ProcessInput()
 		}
 		if (e.type == SDL_KEYUP) 
 		{
-			if (e.key.keysym.sym == SDLK_a) 
+			for (const auto& [keyBoardKey, command] : m_KeyBoardCommands)
 			{
-				//std::cout << "A pressed";
+				if (keyBoardKey == e.key.keysym.scancode && command.first == 1)
+				{
+					command.second->Execute();
+					break;
+				}
 			}
 		}
 		if (e.type == SDL_MOUSEBUTTONDOWN) 
@@ -72,9 +76,10 @@ void dae::InputManager::BindCommandController(unsigned controllerIndex, XBox360C
 	m_ConsoleCommands[ControllerKey(controllerIndex, button)] = std::move(command);
 }
 
-void dae::InputManager::BindCommandKeyBoard(SDL_Scancode keyBoardkey, std::unique_ptr<Command> command)
+void dae::InputManager::BindCommandKeyBoard(SDL_Scancode keyBoardkey, std::unique_ptr<Command> command, int state)
 {
-	m_KeyBoardCommands[keyBoardkey] = std::move(command);
+	m_KeyBoardCommands[keyBoardkey].first = state;
+	m_KeyBoardCommands[keyBoardkey].second = std::move(command);
 }
 
 void dae::InputManager::UnbindCommandController(unsigned controllerIndex, XBox360Controller::ControllerButton button)

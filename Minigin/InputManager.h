@@ -16,7 +16,7 @@ namespace dae
 		bool ProcessInput();
 		void AddController(std::unique_ptr<XBox360Controller> controller);
 		void BindCommandController(unsigned controllerIndex, XBox360Controller::ControllerButton button, std::unique_ptr<Command> command);
-		void BindCommandKeyBoard(SDL_Scancode keyBoardkey, std::unique_ptr<Command> command);
+		void BindCommandKeyBoard(SDL_Scancode keyBoardkey, std::unique_ptr<Command> command, int state);
 		void UnbindCommandController(unsigned controllerIndex, XBox360Controller::ControllerButton button);
 		void UnbindCommandKeyBoard(SDL_Scancode keyBoardkey);
 
@@ -28,7 +28,7 @@ namespace dae
 		std::vector<std::unique_ptr<XBox360Controller>> m_Controllers{};
 
 		SDL_Scancode m_KeyboardKey;
-		using KeyBoardCommandsMap = std::map<SDL_Scancode, std::unique_ptr<Command>>;
+		using KeyBoardCommandsMap = std::map<SDL_Scancode, std::pair<int, std::unique_ptr<Command>>>;
 		KeyBoardCommandsMap m_KeyBoardCommands{};
 	};
 

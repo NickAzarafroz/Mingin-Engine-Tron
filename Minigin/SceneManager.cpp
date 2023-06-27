@@ -31,3 +31,9 @@ dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
 	m_scenes.push_back(scene);
 	return *scene;
 }
+
+dae::Scene& dae::SceneManager::GetScene()
+{
+	Scene* scene{ m_scenes[0].get() };
+	return *scene;
+}

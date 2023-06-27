@@ -11,6 +11,7 @@ namespace dae
 	{
 	public:
 		Scene& CreateScene(const std::string& name);
+		Scene& GetScene();
 
 		void Start();
 		void Update(float elapsedSec);
