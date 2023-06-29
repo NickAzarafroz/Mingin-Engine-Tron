@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{af3973c8-04df-49f0-884a-b46de03396a6}</ProjectGuid>
-    <RootNamespace>DigDug</RootNamespace>
+    <RootNamespace>Tron</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>Tron</ProjectName>
   </PropertyGroup>
