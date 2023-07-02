@@ -43,20 +43,6 @@ void load()
 	auto goHealth = std::make_shared<dae::GameObject>(&scene);
 	auto goPlayerTurret = std::make_shared<dae::GameObject>(&scene);
 
-	//auto p0 = std::make_unique<dae::XBox360Controller>(0);
-
-	/*auto moveRightCommand = std::make_unique<dae::MoveCommand>(goPlayer.get(), 50.f, glm::vec2{ 1.f, 0.f });
-	auto moveLeftCommand = std::make_unique<dae::MoveCommand>(goPlayer.get(), 50.f, glm::vec2{ -1.f, 0.f });
-	auto moveUpCommand = std::make_unique<dae::MoveCommand>(goPlayer.get(), 50.f, glm::vec2{ 0.f, -1.f });
-	auto moveDownCommand = std::make_unique<dae::MoveCommand>(goPlayer.get(), 50.f, glm::vec2{ 0.f, 1.f });*/
-
-	//input.AddController(std::move(p0));
-
-	/*input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadRight, std::move(moveRightCommand));
-	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadLeft, std::move(moveLeftCommand));
-	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadUp, std::move(moveUpCommand));
-	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadDown, std::move(moveDownCommand));*/
-
 	//Logo Texture
 	//-----------------------------------------------------------------------
 	//goLogo->AddComponent<dae::TextureComponent>()->SetTexture("logo.tga");
@@ -136,7 +122,7 @@ void load()
 
 	auto decreaseHealth = std::make_unique<dae::ChangeHealthCommand>(goHealth.get(), 1);
 
-	auto spawnBullet = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get());
+	auto spawnBullet = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get(), goGrid->GetComponent<dae::GridComponent>());
 
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_D, std::move(gridRight), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_A, std::move(gridLeft), 0);
@@ -144,6 +130,20 @@ void load()
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_W, std::move(gridUp), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_P, std::move(decreaseHealth), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_SPACE, std::move(spawnBullet), 1);
+
+	auto p0 = std::make_unique<dae::XBox360Controller>(0);
+
+	auto moveRightCommand = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto moveLeftCommand = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ -1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto moveUpCommand = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, -1.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto moveDownCommand = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, 1.f }, goGrid->GetComponent<dae::GridComponent>());
+
+	input.AddController(std::move(p0));
+
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadRight, std::move(moveRightCommand));
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadLeft, std::move(moveLeftCommand));
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadUp, std::move(moveUpCommand));
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadDown, std::move(moveDownCommand));
 
 	goPlayer->SendMessageID(0);
 

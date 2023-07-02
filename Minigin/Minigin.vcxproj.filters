@@ -165,6 +165,9 @@
     <ClInclude Include="MovementComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="ValidCellComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -261,6 +264,9 @@
       <Filter>Sound</Filter>
     </ClCompile>
     <ClCompile Include="MovementComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ValidCellComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>

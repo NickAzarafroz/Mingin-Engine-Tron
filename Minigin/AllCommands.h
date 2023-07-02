@@ -3,6 +3,7 @@
 #include "PlayerComponent.h"
 #include "TextureComponent.h"
 #include "MovementComponent.h"
+#include "ValidCellComponent.h"
 #include "SceneManager.h"
 namespace dae
 {
@@ -153,7 +154,7 @@ namespace dae
 	class SpawnBulletCommand : public GameActorCommand
 	{
 	public:
-		SpawnBulletCommand(GameObject* actor) : GameActorCommand(actor) {}
+		SpawnBulletCommand(GameObject* actor, GridComponent* pGrid) : GameActorCommand(actor), m_pGrid{pGrid} {}
 		virtual ~SpawnBulletCommand() = default;
 		void Execute() override
 		{
@@ -165,12 +166,15 @@ namespace dae
 																		GetGameActor()->GetLocalPosition().y + 8.f,
 																		GetGameActor()->GetLocalPosition().z);
 			m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(200.f, 1.f, 0.f);
+			m_GoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
 			m_GoBullet->AddGameObject();
 			m_GoBullet->Start();
+
 		}
 
 	private:
 		std::vector<std::shared_ptr<GameObject>> m_GoBullets{};
 		std::shared_ptr<GameObject> m_GoBullet{};
+		GridComponent* m_pGrid{};
 	};
 }
