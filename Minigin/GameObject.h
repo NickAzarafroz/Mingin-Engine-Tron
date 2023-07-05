@@ -36,6 +36,7 @@ namespace dae
 		void RemoveGameObject();	
 		void AddGameObject();
 		void GetAllChildren();
+		std::shared_ptr<GameObject> GetChildAtIndex(int index);
 
 		template <typename T> T* AddComponent();
 		template <typename T> void RemoveComponent();

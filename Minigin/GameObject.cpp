@@ -176,4 +176,17 @@ void dae::GameObject::GetAllChildren()
 	}
 }
 
+std::shared_ptr<dae::GameObject> dae::GameObject::GetChildAtIndex(int index)
+{
+	for(int i{}; i < m_pChildren.size(); ++i)
+	{
+		if(i == index)
+		{
+			return m_pChildren[i];
+		}
+	}
+
+	return nullptr;
+}
+
 

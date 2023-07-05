@@ -120,6 +120,9 @@ void load()
 	auto gridUp = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, -1.f }, goGrid->GetComponent<dae::GridComponent>());
 	auto gridDown = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, 1.f }, goGrid->GetComponent<dae::GridComponent>());
 
+	auto incTurret = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), true);
+	auto decTurret = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), false);
+
 	auto decreaseHealth = std::make_unique<dae::ChangeHealthCommand>(goHealth.get(), 1);
 
 	auto spawnBullet = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get(), goGrid->GetComponent<dae::GridComponent>());
@@ -130,6 +133,8 @@ void load()
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_W, std::move(gridUp), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_P, std::move(decreaseHealth), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_SPACE, std::move(spawnBullet), 1);
+	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_UP, std::move(incTurret), 1);
+	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_DOWN, std::move(decTurret), 1);
 
 	auto p0 = std::make_unique<dae::XBox360Controller>(0);
 

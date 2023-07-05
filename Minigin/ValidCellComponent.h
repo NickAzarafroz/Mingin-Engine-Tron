@@ -18,11 +18,13 @@ namespace dae
 		virtual void Update(float elapsedSec) override;
 
 		void SetGrid(GridComponent* m_pGrid);
+		void SetDirection(glm::vec2 dir);
 
 	private:
 		GridComponent* m_pGrid{};
 		bool m_IsValid{ true };
-		glm::vec2 m_Dir{ 1.f, 0.f };
+		glm::vec2 m_Dir{};
+		bool m_HasCollided{};
 	};
 }
 
