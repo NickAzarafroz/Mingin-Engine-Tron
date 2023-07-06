@@ -9,7 +9,7 @@ dae::GameObject::GameObject(Scene* pScene)
 	  m_pComponents{}, m_pParent{}, m_pChildren{}, m_pScene{pScene},
 	  m_ElapsedSec{}
 {
-	
+
 }
 
 dae::GameObject::~GameObject() = default;

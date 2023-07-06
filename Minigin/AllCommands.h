@@ -154,7 +154,7 @@ namespace dae
 	class SpawnBulletCommand : public GameActorCommand
 	{
 	public:
-		SpawnBulletCommand(GameObject* actor, GridComponent* pGrid) : GameActorCommand(actor), m_pGrid{ pGrid } {}
+		SpawnBulletCommand(GameObject* actor, GameObject* otherActor, GridComponent* pGrid) : GameActorCommand(actor), m_pOtherGameObject{otherActor}, m_pGrid { pGrid } {}
 		virtual ~SpawnBulletCommand() = default;
 		void Execute() override
 		{
@@ -162,11 +162,15 @@ namespace dae
 
 			m_GoBullet = std::make_shared<GameObject>(&scene);
 			m_GoBullet->AddComponent<TextureComponent>()->AddTexture("BulletPlayer.png");
-			m_GoBullet->AddComponent<TransformComponent>()->SetPosition(GetGameActor()->GetLocalPosition().x + 8.f,
+			m_GoBullet->AddComponent<TransformComponent>()->SetPosition(GetGameActor()->GetLocalPosition().x + 33.f,
 				GetGameActor()->GetLocalPosition().y + 8.f,
 				GetGameActor()->GetLocalPosition().z);
 
 			m_GoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
+			m_GoBullet->AddComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
+			
+			GetGameActor()->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_GoBullet.get());
+			m_pOtherGameObject->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_GoBullet.get());
 
 			auto childActor = GetGameActor()->GetChildAtIndex(0);
 			float angle = childActor->GetComponent<TextureComponent>()->GetAngle();
@@ -218,9 +222,9 @@ namespace dae
 		}
 
 	private:
-		std::vector<std::shared_ptr<GameObject>> m_GoBullets{};
 		std::shared_ptr<GameObject> m_GoBullet{};
 		GridComponent* m_pGrid{};
+		GameObject* m_pOtherGameObject{};
 	};
 
 	class MoveTurretCommand : public GameActorCommand

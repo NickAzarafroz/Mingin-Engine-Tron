@@ -220,6 +220,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_truetype.h" />
     <ClInclude Include="AudioClip.h" />
     <ClInclude Include="BaseComponent.h" />
+    <ClInclude Include="BoxTriggerComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Font.h" />
@@ -268,6 +269,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_widgets.cpp" />
     <ClCompile Include="AudioClip.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
+    <ClCompile Include="BoxTriggerComponent.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />

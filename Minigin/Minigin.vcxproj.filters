@@ -168,6 +168,9 @@
     <ClInclude Include="ValidCellComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="BoxTriggerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -267,6 +270,9 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="ValidCellComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxTriggerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>

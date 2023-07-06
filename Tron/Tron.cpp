@@ -21,6 +21,7 @@
 #include "LiveDisplayComponent.h"
 //#include "ScoreDisplayComponent.h"
 #include "GridComponent.h"
+#include "BoxTriggerComponent.h"
 
 #include "AllCommands.h"
 #include "XBox360Controller.h"
@@ -80,13 +81,15 @@ void load()
 	//Player
 	//--------------------------------------------------------------------------
 	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("RedTank.png");
+	goPlayer->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
 	goPlayer->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 96.f, 0.0f);
 	//---------------------------------------------------------------------------
 
 	//Enemy
 	//---------------------------------------------------------------------------
 	goEnemy->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
-	goEnemy->AddComponent<dae::TransformComponent>()->SetPosition(320.f, 270.f, 0.0f);
+	goEnemy->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
+	goEnemy->AddComponent<dae::TransformComponent>()->SetPosition(320.f, 200.f, 0.0f);
 	//---------------------------------------------------------------------------
 
 	//Grid
@@ -125,7 +128,7 @@ void load()
 
 	auto decreaseHealth = std::make_unique<dae::ChangeHealthCommand>(goHealth.get(), 1);
 
-	auto spawnBullet = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get(), goGrid->GetComponent<dae::GridComponent>());
+	auto spawnBullet = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get(), goEnemy.get(), goGrid->GetComponent<dae::GridComponent>());
 
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_D, std::move(gridRight), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_A, std::move(gridLeft), 0);
