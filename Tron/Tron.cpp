@@ -82,6 +82,7 @@ void load()
 	//--------------------------------------------------------------------------
 	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("RedTank.png");
 	goPlayer->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
+	goPlayer->AddComponent<dae::PlayerComponent>();
 	goPlayer->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 96.f, 0.0f);
 	//---------------------------------------------------------------------------
 
@@ -89,6 +90,8 @@ void load()
 	//---------------------------------------------------------------------------
 	goEnemy->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
 	goEnemy->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
+	goEnemy->AddComponent<dae::PlayerComponent>();
+
 	goEnemy->AddComponent<dae::TransformComponent>()->SetPosition(320.f, 200.f, 0.0f);
 	//---------------------------------------------------------------------------
 
@@ -107,9 +110,9 @@ void load()
 	goHealth->AddComponent<dae::TextComponent>()->SetFont(pDigDugFont);
 	goHealth->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 255);
 
-	goHealth->AddComponent<dae::LiveDisplayComponent>();
-	goHealth->AddComponent<dae::PlayerComponent>();
+	goHealth->AddComponent<dae::LiveDisplayComponent>()->SetObjectToDisplayLives(goPlayer.get());
 	goHealth->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 50.f, 0.f);
+
 	//---------------------------------------------------------------------------
 
 	//Player Turret
@@ -126,15 +129,12 @@ void load()
 	auto incTurret = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), true);
 	auto decTurret = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), false);
 
-	auto decreaseHealth = std::make_unique<dae::ChangeHealthCommand>(goHealth.get(), 1);
-
 	auto spawnBullet = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get(), goEnemy.get(), goGrid->GetComponent<dae::GridComponent>());
 
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_D, std::move(gridRight), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_A, std::move(gridLeft), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_S, std::move(gridDown), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_W, std::move(gridUp), 0);
-	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_P, std::move(decreaseHealth), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_SPACE, std::move(spawnBullet), 1);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_UP, std::move(incTurret), 1);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_DOWN, std::move(decTurret), 1);

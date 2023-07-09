@@ -137,20 +137,6 @@ namespace dae
 	Cell MoveGridCommand::m_Cell{};
 	Cell MoveGridCommand::m_DestinationCell{};
 
-	class ChangeHealthCommand : public GameActorCommand
-	{
-	public:
-		ChangeHealthCommand(GameObject* actor, int amount) : GameActorCommand(actor), m_Amount{ amount } {}
-		virtual ~ChangeHealthCommand() = default;
-		void Execute() override
-		{
-			GetGameActor()->GetComponent<PlayerComponent>()->TakeDamage(m_Amount);
-		}
-
-	private:
-		int m_Amount;
-	};
-
 	class SpawnBulletCommand : public GameActorCommand
 	{
 	public:

@@ -1,4 +1,6 @@
 #include "BoxTriggerComponent.h"
+#include "PlayerComponent.h"
+#include "TextureComponent.h"
 #include "GameObject.h"
 using namespace dae;
 
@@ -33,6 +35,8 @@ bool BoxTriggerComponent::IsOverlapping(GameObject* go)
 	}
 
 	go->RemoveGameObject();
+	m_pGameObject->GetComponent<PlayerComponent>()->TakeDamage(1);
+	m_pOtherObject = nullptr;
 	return true;
 }
 

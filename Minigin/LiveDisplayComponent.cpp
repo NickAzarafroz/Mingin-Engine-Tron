@@ -8,10 +8,14 @@ LiveDisplayComponent::LiveDisplayComponent()
   
 }
 
+void LiveDisplayComponent::SetObjectToDisplayLives(GameObject* go)
+{
+    m_pPlayer = go->GetComponent<PlayerComponent>();
+}
+
 void LiveDisplayComponent::Start()
 {
     m_pText = m_pGameObject->GetComponent<TextComponent>();
-    m_pPlayer = m_pGameObject->GetComponent<PlayerComponent>();
 
     m_pPlayer->healthChanged.AddObserver(this);
     m_HealthPoints = m_pPlayer->GetHealth();
@@ -34,10 +38,10 @@ void dae::LiveDisplayComponent::ReceiveMessage(int message)
 
 LiveDisplayComponent::~LiveDisplayComponent()
 {
-    if(m_pPlayer)
+    /*if(m_pPlayer)
     {
         m_pPlayer->healthChanged.RemoveObserver(this);
-    }
+    }*/
 }
 
 void LiveDisplayComponent::HandleEvent()

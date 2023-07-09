@@ -18,6 +18,8 @@ namespace dae
 		LiveDisplayComponent& operator=(const LiveDisplayComponent& other) = delete;
 		LiveDisplayComponent& operator=(LiveDisplayComponent&& other) = delete;
 
+		void SetObjectToDisplayLives(GameObject* go);
+
 		virtual void Start();
 		virtual void Render() const override;
 		virtual void ReceiveMessage(int message) override;
