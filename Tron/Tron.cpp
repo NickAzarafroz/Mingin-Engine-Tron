@@ -22,6 +22,7 @@
 //#include "ScoreDisplayComponent.h"
 #include "GridComponent.h"
 #include "BoxTriggerComponent.h"
+#include "AIComponent.h"
 
 #include "AllCommands.h"
 #include "XBox360Controller.h"
@@ -78,6 +79,16 @@ void load()
 	goFPS->AddComponent<dae::TransformComponent>()->SetPosition(5.f, 5.f, 0.f);
 	//--------------------------------------------------------------------------
 
+	//Grid
+	//---------------------------------------------------------------------------
+	goGrid->AddComponent<dae::TextureComponent>();
+	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("path.png");
+	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("wall.png");
+
+	goGrid->AddComponent<dae::GridComponent>();
+	goGrid->GetComponent<dae::GridComponent>()->Initialize(32.f, 32.f, "../Data/LevelDigDug.json");
+	//---------------------------------------------------------------------------
+
 	//Player
 	//--------------------------------------------------------------------------
 	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("RedTank.png");
@@ -91,18 +102,9 @@ void load()
 	goEnemy->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
 	goEnemy->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
 	goEnemy->AddComponent<dae::PlayerComponent>();
+	goEnemy->AddComponent<dae::AIComponent>()->SetObjectToMoveTo(goGrid->GetComponent<dae::GridComponent>());
 
-	goEnemy->AddComponent<dae::TransformComponent>()->SetPosition(320.f, 200.f, 0.0f);
-	//---------------------------------------------------------------------------
-
-	//Grid
-	//---------------------------------------------------------------------------
-	goGrid->AddComponent<dae::TextureComponent>();
-	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("path.png");
-	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("wall.png");
-
-	goGrid->AddComponent<dae::GridComponent>();
-	goGrid->GetComponent<dae::GridComponent>()->Initialize(32.f, 32.f, "../Data/LevelDigDug.json");
+	goEnemy->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 320.f, 0.0f);
 	//---------------------------------------------------------------------------
 
 	//Health Displayer

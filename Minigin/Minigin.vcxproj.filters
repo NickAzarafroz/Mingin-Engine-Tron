@@ -171,6 +171,9 @@
     <ClInclude Include="BoxTriggerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="AIComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -273,6 +276,9 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="BoxTriggerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="AIComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
