@@ -24,6 +24,18 @@ void Scene::RemoveAll()
 	m_objects.clear();
 }
 
+bool Scene::IsObjectInScene(std::shared_ptr<GameObject> object) const
+{
+	for (const auto& obj : m_objects)
+	{
+		if (obj == object)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void Scene::Start()
 {
 	for(auto& object : m_objects)

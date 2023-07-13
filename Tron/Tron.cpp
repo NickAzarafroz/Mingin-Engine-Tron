@@ -102,7 +102,7 @@ void load()
 	goEnemy->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
 	goEnemy->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
 	goEnemy->AddComponent<dae::PlayerComponent>();
-	goEnemy->AddComponent<dae::AIComponent>()->SetObjectToMoveTo(goGrid->GetComponent<dae::GridComponent>());
+	//goEnemy->AddComponent<dae::AIComponent>()->SetObjectToMoveTo(goGrid->GetComponent<dae::GridComponent>());
 
 	goEnemy->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 320.f, 0.0f);
 	//---------------------------------------------------------------------------

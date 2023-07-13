@@ -5,6 +5,7 @@
 #include "MovementComponent.h"
 #include "ValidCellComponent.h"
 #include "SceneManager.h"
+#include "Scene.h"
 namespace dae
 {
 	class MoveCommand : public GameActorCommand
@@ -145,11 +146,13 @@ namespace dae
 		void Execute() override
 		{
 			auto& scene = SceneManager::GetInstance().GetScene();
+			
+			if (scene.IsObjectInScene(m_GoBullet)) return;
 
 			m_GoBullet = std::make_shared<GameObject>(&scene);
 			m_GoBullet->AddComponent<TextureComponent>()->AddTexture("BulletPlayer.png");
-			m_GoBullet->AddComponent<TransformComponent>()->SetPosition(GetGameActor()->GetLocalPosition().x + 33.f,
-				GetGameActor()->GetLocalPosition().y + 8.f,
+			m_GoBullet->AddComponent<TransformComponent>()->SetPosition(GetGameActor()->GetLocalPosition().x,
+				GetGameActor()->GetLocalPosition().y,
 				GetGameActor()->GetLocalPosition().z);
 
 			m_GoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
@@ -163,6 +166,9 @@ namespace dae
 
 			if(angle == 0.f || angle == 360.f || angle == -360.f)
 			{
+				m_GoBullet->GetComponent<TransformComponent>()->SetPosition(GetGameActor()->GetLocalPosition().x + 33.f,
+					GetGameActor()->GetLocalPosition().y + 8.f,
+					GetGameActor()->GetLocalPosition().z);
 				m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(200.f, 1.f, 0.f);
 				m_GoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 1.f, 0.f });
 			}
@@ -173,6 +179,9 @@ namespace dae
 			}
 			else if(angle == 270.f || angle == -90.f)
 			{
+				m_GoBullet->GetComponent<TransformComponent>()->SetPosition(GetGameActor()->GetLocalPosition().x + 14.f,
+					GetGameActor()->GetLocalPosition().y - 16.f,
+					GetGameActor()->GetLocalPosition().z);
 				m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(200.f, 0.f, -1.f);
 				m_GoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 0.f, -1.f });
 			}
@@ -183,6 +192,9 @@ namespace dae
 			}
 			else if (angle == 180.f || angle == -180.f)
 			{
+				m_GoBullet->GetComponent<TransformComponent>()->SetPosition(GetGameActor()->GetLocalPosition().x - 20.f,
+					GetGameActor()->GetLocalPosition().y + 8.f,
+					GetGameActor()->GetLocalPosition().z);
 				m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(200.f, -1.0f, 0.f);
 				m_GoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ -1.f, 0.f });
 			}
@@ -193,6 +205,9 @@ namespace dae
 			}
 			else if (angle == 90.f || angle == -270.f)
 			{
+				m_GoBullet->GetComponent<TransformComponent>()->SetPosition(GetGameActor()->GetLocalPosition().x + 14.f,
+					GetGameActor()->GetLocalPosition().y + 40.f,
+					GetGameActor()->GetLocalPosition().z);
 				m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(200.f, 0.f, 1.f);
 				m_GoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 0.f, 1.f });
 			}
