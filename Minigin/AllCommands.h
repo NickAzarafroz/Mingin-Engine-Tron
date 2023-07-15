@@ -159,6 +159,8 @@ namespace dae
 			m_GoBullet->AddComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
 			
 			GetGameActor()->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_GoBullet.get());
+
+			if(!m_pOtherGameObject->IsDeleted())
 			m_pOtherGameObject->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_GoBullet.get());
 
 			auto childActor = GetGameActor()->GetChildAtIndex(0);

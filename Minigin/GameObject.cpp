@@ -31,6 +31,7 @@ void dae::GameObject::Update(float elapsedSec)
 {
 	for(const auto& component : m_pComponents)
 	{
+		if (m_MarkedForDelete) return;
 		component->Update(elapsedSec);
 	}
 
@@ -46,6 +47,7 @@ void dae::GameObject::Render() const
 {
 	for (const auto& component : m_pComponents)
 	{
+		if (m_MarkedForDelete) return;
 		component->Render();
 	}
 
@@ -187,6 +189,16 @@ std::shared_ptr<dae::GameObject> dae::GameObject::GetChildAtIndex(int index)
 	}
 
 	return nullptr;
+}
+
+void dae::GameObject::MarkForDelete()
+{
+	m_MarkedForDelete = true;
+}
+
+bool dae::GameObject::IsDeleted()
+{
+	return m_MarkedForDelete;
 }
 
 

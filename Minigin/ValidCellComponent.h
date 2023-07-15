@@ -19,12 +19,16 @@ namespace dae
 
 		void SetGrid(GridComponent* m_pGrid);
 		void SetDirection(glm::vec2 dir);
+		void IncreaseBounce();
+
+		int GetAmountBounce();
 
 	private:
 		GridComponent* m_pGrid{};
 		bool m_IsValid{ true };
 		glm::vec2 m_Dir{};
 		bool m_HasCollided{};
+		int m_AmountBounce{};
 	};
 }
 

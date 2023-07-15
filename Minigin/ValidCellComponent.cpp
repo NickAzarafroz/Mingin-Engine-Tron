@@ -16,6 +16,11 @@ void ValidCellComponent::Update(float)
 	}
 	else
 	{
+		if (m_AmountBounce >= 5)
+		{
+			m_pGameObject->RemoveGameObject();
+		}
+
 		if(!m_HasCollided)
 		{
 			m_HasCollided = true;
@@ -25,6 +30,7 @@ void ValidCellComponent::Update(float)
 				m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, -1.f, 0.f);
 				m_Dir.x = -1.f;
 				m_Dir.y = 0.f;
+				m_AmountBounce++;
 				m_IsValid = true;
 			}
 			else if (m_Dir.x == -1.f && m_Dir.y == 0.f)
@@ -32,6 +38,7 @@ void ValidCellComponent::Update(float)
 				m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, 1.f, 0.f);
 				m_Dir.x = 1.f;
 				m_Dir.y = 0.f;
+				m_AmountBounce++;
 				m_IsValid = true;
 			}
 			else if (m_Dir.x == 0.f && m_Dir.y == 1.f)
@@ -39,6 +46,7 @@ void ValidCellComponent::Update(float)
 				m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, 0.f, -1.f);
 				m_Dir.x = 0.f;
 				m_Dir.y = -1.f;
+				m_AmountBounce++;
 				m_IsValid = true;
 			}
 			else if (m_Dir.x == 0.f && m_Dir.y == -1.f)
@@ -46,6 +54,7 @@ void ValidCellComponent::Update(float)
 				m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, 0.f, 1.f);
 				m_Dir.x = 0.f;
 				m_Dir.y = 1.f;
+				m_AmountBounce++;
 				m_IsValid = true;
 			}
 			else if (m_Dir.x == 0.5f && m_Dir.y == 0.5f)
@@ -88,4 +97,14 @@ void ValidCellComponent::SetGrid(GridComponent* pGrid)
 void ValidCellComponent::SetDirection(glm::vec2 dir)
 {
 	m_Dir = dir;
+}
+
+void ValidCellComponent::IncreaseBounce()
+{
+	++m_AmountBounce;
+}
+
+int ValidCellComponent::GetAmountBounce()
+{
+	return m_AmountBounce;
 }

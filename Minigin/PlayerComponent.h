@@ -15,10 +15,12 @@ namespace dae
 		PlayerComponent& operator=(PlayerComponent&& other) = delete;
 
 		virtual void Start() override;
+		virtual void Update(float elapsedSec) override;
 		virtual void ReceiveMessage(int message) override;
 
 		int GetHealth() const;
 		void TakeDamage(int amount);
+		void Destroy();
 
 		Subject<> healthChanged;
 

@@ -38,6 +38,9 @@ namespace dae
 		void GetAllChildren();
 		std::shared_ptr<GameObject> GetChildAtIndex(int index);
 
+		void MarkForDelete();
+		bool IsDeleted();
+
 		template <typename T> T* AddComponent();
 		template <typename T> void RemoveComponent();
 		template <typename T> T* GetComponent() const;
@@ -59,6 +62,8 @@ namespace dae
 		Scene* m_pScene;
 
 		float m_ElapsedSec;
+
+		bool m_MarkedForDelete{};
 	};
 
 	template<typename T>
