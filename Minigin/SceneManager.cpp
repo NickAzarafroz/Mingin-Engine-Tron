@@ -11,18 +11,12 @@ void dae::SceneManager::Start()
 
 void dae::SceneManager::Update(float elapsedSec)
 {
-	for(auto& scene : m_scenes)
-	{
-		scene->Update(elapsedSec);
-	}
+	m_scenes[0]->Update(elapsedSec);
 }
 
 void dae::SceneManager::Render()
 {
-	for (const auto& scene : m_scenes)
-	{
-		scene->Render();
-	}
+	m_scenes[0]->Render();
 }
 
 dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
@@ -32,8 +26,8 @@ dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
 	return *scene;
 }
 
-dae::Scene& dae::SceneManager::GetScene()
+dae::Scene& dae::SceneManager::GetScene(int index)
 {
-	Scene* scene{ m_scenes[0].get() };
+	Scene* scene{ m_scenes[index].get() };
 	return *scene;
 }

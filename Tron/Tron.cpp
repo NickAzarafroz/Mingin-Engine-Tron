@@ -29,10 +29,12 @@
 
 void load()
 {
-	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("Level-1");
+	auto& sceneMenu = dae::SceneManager::GetInstance().CreateScene("Menu");
+
 	auto& input = dae::InputManager::GetInstance();
 
-	auto pDigDugFont = dae::ResourceManager::GetInstance().LoadFont("DigDug_Font.ttf", 14);
+	auto pTronFont = dae::ResourceManager::GetInstance().LoadFont("Tr2n.ttf", 30);
 	auto pFontFpsText = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 
 	auto goLogo = std::make_shared<dae::GameObject>(&scene);
@@ -45,6 +47,30 @@ void load()
 	auto goHealth = std::make_shared<dae::GameObject>(&scene);
 	auto goPlayerTurret = std::make_shared<dae::GameObject>(&scene);
 
+	auto goMainMenuBG = std::make_shared<dae::GameObject>(&sceneMenu);
+	goMainMenuBG->AddComponent<dae::TextureComponent>()->AddTexture("MainMenuBG.jpg");
+
+	auto goStartText = std::make_shared<dae::GameObject>(&sceneMenu);
+	goStartText->AddComponent<dae::TextComponent>()->SetText("A/SPACE to start the Game");
+	goStartText->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
+	goStartText->GetComponent<dae::TextComponent>()->SetFontColor(0, 255, 0);
+
+	goStartText->AddComponent<dae::TransformComponent>()->SetPosition(100.f, 100.f, 0.f);
+
+	auto goQuitText = std::make_shared<dae::GameObject>(&sceneMenu);
+	goQuitText->AddComponent<dae::TextComponent>()->SetText("B/ESC to quit Application");
+	goQuitText->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
+	goQuitText->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 0);
+
+	goQuitText->AddComponent<dae::TransformComponent>()->SetPosition(100.f, 250.f, 0.f);
+
+	auto goChangeText = std::make_shared<dae::GameObject>(&sceneMenu);
+	goChangeText->AddComponent<dae::TextComponent>()->SetText("Y/TAB to change GameMode");
+	goChangeText->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
+	goChangeText->GetComponent<dae::TextComponent>()->SetFontColor(255, 255, 0);
+
+	goChangeText->AddComponent<dae::TransformComponent>()->SetPosition(100.f, 400.f, 0.f);
+
 	//Logo Texture
 	//-----------------------------------------------------------------------
 	//goLogo->AddComponent<dae::TextureComponent>()->SetTexture("logo.tga");
@@ -54,26 +80,26 @@ void load()
 	//HighScore Text
 	//--------------------------------------------------------------------------
 	goHighScoreText->AddComponent<dae::TextComponent>()->SetText("HIGH SCORE");
-	goHighScoreText->GetComponent<dae::TextComponent>()->SetFont(pDigDugFont);
+	goHighScoreText->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
 	goHighScoreText->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 0);
 
-	goHighScoreText->AddComponent<dae::TransformComponent>()->SetPosition(140.f, 30.f, 0.f);
+	goHighScoreText->AddComponent<dae::TransformComponent>()->SetPosition(450.f, 30.f, 0.f);
 	//--------------------------------------------------------------------------
 
 	//Player 1 Text
 	//--------------------------------------------------------------------------
 	goPlayer1Text->AddComponent<dae::TextComponent>()->SetText("P1");
-	goPlayer1Text->GetComponent<dae::TextComponent>()->SetFont(pDigDugFont);
+	goPlayer1Text->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
 	goPlayer1Text->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 0);
 
-	goPlayer1Text->AddComponent<dae::TransformComponent>()->SetPosition(60.f, 30.f, 0.f);
+	goPlayer1Text->AddComponent<dae::TransformComponent>()->SetPosition(410.f, 30.f, 0.f);
 	//--------------------------------------------------------------------------
 
 	//FPS
 	//--------------------------------------------------------------------------
 	goFPS->AddComponent<dae::FPSComponent>();
 	goFPS->AddComponent<dae::TextComponent>();
-	goFPS->GetComponent<dae::TextComponent>()->SetFont(pDigDugFont);
+	goFPS->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
 	goFPS->GetComponent<dae::TextComponent>()->SetFontColor(0, 255, 0);
 
 	goFPS->AddComponent<dae::TransformComponent>()->SetPosition(5.f, 5.f, 0.f);
@@ -86,7 +112,7 @@ void load()
 	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("wall.png");
 
 	goGrid->AddComponent<dae::GridComponent>();
-	goGrid->GetComponent<dae::GridComponent>()->Initialize(32.f, 32.f, "../Data/LevelDigDug.json");
+	goGrid->GetComponent<dae::GridComponent>()->Initialize(32.f, 32.f, "../Data/LevelTron.json");
 	//---------------------------------------------------------------------------
 
 	//Player
@@ -109,7 +135,7 @@ void load()
 
 	//Health Displayer
 	//---------------------------------------------------------------------------
-	goHealth->AddComponent<dae::TextComponent>()->SetFont(pDigDugFont);
+	goHealth->AddComponent<dae::TextComponent>()->SetFont(pTronFont);
 	goHealth->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 255);
 
 	goHealth->AddComponent<dae::LiveDisplayComponent>()->SetObjectToDisplayLives(goPlayer.get());
@@ -166,6 +192,11 @@ void load()
 	goPlayer->AddGameObject();
 	goHealth->AddGameObject();
 	goEnemy->AddGameObject();
+
+	goMainMenuBG->AddGameObject();
+	goStartText->AddGameObject();
+	goQuitText->AddGameObject();
+	goChangeText->AddGameObject();
 }
 
 int main(int, char*[]) 

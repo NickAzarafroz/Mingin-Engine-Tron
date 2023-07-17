@@ -145,7 +145,7 @@ namespace dae
 		virtual ~SpawnBulletCommand() = default;
 		void Execute() override
 		{
-			auto& scene = SceneManager::GetInstance().GetScene();
+			auto& scene = SceneManager::GetInstance().GetScene(0);
 			
 			if (scene.IsObjectInScene(m_GoBullet)) return;
 
