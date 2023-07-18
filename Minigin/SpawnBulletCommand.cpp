@@ -26,8 +26,16 @@ void SpawnBulletCommand::Execute()
 
 	GetGameActor()->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_GoBullet.get());
 
-	if (!m_pOtherGameObject->IsDeleted())
-		m_pOtherGameObject->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_GoBullet.get());
+	for(const auto& object : m_pOtherGameObjects)
+	{
+		if(!object->IsDeleted())
+		{
+			object->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_GoBullet.get());
+		}
+	}
+
+	//if (!m_pOtherGameObject->IsDeleted())
+		//m_pOtherGameObject->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_GoBullet.get());
 
 	auto childActor = GetGameActor()->GetChildAtIndex(0);
 	float angle = childActor->GetComponent<TextureComponent>()->GetAngle();

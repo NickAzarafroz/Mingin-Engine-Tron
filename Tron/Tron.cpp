@@ -48,6 +48,8 @@ void load()
 	auto goFPS = std::make_shared<dae::GameObject>(&scene);
 	auto goPlayer = std::make_shared<dae::GameObject>(&scene);
 	auto goEnemy = std::make_shared<dae::GameObject>(&scene);
+	auto goEnemy2 = std::make_shared<dae::GameObject>(&scene);
+	auto goEnemy3 = std::make_shared<dae::GameObject>(&scene);
 	auto goGrid = std::make_shared<dae::GameObject>(&scene);
 	auto goHealth = std::make_shared<dae::GameObject>(&scene);
 	auto goPlayerTurret = std::make_shared<dae::GameObject>(&scene);
@@ -133,9 +135,25 @@ void load()
 	goEnemy->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
 	goEnemy->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
 	goEnemy->AddComponent<dae::PlayerComponent>();
-	//goEnemy->AddComponent<dae::AIComponent>()->SetObjectToMoveTo(goGrid->GetComponent<dae::GridComponent>());
 
 	goEnemy->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 320.f, 0.0f);
+
+	goEnemy2->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
+	goEnemy2->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
+	goEnemy2->AddComponent<dae::PlayerComponent>();
+
+	goEnemy2->AddComponent<dae::TransformComponent>()->SetPosition(320.f, 96.f, 0.0f);
+
+	goEnemy3->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
+	goEnemy3->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
+	goEnemy3->AddComponent<dae::PlayerComponent>();
+
+	goEnemy3->AddComponent<dae::TransformComponent>()->SetPosition(384.f, 96.f, 0.0f);
+
+	std::vector<dae::GameObject*> goEnemies;
+	goEnemies.emplace_back(goEnemy.get());
+	goEnemies.emplace_back(goEnemy2.get());
+	goEnemies.emplace_back(goEnemy3.get());
 	//---------------------------------------------------------------------------
 
 	//Health Displayer
@@ -162,7 +180,7 @@ void load()
 	auto incTurret = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), true);
 	auto decTurret = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), false);
 
-	auto spawnBullet = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get(), goEnemy.get(), goGrid->GetComponent<dae::GridComponent>());
+	auto spawnBullet = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get(), goEnemies, goGrid->GetComponent<dae::GridComponent>());
 
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_D, std::move(gridRight), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_A, std::move(gridLeft), 0);
@@ -197,6 +215,8 @@ void load()
 	goPlayer->AddGameObject();
 	goHealth->AddGameObject();
 	goEnemy->AddGameObject();
+	goEnemy2->AddGameObject();
+	goEnemy3->AddGameObject();
 
 	goMainMenuBG->AddGameObject();
 	goStartText->AddGameObject();

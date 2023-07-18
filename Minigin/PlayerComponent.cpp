@@ -39,7 +39,6 @@ void PlayerComponent::TakeDamage(int amount)
 void PlayerComponent::Destroy()
 {
 	m_pGameObject->MarkForDelete();
-	m_pGameObject->RemoveGameObject();
 }
 
 PlayerComponent::~PlayerComponent()
