@@ -23,8 +23,13 @@
 #include "GridComponent.h"
 #include "BoxTriggerComponent.h"
 #include "AIComponent.h"
+#include "PlayerComponent.h"
 
-#include "AllCommands.h"
+#include "MoveCommand.h"
+#include "MoveGridCommand.h"
+#include "MoveTurretCommand.h"
+#include "SpawnBulletCommand.h"
+
 #include "XBox360Controller.h"
 
 void load()
