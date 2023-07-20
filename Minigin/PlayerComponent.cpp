@@ -29,11 +29,23 @@ int PlayerComponent::GetHealth() const
 	return m_Health;
 }
 
+int PlayerComponent::GetScore() const
+{
+	return m_Score;
+}
+
 void PlayerComponent::TakeDamage(int amount)
 {
 	m_Health -= amount;
 
 	healthChanged.Notify();
+}
+
+void PlayerComponent::IncreaseScore(int amount)
+{
+	m_Score += amount;
+
+	scoreChanged.Notify();
 }
 
 void PlayerComponent::Destroy()

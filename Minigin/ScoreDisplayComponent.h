@@ -2,10 +2,12 @@
 #include <SDL.h>
 #include <string>
 #include "BaseComponent.h"
+#include "Observer.h"
 namespace dae
 {
+	class PlayerComponent;
 	class TextComponent;
-	class ScoreDisplayComponent : public BaseComponent
+	class ScoreDisplayComponent final : public BaseComponent, public Observer<>
 	{
 	public:
 		ScoreDisplayComponent();
@@ -16,13 +18,18 @@ namespace dae
 		ScoreDisplayComponent& operator=(const ScoreDisplayComponent& other) = delete;
 		ScoreDisplayComponent& operator=(ScoreDisplayComponent&& other) = delete;
 
+		void SetObjectToDisplayScore(GameObject* go);
+
 		virtual void Start();
 		virtual void Render() const override;
 		virtual void ReceiveMessage(int message) override;
-		int IncreaseScore();
 
 	private:
 		int m_Score;
 		TextComponent* m_pText{};
+		PlayerComponent* m_pPlayer{};
+
+		virtual void HandleEvent() override;
+		virtual void OnSubjectDestroy() override;
 	};
 }

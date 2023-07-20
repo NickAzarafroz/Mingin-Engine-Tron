@@ -20,6 +20,11 @@ void BoxTriggerComponent::SetOtherObject(GameObject* go)
 	m_pOtherObject = go;
 }
 
+void BoxTriggerComponent::SetPlayerObject(GameObject* player)
+{
+	m_pPlayerObject = player;
+}
+
 bool BoxTriggerComponent::IsOverlapping(GameObject* go)
 {
 	if (go == nullptr) return false;
@@ -36,6 +41,10 @@ bool BoxTriggerComponent::IsOverlapping(GameObject* go)
 
 	go->RemoveGameObject();
 	m_pGameObject->GetComponent<PlayerComponent>()->TakeDamage(1);
+	if (m_pPlayerObject) 
+	{
+		m_pPlayerObject->GetComponent<PlayerComponent>()->IncreaseScore(3);
+	} 
 	m_pOtherObject = nullptr;
 	return true;
 }

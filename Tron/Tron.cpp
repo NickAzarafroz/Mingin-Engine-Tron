@@ -19,7 +19,7 @@
 #include "FPSComponent.h"
 #include "RotateComponent.h"
 #include "LiveDisplayComponent.h"
-//#include "ScoreDisplayComponent.h"
+#include "ScoreDisplayComponent.h"
 #include "GridComponent.h"
 #include "BoxTriggerComponent.h"
 #include "AIComponent.h"
@@ -44,6 +44,7 @@ void load()
 
 	auto goLogo = std::make_shared<dae::GameObject>(&scene);
 	auto goHighScoreText = std::make_shared<dae::GameObject>(&scene);
+	auto goHighScoreValue = std::make_shared<dae::GameObject>(&scene);
 	auto goPlayer1Text = std::make_shared<dae::GameObject>(&scene);
 	auto goFPS = std::make_shared<dae::GameObject>(&scene);
 	auto goPlayer = std::make_shared<dae::GameObject>(&scene);
@@ -84,22 +85,13 @@ void load()
 	//goLogo->SetLocalPosition(glm::vec3(216.f, 180.f, 0.f));
 	//--------------------------------------------------------------------------
 
-	//HighScore Text
-	//--------------------------------------------------------------------------
-	goHighScoreText->AddComponent<dae::TextComponent>()->SetText("HIGH SCORE");
-	goHighScoreText->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
-	goHighScoreText->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 0);
-
-	goHighScoreText->AddComponent<dae::TransformComponent>()->SetPosition(450.f, 30.f, 0.f);
-	//--------------------------------------------------------------------------
-
 	//Player 1 Text
 	//--------------------------------------------------------------------------
-	goPlayer1Text->AddComponent<dae::TextComponent>()->SetText("P1");
+	goPlayer1Text->AddComponent<dae::TextComponent>()->SetText("P1:");
 	goPlayer1Text->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
 	goPlayer1Text->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 0);
 
-	goPlayer1Text->AddComponent<dae::TransformComponent>()->SetPosition(410.f, 30.f, 0.f);
+	goPlayer1Text->AddComponent<dae::TransformComponent>()->SetPosition(400.f, 30.f, 0.f);
 	//--------------------------------------------------------------------------
 
 	//FPS
@@ -126,26 +118,46 @@ void load()
 	//--------------------------------------------------------------------------
 	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("RedTank.png");
 	goPlayer->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
+	//goPlayer->GetComponent<dae::BoxTriggerComponent>()->SetPlayerObject(goPlayer.get());
 	goPlayer->AddComponent<dae::PlayerComponent>();
 	goPlayer->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 96.f, 0.0f);
 	//---------------------------------------------------------------------------
+
+	//HighScore Text
+	//--------------------------------------------------------------------------
+	goHighScoreText->AddComponent<dae::TextComponent>()->SetText("HIGH SCORE");
+	goHighScoreText->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
+	goHighScoreText->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 0);
+
+	goHighScoreText->AddComponent<dae::TransformComponent>()->SetPosition(450.f, 30.f, 0.f);
+
+	goHighScoreValue->AddComponent<dae::TextComponent>()->SetText("0");
+	goHighScoreValue->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
+	goHighScoreValue->GetComponent<dae::TextComponent>()->SetFontColor(0, 0, 255);
+	goHighScoreValue->AddComponent<dae::ScoreDisplayComponent>()->SetObjectToDisplayScore(goPlayer.get());
+
+	goHighScoreValue->AddComponent<dae::TransformComponent>()->SetPosition(515.f, 60.f, 0.f);
+	//--------------------------------------------------------------------------
 
 	//Enemy
 	//---------------------------------------------------------------------------
 	goEnemy->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
 	goEnemy->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
+	goEnemy->GetComponent<dae::BoxTriggerComponent>()->SetPlayerObject(goPlayer.get());
 	goEnemy->AddComponent<dae::PlayerComponent>();
 
 	goEnemy->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 320.f, 0.0f);
 
 	goEnemy2->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
 	goEnemy2->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
+	goEnemy2->GetComponent<dae::BoxTriggerComponent>()->SetPlayerObject(goPlayer.get());
 	goEnemy2->AddComponent<dae::PlayerComponent>();
 
 	goEnemy2->AddComponent<dae::TransformComponent>()->SetPosition(320.f, 96.f, 0.0f);
 
 	goEnemy3->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
 	goEnemy3->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
+	goEnemy3->GetComponent<dae::BoxTriggerComponent>()->SetPlayerObject(goPlayer.get());
 	goEnemy3->AddComponent<dae::PlayerComponent>();
 
 	goEnemy3->AddComponent<dae::TransformComponent>()->SetPosition(384.f, 96.f, 0.0f);
@@ -210,6 +222,7 @@ void load()
 
 	goGrid->AddGameObject();
 	goHighScoreText->AddGameObject();
+	goHighScoreValue->AddGameObject();
 	goPlayer1Text->AddGameObject();
 	goFPS->AddGameObject();
 	goPlayer->AddGameObject();

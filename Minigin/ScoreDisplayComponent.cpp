@@ -1,17 +1,26 @@
 #include "ScoreDisplayComponent.h"
 #include "TextComponent.h"
+#include "PlayerComponent.h"
 using namespace dae;
 
 ScoreDisplayComponent::ScoreDisplayComponent()
-    : m_Score{}
 {
 
+}
+
+void ScoreDisplayComponent::SetObjectToDisplayScore(GameObject* go)
+{
+    m_pPlayer = go->GetComponent<PlayerComponent>();
 }
 
 void ScoreDisplayComponent::Start()
 {
     m_pText = m_pGameObject->GetComponent<TextComponent>();
-    m_pText->SetText("Score: " + std::to_string(m_Score));
+
+    m_pPlayer->scoreChanged.AddObserver(this);
+    m_Score = m_pPlayer->GetScore();
+
+    m_pText->SetText(std::to_string(m_Score));
 }
 
 void ScoreDisplayComponent::Render() const
@@ -27,12 +36,21 @@ void dae::ScoreDisplayComponent::ReceiveMessage(int message)
     }
 }
 
-int dae::ScoreDisplayComponent::IncreaseScore()
+void dae::ScoreDisplayComponent::HandleEvent()
 {
-    return ++m_Score;
+    m_Score += 3;
+    m_pText->SetText(std::to_string(m_Score));
+}
+
+void dae::ScoreDisplayComponent::OnSubjectDestroy()
+{
+
 }
 
 ScoreDisplayComponent::~ScoreDisplayComponent()
 {
-
+   if(m_pPlayer)
+   {
+       m_pPlayer->scoreChanged.RemoveObserver(this);
+   }
 }

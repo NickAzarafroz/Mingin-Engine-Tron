@@ -22,7 +22,8 @@ void SpawnBulletCommand::Execute()
 		GetGameActor()->GetLocalPosition().z);
 
 	m_GoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
-	m_GoBullet->AddComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
+	m_GoBullet->AddComponent<BoxTriggerComponent>()->SetPlayerObject(GetGameActor());
+	m_GoBullet->GetComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
 
 	GetGameActor()->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_GoBullet.get());
 

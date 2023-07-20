@@ -17,6 +17,7 @@ namespace dae
 
 		void SetSize(float width, float height);
 		void SetOtherObject(GameObject* go);
+		void SetPlayerObject(GameObject* player);
 		bool IsOverlapping(GameObject* go);
 
 		float GetWidth();
@@ -27,6 +28,7 @@ namespace dae
 		float m_Height;
 
 		GameObject* m_pOtherObject;
+		GameObject* m_pPlayerObject;
 	};
 }
 

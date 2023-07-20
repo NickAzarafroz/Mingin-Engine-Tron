@@ -19,13 +19,18 @@ namespace dae
 		virtual void ReceiveMessage(int message) override;
 
 		int GetHealth() const;
+		int GetScore() const;
+
 		void TakeDamage(int amount);
+		void IncreaseScore(int amount);
 		void Destroy();
 
 		Subject<> healthChanged;
+		Subject<> scoreChanged;
 
 	private:
 		int m_Health;
+		int m_Score;
 	};
 }
 
