@@ -8,7 +8,7 @@ void ValidCellComponent::Update(float)
 {
 	if(m_IsValid)
 	{
-		m_IsValid = m_pGrid->GetDestinationCell(glm::vec2{ m_pGameObject->GetLocalPosition().x, m_pGameObject->GetLocalPosition().y }, m_Dir).second;
+		m_IsValid = m_pGrid->GetDestinationCell(glm::vec2{ m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y }, m_Dir).second;
 		if(m_IsValid)
 		{
 			m_HasCollided = false;
@@ -16,7 +16,7 @@ void ValidCellComponent::Update(float)
 	}
 	else
 	{
-		if (m_AmountBounce >= 5)
+		if (m_AmountBounce >= 0)
 		{
 			m_pGameObject->RemoveGameObject();
 		}

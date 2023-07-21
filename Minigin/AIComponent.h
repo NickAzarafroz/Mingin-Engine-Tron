@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 #include "glm/glm.hpp"
+#include <memory>
 namespace dae
 {
 	struct Cell;
@@ -18,8 +19,10 @@ namespace dae
 
 		virtual void Update(float elapsedSec) override;
 
-		void SetObjectToMoveTo(GridComponent* pGrid);
+		void SetObjectToMoveTo(GameObject* pPlayer);
+		void SetGrid(GridComponent* pGrid);
 		void MoveToObject();
+		void ShootPlayer();
 
 		static bool m_MovementFlag;
 		static bool m_IsValid;
@@ -30,5 +33,7 @@ namespace dae
 	private:
 		glm::vec2 m_Dir{0.f, 1.f};
 		GridComponent* m_pGrid{};
+		GameObject* m_pPlayer{};
+		std::shared_ptr<GameObject> m_pGoBullet{};
 	};
 }

@@ -56,6 +56,8 @@ void GridComponent::Initialize(float cellWidth, float cellHeight, const std::str
 			Cell c;
 			c.width = cellWidth;
 			c.height = cellHeight;
+			c.col = col;
+			c.row = row;
 			c.localPosition = glm::vec2{ col * cellWidth, row * cellHeight + 96.f};
 			c.centerPosition = glm::vec2{ c.localPosition.x + cellWidth / 2, c.localPosition.y + cellHeight / 2};
 

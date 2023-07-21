@@ -14,6 +14,9 @@ namespace dae
 		float height{};
 		float width{};
 
+		int row{};
+		int col{};
+
 		glm::vec2 centerPosition{};
 		glm::vec2 localPosition{};
 
