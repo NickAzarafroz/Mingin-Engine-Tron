@@ -29,13 +29,14 @@
 #include "MoveGridCommand.h"
 #include "MoveTurretCommand.h"
 #include "SpawnBulletCommand.h"
+#include "GoToNextSceneCommand.h"
 
 #include "XBox360Controller.h"
 
 void load()
 {
-	auto& scene = dae::SceneManager::GetInstance().CreateScene("Level-1");
 	auto& sceneMenu = dae::SceneManager::GetInstance().CreateScene("Menu");
+	auto& scene = dae::SceneManager::GetInstance().CreateScene("Level-1");
 
 	auto& input = dae::InputManager::GetInstance();
 
@@ -78,6 +79,8 @@ void load()
 	goChangeText->GetComponent<dae::TextComponent>()->SetFontColor(255, 255, 0);
 
 	goChangeText->AddComponent<dae::TransformComponent>()->SetPosition(100.f, 400.f, 0.f);
+
+	auto goNextScene = std::make_shared<dae::GameObject>(&sceneMenu);
 
 	//Logo Texture
 	//-----------------------------------------------------------------------
@@ -196,6 +199,8 @@ void load()
 
 	auto spawnBullet = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get(), goEnemies, goGrid->GetComponent<dae::GridComponent>());
 
+	auto goToNextScene = std::make_unique<dae::GoToNextSceneCommand>(goNextScene.get());
+
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_D, std::move(gridRight), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_A, std::move(gridLeft), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_S, std::move(gridDown), 0);
@@ -203,6 +208,10 @@ void load()
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_SPACE, std::move(spawnBullet), 1);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_UP, std::move(incTurret), 1);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_DOWN, std::move(decTurret), 1);
+
+	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_RETURN, std::move(goToNextScene), 1);
+
+
 
 	auto p0 = std::make_unique<dae::XBox360Controller>(0);
 
@@ -237,6 +246,7 @@ void load()
 	goStartText->AddGameObject();
 	goQuitText->AddGameObject();
 	goChangeText->AddGameObject();
+	goNextScene->AddGameObject();
 }
 
 int main(int, char*[]) 

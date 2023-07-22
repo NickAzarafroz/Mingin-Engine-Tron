@@ -13,6 +13,9 @@ namespace dae
 		Scene& CreateScene(const std::string& name);
 		Scene& GetScene(int index);
 
+		void GoNextScene();
+		int GetCurrentSceneIndex();
+
 		void Start();
 		void Update(float elapsedSec);
 		void Render();
@@ -20,5 +23,6 @@ namespace dae
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
 		std::vector<std::shared_ptr<Scene>> m_scenes;
+		int m_ActiveSceneIndex{ 0 };
 	};
 }

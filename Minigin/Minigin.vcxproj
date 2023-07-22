@@ -228,6 +228,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameActorCommand.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GoToNextSceneCommand.h" />
     <ClInclude Include="GridComponent.h" />
     <ClInclude Include="LiveDisplayComponent.h" />
     <ClInclude Include="InputManager.h" />
@@ -278,6 +279,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GoToNextSceneCommand.cpp" />
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LiveDisplayComponent.cpp" />

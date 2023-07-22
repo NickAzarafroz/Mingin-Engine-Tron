@@ -183,6 +183,9 @@
     <ClInclude Include="MoveTurretCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
+    <ClInclude Include="GoToNextSceneCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -300,6 +303,9 @@
       <Filter>Commands</Filter>
     </ClCompile>
     <ClCompile Include="MoveTurretCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="GoToNextSceneCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
   </ItemGroup>

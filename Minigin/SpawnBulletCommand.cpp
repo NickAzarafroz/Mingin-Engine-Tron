@@ -11,7 +11,7 @@ using namespace dae;
 
 void SpawnBulletCommand::Execute()
 {
-	auto& scene = SceneManager::GetInstance().GetScene(0);
+	auto& scene = SceneManager::GetInstance().GetScene(1);
 
 	if (scene.IsObjectInScene(m_GoBullet)) return;
 

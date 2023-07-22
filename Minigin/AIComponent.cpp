@@ -129,7 +129,7 @@ void AIComponent::ShootPlayer()
 
 	if(m_pGrid->GetCell(glm::vec2{x,y}).row == m_pGrid->GetCell(glm::vec2{px, py}).row)
 	{
-		auto& scene = SceneManager::GetInstance().GetScene(0);
+		auto& scene = SceneManager::GetInstance().GetScene(1);
 
 		if (scene.IsObjectInScene(m_pGoBullet)) return;
 
@@ -155,7 +155,7 @@ void AIComponent::ShootPlayer()
 	}
 	else if(m_pGrid->GetCell(glm::vec2{ x,y }).col == m_pGrid->GetCell(glm::vec2{ px, py }).col)
 	{
-		auto& scene = SceneManager::GetInstance().GetScene(0);
+		auto& scene = SceneManager::GetInstance().GetScene(1);
 
 		if (scene.IsObjectInScene(m_pGoBullet)) return;
 
