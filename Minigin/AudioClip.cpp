@@ -3,8 +3,6 @@
 #include <SDL_mixer.h>
 using namespace dae;
 
-AudioClip::AudioClip(){}
-
 AudioClip::~AudioClip()
 {
 	Mix_FreeChunk(m_pMixChunk);

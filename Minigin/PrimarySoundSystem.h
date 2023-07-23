@@ -28,17 +28,18 @@ namespace dae
 
 		void Update() override
 		{
-			// Do nothing - sound requests are now processed on a separate thread
+			if(!m_DoContinue)
+			{
+				m_CV.notify_one();
+			}
 		}
 
 		void Play(const Sound_ID id, const float volume) override
 		{
-			std::unique_lock<std::mutex> lock(m_Mutex);
-
-			// If the buffer is full, wait for the sound thread to process some requests
+			// If the buffer is full, drop the sound request
 			while ((m_Tail + 1) % MAX_PENDING == m_Head)
 			{
-				m_CV.wait(lock);
+				return;
 			}
 
 			// Add to the end of the list.
@@ -72,24 +73,25 @@ namespace dae
 		{
 			while (m_DoContinue)
 			{
-				// Check the ring buffer for pending sound requests
-				if (m_Head != m_Tail)
-				{
-					// Load and play the audio clip
-					m_pAudio->Load(m_Pending[m_Head].id);
-					m_pAudio->SetVolume(m_Pending[m_Head].volume);
-					m_pAudio->Play();
+				std::unique_lock<std::mutex> lock(m_Mutex);
 
-					m_Head = (m_Head + 1) % MAX_PENDING;
+				// Wait until there are pending sound requests in the buffer
+				m_CV.wait(lock, [this]() 
+					{ 
+						return ((m_Head != m_Tail) || !m_DoContinue);
+					});
 
-					// Notify the main thread that the buffer is no longer full
-					m_CV.notify_one();
-				}
-				else
+				if(!m_DoContinue)
 				{
-					// Sleep for a short amount of time if the buffer is empty
-					std::this_thread::sleep_for(std::chrono::milliseconds(10));
+					return;
 				}
+
+				// Load and play the audio clip
+				m_pAudio->Load(m_Pending[m_Head].id);
+				m_pAudio->SetVolume(m_Pending[m_Head].volume);
+				m_pAudio->Play();
+
+				m_Head = (m_Head + 1) % MAX_PENDING;
 			}
 		}
 	};

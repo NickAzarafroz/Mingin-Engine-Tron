@@ -211,8 +211,6 @@ void load()
 
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_RETURN, std::move(goToNextScene), 1);
 
-
-
 	auto p0 = std::make_unique<dae::XBox360Controller>(0);
 
 	auto moveRightCommand = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
