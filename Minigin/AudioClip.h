@@ -16,7 +16,7 @@ namespace dae
         AudioClip& operator=(AudioClip&& other) = delete;
 
         bool IsLoaded() const;
-        void Load(unsigned short id);
+        void Load(const std::string filePath);
         void SetVolume(float volume);
         void Play();
 

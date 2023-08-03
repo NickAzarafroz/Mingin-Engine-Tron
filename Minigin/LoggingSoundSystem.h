@@ -17,14 +17,14 @@ namespace dae
 
 		virtual void Update() override 
 		{
-			std::cout << "Updating ...\n";
+			//std::cout << "Updating ...\n";
 			m_pReal_SS->Update();
 		}
 
-		void Play(const Sound_ID id, const float volume) override 
+		void Play(const SoundFile filePath, const float volume) override 
 		{
-			std::cout << "Playing " << id << " at volume " << volume << std::endl;
-			m_pReal_SS->Play(id, volume);
+			std::cout << "Playing " << filePath << " at volume " << volume << std::endl;
+			m_pReal_SS->Play(filePath, volume);
 		}
 
 		virtual void Release() override 

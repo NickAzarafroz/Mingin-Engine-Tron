@@ -308,5 +308,8 @@
     <ClCompile Include="GoToNextSceneCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
+    <ClCompile Include="ServiceLocator.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -14,21 +14,14 @@ bool AudioClip::IsLoaded() const
 	return m_pMixChunk != nullptr;
 }
 
-void AudioClip::Load(unsigned short id)
+void AudioClip::Load(const std::string filePath)
 {
-	//TODO: Change this. Only for testing if playing a sound works
-	const std::string& filePath = "../Data/Dig_Dug_SFX_(11).wav";
-
 	const int frequency = 44100;
 	const int chunkSize = 4096;
 	const int channels = 2;
 	const int audioFormat = AUDIO_S16SYS;
 
-	switch (id)
-	{
-	case 0: 
-		std::cout << filePath << std::endl;
-	}
+	std::cout << filePath << std::endl;
 
 
 	if (Mix_OpenAudio(frequency, audioFormat, channels, chunkSize) != 0) {

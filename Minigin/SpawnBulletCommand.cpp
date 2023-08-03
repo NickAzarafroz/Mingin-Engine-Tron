@@ -7,13 +7,17 @@
 #include "ValidCellComponent.h"
 #include "BoxTriggerComponent.h"
 #include "TextureComponent.h"
+#include "ServiceLocator.h"
 using namespace dae;
 
 void SpawnBulletCommand::Execute()
 {
 	auto& scene = SceneManager::GetInstance().GetScene(1);
+	auto& soundSystem = ServiceLocator::GetSoundSystem();
 
 	if (scene.IsObjectInScene(m_GoBullet)) return;
+
+	soundSystem.Play("../Data/Shoot.mp3", 20.f);
 
 	m_GoBullet = std::make_shared<GameObject>(&scene);
 	m_GoBullet->AddComponent<TextureComponent>()->AddTexture("BulletPlayer.png");
@@ -22,6 +26,7 @@ void SpawnBulletCommand::Execute()
 		GetGameActor()->GetLocalPosition().z);
 
 	m_GoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
+	m_GoBullet->GetComponent<ValidCellComponent>()->SetBounceThreshold(5);
 	m_GoBullet->AddComponent<BoxTriggerComponent>()->SetPlayerObject(GetGameActor());
 	m_GoBullet->GetComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
 

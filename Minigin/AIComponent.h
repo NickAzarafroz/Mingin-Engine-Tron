@@ -21,8 +21,6 @@ namespace dae
 
 		void SetObjectToMoveTo(GameObject* pPlayer);
 		void SetGrid(GridComponent* pGrid);
-		void MoveToObject();
-		void ShootPlayer();
 
 		static bool m_MovementFlag;
 		static bool m_IsValid;
@@ -31,6 +29,9 @@ namespace dae
 		static Cell m_DestinationCell;
 
 	private:
+		void MoveToObject();
+		void ShootPlayer();
+
 		glm::vec2 m_Dir{0.f, 1.f};
 		GridComponent* m_pGrid{};
 		GameObject* m_pPlayer{};

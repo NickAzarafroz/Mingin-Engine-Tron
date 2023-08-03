@@ -142,12 +142,14 @@ void AIComponent::ShootPlayer()
 			m_pGoBullet->AddComponent<MovementComponent>()->SetSpeed(300.f, -1.f, 0.f);
 			m_pGoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
 			m_pGoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ -1.f, 0.f });
+			m_pGoBullet->GetComponent<ValidCellComponent>()->SetBounceThreshold(0);
 		}
 		else
 		{
 			m_pGoBullet->AddComponent<MovementComponent>()->SetSpeed(300.f, 1.f, 0.f);
 			m_pGoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
 			m_pGoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 1.f, 0.f });
+			m_pGoBullet->GetComponent<ValidCellComponent>()->SetBounceThreshold(0);
 		}
 
 		m_pGoBullet->AddGameObject();

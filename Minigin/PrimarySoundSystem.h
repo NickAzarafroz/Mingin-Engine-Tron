@@ -9,7 +9,7 @@ namespace dae
 {
 	struct SoundPlay
 	{
-		Sound_ID id;
+		SoundFile filePath;
 		float volume;
 	};
 
@@ -34,7 +34,7 @@ namespace dae
 			}
 		}
 
-		void Play(const Sound_ID id, const float volume) override
+		void Play(const SoundFile filePath, const float volume) override
 		{
 			// If the buffer is full, drop the sound request
 			while ((m_Tail + 1) % MAX_PENDING == m_Head)
@@ -43,7 +43,7 @@ namespace dae
 			}
 
 			// Add to the end of the list.
-			m_Pending[m_Tail].id = id;
+			m_Pending[m_Tail].filePath = filePath;
 			m_Pending[m_Tail].volume = volume;
 			m_Tail = (m_Tail + 1) % MAX_PENDING;
 
@@ -87,7 +87,7 @@ namespace dae
 				}
 
 				// Load and play the audio clip
-				m_pAudio->Load(m_Pending[m_Head].id);
+				m_pAudio->Load(m_Pending[m_Head].filePath);
 				m_pAudio->SetVolume(m_Pending[m_Head].volume);
 				m_pAudio->Play();
 

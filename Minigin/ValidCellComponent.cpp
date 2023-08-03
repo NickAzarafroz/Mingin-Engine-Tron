@@ -16,7 +16,7 @@ void ValidCellComponent::Update(float)
 	}
 	else
 	{
-		if (m_AmountBounce >= 0)
+		if (m_AmountBounce >= m_BounceThreshold)
 		{
 			m_pGameObject->RemoveGameObject();
 		}
@@ -102,6 +102,11 @@ void ValidCellComponent::SetDirection(glm::vec2 dir)
 void ValidCellComponent::IncreaseBounce()
 {
 	++m_AmountBounce;
+}
+
+void ValidCellComponent::SetBounceThreshold(int amount)
+{
+	m_BounceThreshold = amount;
 }
 
 int ValidCellComponent::GetAmountBounce()

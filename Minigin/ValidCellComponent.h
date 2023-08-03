@@ -21,6 +21,7 @@ namespace dae
 		void SetDirection(glm::vec2 dir);
 		void IncreaseBounce();
 
+		void SetBounceThreshold(int amount);
 		int GetAmountBounce();
 
 	private:
@@ -29,6 +30,7 @@ namespace dae
 		glm::vec2 m_Dir{};
 		bool m_HasCollided{};
 		int m_AmountBounce{};
+		int m_BounceThreshold{};
 	};
 }
 
