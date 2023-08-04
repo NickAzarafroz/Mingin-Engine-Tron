@@ -44,13 +44,10 @@ void dae::ScoreDisplayComponent::HandleEvent()
 
 void dae::ScoreDisplayComponent::OnSubjectDestroy()
 {
-
+   
 }
 
 ScoreDisplayComponent::~ScoreDisplayComponent()
 {
-   if(m_pPlayer)
-   {
-       m_pPlayer->scoreChanged.RemoveObserver(this);
-   }
+    m_pPlayer->scoreChanged.RemoveObserver(this);
 }

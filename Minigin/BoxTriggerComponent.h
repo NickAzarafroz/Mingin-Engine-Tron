@@ -17,18 +17,30 @@ namespace dae
 
 		void SetSize(float width, float height);
 		void SetOtherObject(GameObject* go);
-		void SetPlayerObject(GameObject* player);
-		bool IsOverlapping(GameObject* go);
+		void SetPlayerObject(GameObject* pPlayer);
+
+		void DestroyOtherAfterOverLap(bool condition);
+		void DestroyMeAfterOverLap(bool condition);
+
+		void IncPlayerScoreAfterOverlap(bool condition);
+		void DecMyHealthAfterOverlap(bool condition);
 
 		float GetWidth();
 		float GetHeight();
 
 	private:
+		bool IsOverlapping(GameObject* go);
+
 		float m_Width;
 		float m_Height;
 
+		bool m_ConditionOther;
+		bool m_ConditionMe;
+		bool m_ConditionPlayer;
+		bool m_ConditionHealth;
+
 		GameObject* m_pOtherObject;
-		GameObject* m_pPlayerObject;
+		GameObject* m_pPlayer;
 	};
 }
 

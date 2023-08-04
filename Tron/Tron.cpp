@@ -121,7 +121,6 @@ void load()
 	//--------------------------------------------------------------------------
 	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("RedTank.png");
 	goPlayer->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
-	//goPlayer->GetComponent<dae::BoxTriggerComponent>()->SetPlayerObject(goPlayer.get());
 	goPlayer->AddComponent<dae::PlayerComponent>();
 	goPlayer->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 96.f, 0.0f);
 	//---------------------------------------------------------------------------
@@ -146,23 +145,23 @@ void load()
 	//---------------------------------------------------------------------------
 	goEnemy->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
 	goEnemy->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
-	goEnemy->GetComponent<dae::BoxTriggerComponent>()->SetPlayerObject(goPlayer.get());
+	goEnemy->GetComponent<dae::BoxTriggerComponent>()->DestroyOtherAfterOverLap(true);
 	goEnemy->AddComponent<dae::PlayerComponent>();
-	goEnemy->AddComponent<dae::AIComponent>()->SetObjectToMoveTo(goPlayer.get());
+	goEnemy->AddComponent<dae::AIComponent>()->SetObjectToMoveTo(goPlayer);
 	goEnemy->GetComponent<dae::AIComponent>()->SetGrid(goGrid->GetComponent<dae::GridComponent>());
 
 	goEnemy->AddComponent<dae::TransformComponent>()->SetPosition(288.f, 320.f, 0.0f);
 
 	goEnemy2->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
 	goEnemy2->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
-	goEnemy2->GetComponent<dae::BoxTriggerComponent>()->SetPlayerObject(goPlayer.get());
+	goEnemy2->GetComponent<dae::BoxTriggerComponent>()->DestroyOtherAfterOverLap(true);
 	goEnemy2->AddComponent<dae::PlayerComponent>();
 
 	goEnemy2->AddComponent<dae::TransformComponent>()->SetPosition(320.f, 96.f, 0.0f);
 
 	goEnemy3->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
 	goEnemy3->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
-	goEnemy3->GetComponent<dae::BoxTriggerComponent>()->SetPlayerObject(goPlayer.get());
+	goEnemy3->GetComponent<dae::BoxTriggerComponent>()->DestroyOtherAfterOverLap(true);
 	goEnemy3->AddComponent<dae::PlayerComponent>();
 
 	goEnemy3->AddComponent<dae::TransformComponent>()->SetPosition(384.f, 96.f, 0.0f);

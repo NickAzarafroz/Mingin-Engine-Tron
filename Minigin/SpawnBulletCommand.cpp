@@ -27,16 +27,18 @@ void SpawnBulletCommand::Execute()
 
 	m_GoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
 	m_GoBullet->GetComponent<ValidCellComponent>()->SetBounceThreshold(5);
-	m_GoBullet->AddComponent<BoxTriggerComponent>()->SetPlayerObject(GetGameActor());
-	m_GoBullet->GetComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
-
-	GetGameActor()->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_GoBullet.get());
+	
+	m_GoBullet->AddComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
 
 	for(const auto& object : m_pOtherGameObjects)
 	{
 		if(!object->IsDeleted())
 		{
 			object->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_GoBullet.get());
+			object->GetComponent<BoxTriggerComponent>()->SetPlayerObject(GetGameActor());
+			object->GetComponent<BoxTriggerComponent>()->DestroyOtherAfterOverLap(true);
+			object->GetComponent<BoxTriggerComponent>()->DecMyHealthAfterOverlap(true);
+			object->GetComponent<BoxTriggerComponent>()->IncPlayerScoreAfterOverlap(true);
 		}
 	}
 

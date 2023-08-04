@@ -6,7 +6,29 @@ using namespace dae;
 
 void BoxTriggerComponent::Update(float)
 {
-	IsOverlapping(m_pOtherObject);
+	if (IsOverlapping(m_pOtherObject))
+	{
+		if (m_ConditionPlayer)
+		{
+			m_pPlayer->GetComponent<PlayerComponent>()->IncreaseScore(3);
+		}
+
+		if(m_ConditionHealth)
+		{
+			m_pGameObject->GetComponent<PlayerComponent>()->TakeDamage(1);
+		}
+
+		if (m_ConditionOther)
+		{
+			m_pOtherObject->MarkForDelete();
+			m_pOtherObject = nullptr;
+		}
+
+		if (m_ConditionMe) 
+		{
+			m_pGameObject->MarkForDelete();
+		} 
+	}
 }
 
 void BoxTriggerComponent::SetSize(float width, float height)
@@ -20,9 +42,29 @@ void BoxTriggerComponent::SetOtherObject(GameObject* go)
 	m_pOtherObject = go;
 }
 
-void BoxTriggerComponent::SetPlayerObject(GameObject* player)
+void BoxTriggerComponent::SetPlayerObject(GameObject* pPlayer)
 {
-	m_pPlayerObject = player;
+	m_pPlayer = pPlayer;
+}
+
+void BoxTriggerComponent::DestroyOtherAfterOverLap(bool condition)
+{
+	m_ConditionOther = condition;
+}
+
+void BoxTriggerComponent::DestroyMeAfterOverLap(bool condition)
+{
+	m_ConditionMe = condition;
+}
+
+void BoxTriggerComponent::IncPlayerScoreAfterOverlap(bool condition)
+{
+	m_ConditionPlayer = condition;
+}
+
+void BoxTriggerComponent::DecMyHealthAfterOverlap(bool condition)
+{
+	m_ConditionHealth = condition;
 }
 
 bool BoxTriggerComponent::IsOverlapping(GameObject* go)
@@ -39,13 +81,6 @@ bool BoxTriggerComponent::IsOverlapping(GameObject* go)
 		return false;
 	}
 
-	go->RemoveGameObject();
-	m_pGameObject->GetComponent<PlayerComponent>()->TakeDamage(1);
-	if (m_pPlayerObject) 
-	{
-		m_pPlayerObject->GetComponent<PlayerComponent>()->IncreaseScore(3);
-	} 
-	m_pOtherObject = nullptr;
 	return true;
 }
 

@@ -38,10 +38,7 @@ void dae::LiveDisplayComponent::ReceiveMessage(int message)
 
 LiveDisplayComponent::~LiveDisplayComponent()
 {
-    /*if(m_pPlayer)
-    {
-        m_pPlayer->healthChanged.RemoveObserver(this);
-    }*/
+    //m_pPlayer->healthChanged.RemoveObserver(this);
 }
 
 void LiveDisplayComponent::HandleEvent()
@@ -52,5 +49,5 @@ void LiveDisplayComponent::HandleEvent()
 
 void LiveDisplayComponent::OnSubjectDestroy()
 {
-
+   
 }

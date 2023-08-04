@@ -4,6 +4,7 @@
 #include "TextureComponent.h"
 #include "MovementComponent.h"
 #include "ValidCellComponent.h"
+#include "BoxTriggerComponent.h"
 #include "SceneManager.h"
 #include "Scene.h"
 using namespace dae;
@@ -20,7 +21,7 @@ void AIComponent::Update(float)
 	ShootPlayer();
 }
 
-void AIComponent::SetObjectToMoveTo(GameObject* pPlayer)
+void AIComponent::SetObjectToMoveTo(std::shared_ptr<GameObject> pPlayer)
 {
 	m_pPlayer = pPlayer;
 }
@@ -119,6 +120,10 @@ void AIComponent::MoveToObject()
 
 void AIComponent::ShootPlayer()
 {
+	auto& scene = SceneManager::GetInstance().GetScene(1);
+
+	if (!scene.IsObjectInScene(m_pPlayer)) return;
+
 	// Get the position of the enemy
 	float x = m_pGameObject->GetWorldPosition().x;
 	float y = m_pGameObject->GetWorldPosition().y;
@@ -129,13 +134,14 @@ void AIComponent::ShootPlayer()
 
 	if(m_pGrid->GetCell(glm::vec2{x,y}).row == m_pGrid->GetCell(glm::vec2{px, py}).row)
 	{
-		auto& scene = SceneManager::GetInstance().GetScene(1);
-
 		if (scene.IsObjectInScene(m_pGoBullet)) return;
 
 		m_pGoBullet = std::make_shared<GameObject>(&scene);
 		m_pGoBullet->AddComponent<TextureComponent>()->AddTexture("BulletNPC.png");
 		m_pGoBullet->AddComponent<TransformComponent>()->SetPosition(m_pGameObject->GetWorldPosition().x + 12.f, m_pGameObject->GetWorldPosition().y + 10.f, 0);
+		m_pGoBullet->AddComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
+		m_pGoBullet->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_pPlayer.get());
+		m_pGoBullet->GetComponent<BoxTriggerComponent>()->DestroyOtherAfterOverLap(true);
 
 		if(m_pGrid->GetCell(glm::vec2{x,y}).col > m_pGrid->GetCell(glm::vec2{ px, py }).col)
 		{
@@ -157,13 +163,14 @@ void AIComponent::ShootPlayer()
 	}
 	else if(m_pGrid->GetCell(glm::vec2{ x,y }).col == m_pGrid->GetCell(glm::vec2{ px, py }).col)
 	{
-		auto& scene = SceneManager::GetInstance().GetScene(1);
-
 		if (scene.IsObjectInScene(m_pGoBullet)) return;
 
 		m_pGoBullet = std::make_shared<GameObject>(&scene);
 		m_pGoBullet->AddComponent<TextureComponent>()->AddTexture("BulletNPC.png");
 		m_pGoBullet->AddComponent<TransformComponent>()->SetPosition(m_pGameObject->GetWorldPosition().x + 12.f, m_pGameObject->GetWorldPosition().y + 10.f, 0);
+		m_pGoBullet->AddComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
+		m_pGoBullet->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_pPlayer.get());
+		m_pGoBullet->GetComponent<BoxTriggerComponent>()->DestroyOtherAfterOverLap(true);
 
 		if (m_pGrid->GetCell(glm::vec2{ x,y }).row > m_pGrid->GetCell(glm::vec2{ px, py }).row)
 		{
