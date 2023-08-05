@@ -1,5 +1,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
+#include "MainMenuScene.h"
+#include "TronGameScene.h"
 
 void dae::SceneManager::Start()
 {
@@ -30,6 +32,15 @@ dae::Scene& dae::SceneManager::GetScene(int index)
 {
 	Scene* scene{ m_scenes[index].get() };
 	return *scene;
+}
+
+void dae::SceneManager::Initialize()
+{
+	m_MainMenuScene = std::make_shared<MainMenuScene>(m_scenes[0]);
+	m_MainMenuScene->Load();
+
+	m_TronGameScene = std::make_shared<TronGameScene>(m_scenes[1]);
+	m_TronGameScene->Load();
 }
 
 void dae::SceneManager::GoNextScene()

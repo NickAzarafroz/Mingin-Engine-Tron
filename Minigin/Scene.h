@@ -15,6 +15,8 @@ namespace dae
 
 		bool IsObjectInScene(std::shared_ptr<GameObject> object) const;
 
+		const std::string& GetSceneName() const;
+
 		void Start();
 		void Update(float elapsedSec);
 		void Render() const;

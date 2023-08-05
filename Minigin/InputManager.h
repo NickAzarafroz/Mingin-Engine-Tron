@@ -7,6 +7,7 @@
 #include "Singleton.h"
 #include "Command.h"
 #include "XBox360Controller.h"
+#include <SDL.h>
 
 namespace dae
 {

@@ -106,7 +106,6 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	bool doContinue = true;
 	soundSystem.Init();
 	soundSystem.Play("../Data/MainMenuMusic.mp3", 20.f);
-	sceneManager.Start();
 	auto lastTime = high_resolution_clock::now();
 	while (doContinue)
 	{

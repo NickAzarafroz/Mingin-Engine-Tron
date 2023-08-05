@@ -25,6 +25,9 @@
     <Filter Include="Sound">
       <UniqueIdentifier>{6f0d09a3-70f8-4640-b990-cda4b8e22643}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{8e8475ce-04ac-4b5f-a81b-806db2d7479a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -186,6 +189,12 @@
     <ClInclude Include="GoToNextSceneCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
+    <ClInclude Include="MainMenuScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="TronGameScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -310,6 +319,12 @@
     </ClCompile>
     <ClCompile Include="ServiceLocator.cpp">
       <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="TronGameScene.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
