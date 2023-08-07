@@ -17,11 +17,11 @@ Cell AIComponent::m_DestinationCell{};
 
 void AIComponent::Update(float)
 {
-	//MoveToObject();
+	Wander();
 	ShootPlayer();
 }
 
-void AIComponent::SetObjectToMoveTo(std::shared_ptr<GameObject> pPlayer)
+void AIComponent::SetObjectToShoot(std::shared_ptr<GameObject> pPlayer)
 {
 	m_pPlayer = pPlayer;
 }
@@ -31,8 +31,23 @@ void AIComponent::SetGrid(GridComponent* pGrid)
 	m_pGrid = pGrid;
 }
 
-void AIComponent::MoveToObject()
+void AIComponent::Wander()
 {
+	m_Dir.x = static_cast<float>(rand() % 3 - 1);
+	m_Dir.y = static_cast<float>(rand() % 3 - 1);
+
+	if (m_Dir.x == 1.f || m_Dir.x == -1.f)
+	{
+		m_Dir.y = 0.f;
+	}
+	else
+	{
+		do
+		{
+			m_Dir.y = static_cast<float>(rand() % 3 - 1);
+		} while (m_Dir.y == 0.f);
+	}
+
 	// Get the position of the player
 	float x = m_pGameObject->GetWorldPosition().x;
 	float y = m_pGameObject->GetWorldPosition().y;
@@ -48,8 +63,8 @@ void AIComponent::MoveToObject()
 		m_MovementFlag = true;
 	}
 
-	x += m_TempDir.x * 50.f * m_pGameObject->GetElapsedSec();									// Move to destination with certain amount of speed TODO: fix magic numbers :)
-	y += m_TempDir.y * 50.f * m_pGameObject->GetElapsedSec();
+	x += m_TempDir.x * 25.f * m_pGameObject->GetElapsedSec();									// Move to destination with certain amount of speed TODO: fix magic numbers :)
+	y += m_TempDir.y * 25.f * m_pGameObject->GetElapsedSec();
 
 	float distanceX = fabs(m_DestinationCell.centerPosition.x - (x + m_Cell.width / 2));		// Calculate the distance from the destionation and the player (length)
 	float distanceY = fabs(m_DestinationCell.centerPosition.y - (y + m_Cell.height / 2));
@@ -145,14 +160,14 @@ void AIComponent::ShootPlayer()
 
 		if(m_pGrid->GetCell(glm::vec2{x,y}).col > m_pGrid->GetCell(glm::vec2{ px, py }).col)
 		{
-			m_pGoBullet->AddComponent<MovementComponent>()->SetSpeed(300.f, -1.f, 0.f);
+			m_pGoBullet->AddComponent<MovementComponent>()->SetSpeed(150.f, -1.f, 0.f);
 			m_pGoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
 			m_pGoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ -1.f, 0.f });
 			m_pGoBullet->GetComponent<ValidCellComponent>()->SetBounceThreshold(0);
 		}
 		else
 		{
-			m_pGoBullet->AddComponent<MovementComponent>()->SetSpeed(300.f, 1.f, 0.f);
+			m_pGoBullet->AddComponent<MovementComponent>()->SetSpeed(150.f, 1.f, 0.f);
 			m_pGoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
 			m_pGoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 1.f, 0.f });
 			m_pGoBullet->GetComponent<ValidCellComponent>()->SetBounceThreshold(0);
@@ -174,13 +189,13 @@ void AIComponent::ShootPlayer()
 
 		if (m_pGrid->GetCell(glm::vec2{ x,y }).row > m_pGrid->GetCell(glm::vec2{ px, py }).row)
 		{
-			m_pGoBullet->AddComponent<MovementComponent>()->SetSpeed(300.f, 0.f, -1.f);
+			m_pGoBullet->AddComponent<MovementComponent>()->SetSpeed(150.f, 0.f, -1.f);
 			m_pGoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
 			m_pGoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 0.f, -1.f });
 		}
 		else
 		{
-			m_pGoBullet->AddComponent<MovementComponent>()->SetSpeed(300.f, 0.f, 1.f);
+			m_pGoBullet->AddComponent<MovementComponent>()->SetSpeed(150.f, 0.f, 1.f);
 			m_pGoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
 			m_pGoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 0.f, 1.f });
 		}

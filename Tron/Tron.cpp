@@ -36,7 +36,6 @@ void load()
 {
 	dae::SceneManager::GetInstance().CreateScene("Menu");
 	dae::SceneManager::GetInstance().CreateScene("Level-1");
-
 	dae::SceneManager::GetInstance().Initialize();
 }
 

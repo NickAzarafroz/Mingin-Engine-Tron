@@ -19,7 +19,7 @@ namespace dae
 
 		virtual void Update(float elapsedSec) override;
 
-		void SetObjectToMoveTo(std::shared_ptr<GameObject> pPlayer);
+		void SetObjectToShoot(std::shared_ptr<GameObject> pPlayer);
 		void SetGrid(GridComponent* pGrid);
 
 		static bool m_MovementFlag;
@@ -29,10 +29,10 @@ namespace dae
 		static Cell m_DestinationCell;
 
 	private:
-		void MoveToObject();
+		void Wander();
 		void ShootPlayer();
 
-		glm::vec2 m_Dir{0.f, 1.f};
+		glm::vec2 m_Dir{0.f, 0.f};
 		GridComponent* m_pGrid{};
 		std::shared_ptr<GameObject> m_pPlayer{};
 		std::shared_ptr<GameObject> m_pGoBullet{};

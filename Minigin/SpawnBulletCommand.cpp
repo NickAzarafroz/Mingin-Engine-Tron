@@ -38,7 +38,6 @@ void SpawnBulletCommand::Execute()
 			object->GetComponent<BoxTriggerComponent>()->SetPlayerObject(GetGameActor());
 			object->GetComponent<BoxTriggerComponent>()->DestroyOtherAfterOverLap(true);
 			object->GetComponent<BoxTriggerComponent>()->DecMyHealthAfterOverlap(true);
-			object->GetComponent<BoxTriggerComponent>()->IncPlayerScoreAfterOverlap(true);
 		}
 	}
 

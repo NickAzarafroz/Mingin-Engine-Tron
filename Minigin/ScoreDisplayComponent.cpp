@@ -38,7 +38,7 @@ void dae::ScoreDisplayComponent::ReceiveMessage(int message)
 
 void dae::ScoreDisplayComponent::HandleEvent()
 {
-    m_Score += 3;
+    m_Score = m_pPlayer->GetScore();
     m_pText->SetText(std::to_string(m_Score));
 }
 
