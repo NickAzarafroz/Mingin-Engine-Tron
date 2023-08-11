@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include "GridComponent.h"
 #include "glm/glm.hpp"
 #include <memory>
 namespace dae
@@ -22,11 +23,7 @@ namespace dae
 		void SetObjectToShoot(std::shared_ptr<GameObject> pPlayer);
 		void SetGrid(GridComponent* pGrid);
 
-		static bool m_MovementFlag;
-		static bool m_IsValid;
-		static glm::vec2 m_TempDir;
-		static Cell m_Cell;
-		static Cell m_DestinationCell;
+		void SetMovementFlag(bool flag);
 
 	private:
 		void Wander();
@@ -36,5 +33,11 @@ namespace dae
 		GridComponent* m_pGrid{};
 		std::shared_ptr<GameObject> m_pPlayer{};
 		std::shared_ptr<GameObject> m_pGoBullet{};
+
+		bool m_MovementFlag;
+		bool m_IsValid;
+		glm::vec2 m_TempDir;
+		Cell m_Cell;
+		Cell m_DestinationCell;
 	};
 }

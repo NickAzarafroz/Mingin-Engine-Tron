@@ -16,6 +16,8 @@ namespace dae
 		Scene& GetScene(int index);
 
 		void Initialize();
+		void ResetEnemiesLv1();
+		void LoadLevel2();
 
 		void GoNextScene();
 

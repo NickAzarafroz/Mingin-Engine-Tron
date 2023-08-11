@@ -1,8 +1,12 @@
 #pragma once
 #include "BaseComponent.h"
+#include "GridComponent.h"
 #include "glm/glm.hpp"
+#include <vector>
+#include <map>
 namespace dae
 {
+	struct Cell;
 	class GridComponent;
 	class ValidCellComponent : public BaseComponent
 	{
@@ -26,9 +30,10 @@ namespace dae
 
 	private:
 		GridComponent* m_pGrid{};
-		bool m_IsValid{ true };
+		std::vector<Cell> m_BulletTrail{};
+		Cell m_CurrentCell;
 		glm::vec2 m_Dir{};
-		bool m_HasCollided{};
+		int m_CellID{ 0 };
 		int m_AmountBounce{};
 		int m_BounceThreshold{};
 	};

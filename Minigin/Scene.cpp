@@ -36,9 +36,14 @@ bool Scene::IsObjectInScene(std::shared_ptr<GameObject> object) const
 	return false;
 }
 
-const std::string& dae::Scene::GetSceneName() const
+const std::string& Scene::GetSceneName() const
 {
 	return m_name;
+}
+
+std::vector<std::shared_ptr<GameObject>> Scene::GetAllObjects() const
+{
+	return m_objects;
 }
 
 void Scene::Start()

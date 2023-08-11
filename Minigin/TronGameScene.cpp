@@ -15,6 +15,8 @@
 #include "MoveGridCommand.h"
 #include "SpawnBulletCommand.h"
 #include "MoveTurretCommand.h"
+#include "GoToNextSceneCommand.h"
+#include "ValidCellComponent.h"
 #include "Scene.h"
 using namespace dae;
 
@@ -30,7 +32,7 @@ void TronGameScene::Load()
 	auto pTronFont = dae::ResourceManager::GetInstance().LoadFont("Tr2n.ttf", 30);
 	auto pFontFpsText = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 
-	auto goLogo = std::make_shared<dae::GameObject>(m_TronGameScene.get());
+	//auto goLogo = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goHighScoreText = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goHighScoreValue = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goPlayer1Text = std::make_shared<dae::GameObject>(m_TronGameScene.get());
@@ -83,7 +85,7 @@ void TronGameScene::Load()
 	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("RedTank.png");
 	goPlayer->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
 	goPlayer->AddComponent<dae::PlayerComponent>();
-	goPlayer->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 96.f, 0.0f);
+	goPlayer->AddComponent<dae::TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
 	//---------------------------------------------------------------------------
 
 	//HighScore Text
@@ -118,7 +120,7 @@ void TronGameScene::Load()
 	goEnemy2->AddComponent<dae::AIComponent>()->SetObjectToShoot(goPlayer);
 	goEnemy2->GetComponent<dae::AIComponent>()->SetGrid(goGrid->GetComponent<dae::GridComponent>());
 
-	goEnemy2->AddComponent<dae::TransformComponent>()->SetPosition(320.f, 96.f, 0.0f);
+	goEnemy2->AddComponent<dae::TransformComponent>()->SetPosition(384.f, 352.f, 0.0f);
 
 	goEnemy3->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
 	goEnemy3->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
@@ -126,12 +128,14 @@ void TronGameScene::Load()
 	goEnemy3->AddComponent<dae::AIComponent>()->SetObjectToShoot(goPlayer);
 	goEnemy3->GetComponent<dae::AIComponent>()->SetGrid(goGrid->GetComponent<dae::GridComponent>());
 
-	goEnemy3->AddComponent<dae::TransformComponent>()->SetPosition(384.f, 96.f, 0.0f);
+	goEnemy3->AddComponent<dae::TransformComponent>()->SetPosition(192.f, 192.f, 0.0f);
 
-	std::vector<dae::GameObject*> goEnemies;
-	goEnemies.emplace_back(goEnemy.get());
-	goEnemies.emplace_back(goEnemy2.get());
-	goEnemies.emplace_back(goEnemy3.get());
+	std::vector<std::shared_ptr<dae::GameObject>> goEnemies;
+	goEnemies.emplace_back(goEnemy);
+	goEnemies.emplace_back(goEnemy2);
+	goEnemies.emplace_back(goEnemy3);
+
+	m_pEnemiesLv1 = goEnemies;
 	//---------------------------------------------------------------------------
 
 	//Health Displayer
@@ -147,7 +151,7 @@ void TronGameScene::Load()
 	//Player Turret
 	//-----------------------------------------------------------------------------------
 	goPlayerTurret->AddComponent<dae::TextureComponent>()->AddTexture("RedTankGun.png");
-	goPlayerTurret->AddComponent<dae::TransformComponent>()->SetPosition(-5.f, 88.f, 0.f);
+	goPlayerTurret->AddComponent<dae::TransformComponent>()->SetPosition(24.f, 120.f, 0.f);
 	//-----------------------------------------------------------------------------------
 
 	auto gridRight = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
@@ -186,6 +190,9 @@ void TronGameScene::Load()
 
 	goPlayerTurret->SetParent(goPlayer.get(), true);
 
+	m_pPlayer = goPlayer;
+	m_pGrid = goGrid;
+
 	goGrid->AddGameObject();
 	goHighScoreText->AddGameObject();
 	goHighScoreValue->AddGameObject();
@@ -193,6 +200,95 @@ void TronGameScene::Load()
 	goFPS->AddGameObject();
 	goPlayer->AddGameObject();
 	goHealth->AddGameObject();
+	goEnemy->AddGameObject();
+	goEnemy2->AddGameObject();
+	goEnemy3->AddGameObject();
+
+	m_TronGameScene->Start();
+}
+
+void TronGameScene::ResetEnemies()
+{
+	m_pEnemiesLv1[0]->GetComponent<TransformComponent>()->SetPosition(288.f, 320.f, 0.0f);
+	m_pEnemiesLv1[0]->GetComponent<AIComponent>()->SetMovementFlag(false);
+	m_pEnemiesLv1[1]->GetComponent<TransformComponent>()->SetPosition(384.f, 352.f, 0.0f);
+	m_pEnemiesLv1[1]->GetComponent<AIComponent>()->SetMovementFlag(false);
+	m_pEnemiesLv1[2]->GetComponent<TransformComponent>()->SetPosition(192.f, 192.f, 0.0f);
+	m_pEnemiesLv1[2]->GetComponent<AIComponent>()->SetMovementFlag(false);
+
+	for(const auto& object : m_TronGameScene->GetAllObjects())
+	{
+		if(object->GetComponent<ValidCellComponent>())
+		{
+			object->RemoveGameObject();
+		}
+	}
+}
+
+void TronGameScene::LoadLevel2()
+{
+	auto& input = dae::InputManager::GetInstance();
+
+	m_pGrid->RemoveGameObject();
+	m_pPlayer->GetComponent<TransformComponent>()->SetPosition(0.f, 96.f, 0.f);
+
+	auto goGrid = std::make_shared<dae::GameObject>(m_TronGameScene.get());
+	auto goEnemy = std::make_shared<dae::GameObject>(m_TronGameScene.get());
+	auto goEnemy2 = std::make_shared<dae::GameObject>(m_TronGameScene.get());
+	auto goEnemy3 = std::make_shared<dae::GameObject>(m_TronGameScene.get());
+
+	//Grid
+	//---------------------------------------------------------------------------
+	goGrid->AddComponent<dae::TextureComponent>();
+	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("path.png");
+	goGrid->GetComponent<dae::TextureComponent>()->AddTexture("wall.png");
+
+	goGrid->AddComponent<dae::GridComponent>();
+	goGrid->GetComponent<dae::GridComponent>()->Initialize(32.f, 32.f, "../Data/LevelTron2.json");
+	//---------------------------------------------------------------------------
+
+	//Enemy
+	//---------------------------------------------------------------------------
+	goEnemy->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
+	goEnemy->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
+	goEnemy->AddComponent<dae::EnemyComponent>()->SetPlayer(m_pPlayer.get());
+	goEnemy->AddComponent<dae::AIComponent>()->SetObjectToShoot(m_pPlayer);
+	goEnemy->GetComponent<dae::AIComponent>()->SetGrid(goGrid->GetComponent<dae::GridComponent>());
+
+	goEnemy->AddComponent<dae::TransformComponent>()->SetPosition(288.f, 320.f, 0.0f);
+
+	goEnemy2->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
+	goEnemy2->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
+	goEnemy2->AddComponent<dae::EnemyComponent>()->SetPlayer(m_pPlayer.get());
+	//goEnemy2->AddComponent<dae::AIComponent>()->SetObjectToShoot(goPlayer);
+	//goEnemy2->GetComponent<dae::AIComponent>()->SetGrid(goGrid->GetComponent<dae::GridComponent>());
+
+	goEnemy2->AddComponent<dae::TransformComponent>()->SetPosition(320.f, 96.f, 0.0f);
+
+	goEnemy3->AddComponent<dae::TextureComponent>()->SetTexture("BlueTank.png");
+	goEnemy3->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
+	goEnemy3->AddComponent<dae::EnemyComponent>()->SetPlayer(m_pPlayer.get());
+	//goEnemy3->AddComponent<dae::AIComponent>()->SetObjectToShoot(goPlayer);
+	//goEnemy3->GetComponent<dae::AIComponent>()->SetGrid(goGrid->GetComponent<dae::GridComponent>());
+
+	goEnemy3->AddComponent<dae::TransformComponent>()->SetPosition(384.f, 96.f, 0.0f);
+
+	std::vector<std::shared_ptr<dae::GameObject>> goEnemies;
+	goEnemies.emplace_back(goEnemy);
+	goEnemies.emplace_back(goEnemy2);
+	goEnemies.emplace_back(goEnemy3);
+
+	auto moveRightCommand = std::make_unique<dae::MoveGridCommand>(m_pPlayer.get(), glm::vec2{ 1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto moveLeftCommand = std::make_unique<dae::MoveGridCommand>(m_pPlayer.get(), glm::vec2{ -1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto moveUpCommand = std::make_unique<dae::MoveGridCommand>(m_pPlayer.get(), glm::vec2{ 0.f, -1.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto moveDownCommand = std::make_unique<dae::MoveGridCommand>(m_pPlayer.get(), glm::vec2{ 0.f, 1.f }, goGrid->GetComponent<dae::GridComponent>());
+
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadRight, std::move(moveRightCommand));
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadLeft, std::move(moveLeftCommand));
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadUp, std::move(moveUpCommand));
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadDown, std::move(moveDownCommand));
+
+	goGrid->AddGameObject();
 	goEnemy->AddGameObject();
 	goEnemy2->AddGameObject();
 	goEnemy3->AddGameObject();

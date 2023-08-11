@@ -10,7 +10,7 @@ void PlayerComponent::Start()
 
 void PlayerComponent::Update(float)
 {
-	if(m_Health <= 0)
+	if(m_Health < 0)
 	{
 		Destroy();
 	}

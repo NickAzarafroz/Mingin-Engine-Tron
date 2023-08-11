@@ -1,5 +1,4 @@
 #include "AIComponent.h"
-#include "GridComponent.h"
 #include "GameObject.h"
 #include "TextureComponent.h"
 #include "MovementComponent.h"
@@ -8,12 +7,6 @@
 #include "SceneManager.h"
 #include "Scene.h"
 using namespace dae;
-
-bool AIComponent::m_MovementFlag{};
-bool AIComponent::m_IsValid{};
-glm::vec2 AIComponent::m_TempDir{};
-Cell AIComponent::m_Cell{};
-Cell AIComponent::m_DestinationCell{};
 
 void AIComponent::Update(float)
 {
@@ -29,6 +22,11 @@ void AIComponent::SetObjectToShoot(std::shared_ptr<GameObject> pPlayer)
 void AIComponent::SetGrid(GridComponent* pGrid)
 {
 	m_pGrid = pGrid;
+}
+
+void AIComponent::SetMovementFlag(bool flag)
+{
+	m_MovementFlag = flag;
 }
 
 void AIComponent::Wander()
@@ -156,7 +154,7 @@ void AIComponent::ShootPlayer()
 		m_pGoBullet->AddComponent<TransformComponent>()->SetPosition(m_pGameObject->GetWorldPosition().x + 12.f, m_pGameObject->GetWorldPosition().y + 10.f, 0);
 		m_pGoBullet->AddComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
 		m_pGoBullet->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_pPlayer.get());
-		m_pGoBullet->GetComponent<BoxTriggerComponent>()->DestroyOtherAfterOverLap(true);
+		m_pGoBullet->GetComponent<BoxTriggerComponent>()->DecOtherHealthAfterOverlap(true);
 
 		if(m_pGrid->GetCell(glm::vec2{x,y}).col > m_pGrid->GetCell(glm::vec2{ px, py }).col)
 		{
@@ -185,7 +183,7 @@ void AIComponent::ShootPlayer()
 		m_pGoBullet->AddComponent<TransformComponent>()->SetPosition(m_pGameObject->GetWorldPosition().x + 12.f, m_pGameObject->GetWorldPosition().y + 10.f, 0);
 		m_pGoBullet->AddComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
 		m_pGoBullet->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_pPlayer.get());
-		m_pGoBullet->GetComponent<BoxTriggerComponent>()->DestroyOtherAfterOverLap(true);
+		m_pGoBullet->GetComponent<BoxTriggerComponent>()->DecOtherHealthAfterOverlap(true);
 
 		if (m_pGrid->GetCell(glm::vec2{ x,y }).row > m_pGrid->GetCell(glm::vec2{ px, py }).row)
 		{

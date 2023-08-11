@@ -202,6 +202,11 @@ void dae::GameObject::MarkForDelete()
 	m_MarkedForDelete = true;
 }
 
+void dae::GameObject::UnmarkForDelete()
+{
+	m_MarkedForDelete = false;
+}
+
 bool dae::GameObject::IsDeleted()
 {
 	return m_MarkedForDelete;

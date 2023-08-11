@@ -23,6 +23,7 @@ namespace dae
 		void DestroyMeAfterOverLap(bool condition);
 
 		void DecMyHealthAfterOverlap(bool condition);
+		void DecOtherHealthAfterOverlap(bool condition);
 
 		float GetWidth();
 		float GetHeight();
@@ -36,6 +37,7 @@ namespace dae
 		bool m_ConditionOther;
 		bool m_ConditionMe;
 		bool m_ConditionHealth;
+		bool m_ConditionPlayer;
 
 		GameObject* m_pOtherObject;
 		GameObject* m_pPlayer;

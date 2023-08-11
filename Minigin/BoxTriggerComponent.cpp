@@ -1,7 +1,9 @@
 #include "BoxTriggerComponent.h"
 #include "EnemyComponent.h"
+#include "PlayerComponent.h"
 #include "TextureComponent.h"
 #include "GameObject.h"
+#include "SceneManager.h"
 using namespace dae;
 
 void BoxTriggerComponent::Update(float)
@@ -11,6 +13,14 @@ void BoxTriggerComponent::Update(float)
 		if(m_ConditionHealth)
 		{
 			m_pGameObject->GetComponent<EnemyComponent>()->TakeDamage(1);
+		}
+
+		if(m_ConditionPlayer)
+		{
+			m_pOtherObject->GetComponent<TransformComponent>()->SetPosition(0.f, 96.f, 0.f);
+			m_pOtherObject->GetComponent<PlayerComponent>()->TakeDamage(1);
+
+			SceneManager::GetInstance().ResetEnemiesLv1();
 		}
 
 		if (m_ConditionOther)
@@ -55,6 +65,11 @@ void BoxTriggerComponent::DestroyMeAfterOverLap(bool condition)
 void BoxTriggerComponent::DecMyHealthAfterOverlap(bool condition)
 {
 	m_ConditionHealth = condition;
+}
+
+void dae::BoxTriggerComponent::DecOtherHealthAfterOverlap(bool condition)
+{
+	m_ConditionPlayer = condition;
 }
 
 bool BoxTriggerComponent::IsOverlapping(GameObject* go)

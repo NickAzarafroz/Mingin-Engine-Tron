@@ -1,18 +1,15 @@
 #include "ValidCellComponent.h"
 #include "GameObject.h"
-#include "GridComponent.h"
 #include "MovementComponent.h"
 using namespace dae;
 
 void ValidCellComponent::Update(float)
 {
-	if(m_IsValid)
+	m_CellID = m_pGrid->GetCell(m_pGameObject->GetWorldPosition()).ID;
+
+	if(m_CellID < 1)
 	{
-		m_IsValid = m_pGrid->GetDestinationCell(glm::vec2{ m_pGameObject->GetWorldPosition().x, m_pGameObject->GetWorldPosition().y }, m_Dir).second;
-		if(m_IsValid)
-		{
-			m_HasCollided = false;
-		}
+		m_BulletTrail.emplace_back(m_pGrid->GetCell(m_pGameObject->GetWorldPosition()));
 	}
 	else
 	{
@@ -21,69 +18,132 @@ void ValidCellComponent::Update(float)
 			m_pGameObject->RemoveGameObject();
 		}
 
-		if(!m_HasCollided)
+		if (m_Dir.x == 1.f && m_Dir.y == 0.f)
 		{
-			m_HasCollided = true;
+			m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, -1.f, 0.f);
+			m_Dir.x = -1.f;
+			m_Dir.y = 0.f;
+			m_AmountBounce++;
+			m_BulletTrail.clear();
+		}
+		else if (m_Dir.x == -1.f && m_Dir.y == 0.f)
+		{
+			m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, 1.f, 0.f);
+			m_Dir.x = 1.f;
+			m_Dir.y = 0.f;
+			m_AmountBounce++;
+			m_BulletTrail.clear();
+		}
+		else if (m_Dir.x == 0.f && m_Dir.y == 1.f)
+		{
+			m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, 0.f, -1.f);
+			m_Dir.x = 0.f;
+			m_Dir.y = -1.f;
+			m_AmountBounce++;
+			m_BulletTrail.clear();
+		}
+		else if (m_Dir.x == 0.f && m_Dir.y == -1.f)
+		{
+			m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, 0.f, 1.f);
+			m_Dir.x = 0.f;
+			m_Dir.y = 1.f;
+			m_AmountBounce++;
+			m_BulletTrail.clear();
+		}
+		else if (m_Dir.x == 0.5f && m_Dir.y == 0.5f)
+		{
+			if(!m_BulletTrail.empty())
+			{
+				m_CurrentCell = m_pGrid->GetCell(m_pGameObject->GetWorldPosition());
 
-			if (m_Dir.x == 1.f && m_Dir.y == 0.f)
-			{
-				m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, -1.f, 0.f);
-				m_Dir.x = -1.f;
-				m_Dir.y = 0.f;
-				m_AmountBounce++;
-				m_IsValid = true;
+				if (m_BulletTrail.back().row == m_CurrentCell.row)
+				{
+					m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, -0.5f, 0.5f);
+					m_Dir.x = -0.5f;
+					m_Dir.y = 0.5f;
+					m_AmountBounce++;
+				}
+				else
+				{
+					m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, 0.5f, -0.5f);
+					m_Dir.x = 0.5f;
+					m_Dir.y = -0.5f;
+					m_AmountBounce++;
+				}
+
+				m_BulletTrail.clear();
 			}
-			else if (m_Dir.x == -1.f && m_Dir.y == 0.f)
+		}
+		else if (m_Dir.x == 0.5f && m_Dir.y == -0.5f)
+		{
+			if(!m_BulletTrail.empty())
 			{
-				m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, 1.f, 0.f);
-				m_Dir.x = 1.f;
-				m_Dir.y = 0.f;
-				m_AmountBounce++;
-				m_IsValid = true;
+				m_CurrentCell = m_pGrid->GetCell(m_pGameObject->GetWorldPosition());
+
+				if (m_BulletTrail.back().row == m_CurrentCell.row)
+				{
+					m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, -0.5f, -0.5f);
+					m_Dir.x = -0.5f;
+					m_Dir.y = -0.5f;
+					m_AmountBounce++;
+				}
+				else
+				{
+					m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, 0.5f, 0.5f);
+					m_Dir.x = 0.5f;
+					m_Dir.y = 0.5f;
+					m_AmountBounce++;
+				}
+
+				m_BulletTrail.clear();
 			}
-			else if (m_Dir.x == 0.f && m_Dir.y == 1.f)
+		}
+		else if (m_Dir.x == -0.5f && m_Dir.y == -0.5f)
+		{
+			if(!m_BulletTrail.empty())
 			{
-				m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, 0.f, -1.f);
-				m_Dir.x = 0.f;
-				m_Dir.y = -1.f;
-				m_AmountBounce++;
-				m_IsValid = true;
+				m_CurrentCell = m_pGrid->GetCell(m_pGameObject->GetWorldPosition());
+
+				if (m_BulletTrail.back().row == m_CurrentCell.row)
+				{
+					m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, 0.5f, -0.5f);
+					m_Dir.x = 0.5f;
+					m_Dir.y = -0.5f;
+					m_AmountBounce++;
+				}
+				else
+				{
+					m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, -0.5f, 0.5f);
+					m_Dir.x = -0.5f;
+					m_Dir.y = 0.5f;
+					m_AmountBounce++;
+				}
 			}
-			else if (m_Dir.x == 0.f && m_Dir.y == -1.f)
+
+			m_BulletTrail.clear();
+		}
+		else if (m_Dir.x == -0.5f && m_Dir.y == 0.5f)
+		{
+			if(!m_BulletTrail.empty())
 			{
-				m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, 0.f, 1.f);
-				m_Dir.x = 0.f;
-				m_Dir.y = 1.f;
-				m_AmountBounce++;
-				m_IsValid = true;
-			}
-			else if (m_Dir.x == 0.5f && m_Dir.y == 0.5f)
-			{
-				m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, -0.5f, 0.5f);
-				m_Dir.x = -0.5f;
-				m_Dir.y = 0.5f;
-				m_IsValid = true;
-			}
-			else if (m_Dir.x == 0.5f && m_Dir.y == -0.5f)
-			{
-				m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, -0.5f, -0.5f);
-				m_Dir.x = -0.5f;
-				m_Dir.y = -0.5f;
-				m_IsValid = true;
-			}
-			else if (m_Dir.x == -0.5f && m_Dir.y == -0.5f)
-			{
-				m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, -0.5f, 0.5f);
-				m_Dir.x = -0.5f;
-				m_Dir.y = 0.5f;
-				m_IsValid = true;
-			}
-			else if (m_Dir.x == -0.5f && m_Dir.y == 0.5f)
-			{
-				m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, 0.5f, 0.5f);
-				m_Dir.x = 0.5f;
-				m_Dir.y = 0.5f;
-				m_IsValid = true;
+				m_CurrentCell = m_pGrid->GetCell(m_pGameObject->GetWorldPosition());
+
+				if (m_BulletTrail.back().row == m_CurrentCell.row)
+				{
+					m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, 0.5f, 0.5f);
+					m_Dir.x = 0.5f;
+					m_Dir.y = 0.5f;
+					m_AmountBounce++;
+				}
+				else
+				{
+					m_pGameObject->GetComponent<MovementComponent>()->SetSpeed(200.f, -0.5f, -0.5f);
+					m_Dir.x = -0.5f;
+					m_Dir.y = -0.5f;
+					m_AmountBounce++;
+				}
+
+				m_BulletTrail.clear();
 			}
 		}
 	}

@@ -39,6 +39,7 @@ namespace dae
 		std::shared_ptr<GameObject> GetChildAtIndex(int index);
 
 		void MarkForDelete();
+		void UnmarkForDelete();
 		bool IsDeleted();
 
 		template <typename T> T* AddComponent();

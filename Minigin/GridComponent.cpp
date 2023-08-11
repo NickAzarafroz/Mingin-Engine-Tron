@@ -100,7 +100,11 @@ Cell GridComponent::GetCell(glm::vec2 localPosition) const
 	}
 
 	std::cout << "OutOfRange";
-	return m_Cells[0];
+	Cell c;
+	c.row = -1;
+	c.col = -1;
+	c.ID = 1;
+	return c;
 }
 
 std::pair<Cell, bool> dae::GridComponent::GetDestinationCell(glm::vec2 localPosition, glm::vec2 dir)
