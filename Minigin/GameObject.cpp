@@ -29,15 +29,10 @@ void dae::GameObject::Start()
 
 void dae::GameObject::Update(float elapsedSec)
 {
-	if (this == nullptr) return;
+	//if (this == nullptr) return;
 
 	for(const auto& component : m_pComponents)
 	{
-		if (m_MarkedForDelete)
-		{
-			this->RemoveGameObject();
-			return;
-		}
 		component->Update(elapsedSec);
 	}
 
@@ -47,6 +42,11 @@ void dae::GameObject::Update(float elapsedSec)
 	}
 
 	m_ElapsedSec = elapsedSec;
+
+	if (m_MarkedForDelete)
+	{
+		this->RemoveGameObject();
+	}
 }
 
 void dae::GameObject::Render() const

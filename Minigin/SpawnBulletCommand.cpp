@@ -46,42 +46,42 @@ void SpawnBulletCommand::Execute()
 
 	if (angle == 0.f || angle == 360.f || angle == -360.f)
 	{
-		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(200.f, 1.f, 0.f);
+		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(300.f, 1.f, 0.f);
 		m_GoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 1.f, 0.f });
 	}
 	else if (angle == 315.f || angle == -45.f)
 	{
-		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(200.f, 0.5f, -0.5f);
+		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(300.f, 0.5f, -0.5f);
 		m_GoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 0.5f, -0.5f });
 	}
 	else if (angle == 270.f || angle == -90.f)
 	{
-		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(200.f, 0.f, -1.f);
+		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(300.f, 0.f, -1.f);
 		m_GoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 0.f, -1.f });
 	}
 	else if (angle == 225.f || angle == -135.f)
 	{
-		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(200.f, -0.5f, -0.5f);
+		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(300.f, -0.5f, -0.5f);
 		m_GoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ -0.5f, -0.5f });
 	}
 	else if (angle == 180.f || angle == -180.f)
 	{
-		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(200.f, -1.0f, 0.f);
+		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(300.f, -1.0f, 0.f);
 		m_GoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ -1.f, 0.f });
 	}
 	else if (angle == 135.f || angle == -225.f)
 	{
-		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(200.f, -0.5f, 0.5f);
+		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(300.f, -0.5f, 0.5f);
 		m_GoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ -0.5f, 0.5f });
 	}
 	else if (angle == 90.f || angle == -270.f)
 	{
-		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(200.f, 0.f, 1.f);
+		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(300.f, 0.f, 1.f);
 		m_GoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 0.f, 1.f });
 	}
 	else if (angle == 45.f || angle == -315.f)
 	{
-		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(200.f, 0.5f, 0.5f);
+		m_GoBullet->AddComponent<MovementComponent>()->SetSpeed(300.f, 0.5f, 0.5f);
 		m_GoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 0.5f, 0.5f });
 	}
 

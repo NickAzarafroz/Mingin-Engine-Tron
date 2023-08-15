@@ -219,6 +219,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_textedit.h" />
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imstb_truetype.h" />
     <ClInclude Include="AIComponent.h" />
+    <ClInclude Include="AliveComponent.h" />
     <ClInclude Include="AudioClip.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BoxTriggerComponent.h" />
@@ -276,6 +277,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_tables.cpp" />
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_widgets.cpp" />
     <ClCompile Include="AIComponent.cpp" />
+    <ClCompile Include="AliveComponent.cpp" />
     <ClCompile Include="AudioClip.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="BoxTriggerComponent.cpp" />

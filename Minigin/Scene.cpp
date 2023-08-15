@@ -56,9 +56,9 @@ void Scene::Start()
 
 void Scene::Update(float elapsedSec)
 {
-	for(auto& object : m_objects)
+	for(int i{}; i < m_objects.size(); ++i)
 	{
-		object->Update(elapsedSec);
+		m_objects[i]->Update(elapsedSec);
 	}
 }
 

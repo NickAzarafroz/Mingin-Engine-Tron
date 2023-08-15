@@ -2,8 +2,10 @@
 #include "EnemyComponent.h"
 #include "PlayerComponent.h"
 #include "TextureComponent.h"
+#include "MoveGridCommand.h"
 #include "GameObject.h"
 #include "SceneManager.h"
+#include "Scene.h"
 using namespace dae;
 
 void BoxTriggerComponent::Update(float)
@@ -17,10 +19,11 @@ void BoxTriggerComponent::Update(float)
 
 		if(m_ConditionPlayer)
 		{
-			m_pOtherObject->GetComponent<TransformComponent>()->SetPosition(0.f, 96.f, 0.f);
+			m_pOtherObject->GetComponent<TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
 			m_pOtherObject->GetComponent<PlayerComponent>()->TakeDamage(1);
 
-			SceneManager::GetInstance().ResetEnemiesLv1();
+			MoveGridCommand::m_MovementFlag = false;
+			SceneManager::GetInstance().ResetEnemies();
 		}
 
 		if (m_ConditionOther)

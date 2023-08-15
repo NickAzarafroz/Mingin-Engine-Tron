@@ -11,7 +11,8 @@ using namespace dae;
 void AIComponent::Update(float)
 {
 	Wander();
-	ShootPlayer();
+
+	if(m_pPlayer) ShootPlayer();
 }
 
 void AIComponent::SetObjectToShoot(std::shared_ptr<GameObject> pPlayer)
@@ -22,6 +23,11 @@ void AIComponent::SetObjectToShoot(std::shared_ptr<GameObject> pPlayer)
 void AIComponent::SetGrid(GridComponent* pGrid)
 {
 	m_pGrid = pGrid;
+}
+
+void AIComponent::SetSpeed(float speed)
+{
+	m_Speed = speed;
 }
 
 void AIComponent::SetMovementFlag(bool flag)
@@ -61,8 +67,8 @@ void AIComponent::Wander()
 		m_MovementFlag = true;
 	}
 
-	x += m_TempDir.x * 25.f * m_pGameObject->GetElapsedSec();									// Move to destination with certain amount of speed TODO: fix magic numbers :)
-	y += m_TempDir.y * 25.f * m_pGameObject->GetElapsedSec();
+	x += m_TempDir.x * m_Speed * m_pGameObject->GetElapsedSec();									// Move to destination with certain amount of speed TODO: fix magic numbers :)
+	y += m_TempDir.y * m_Speed * m_pGameObject->GetElapsedSec();
 
 	float distanceX = fabs(m_DestinationCell.centerPosition.x - (x + m_Cell.width / 2));		// Calculate the distance from the destionation and the player (length)
 	float distanceY = fabs(m_DestinationCell.centerPosition.y - (y + m_Cell.height / 2));

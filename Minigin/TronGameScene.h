@@ -18,13 +18,21 @@ namespace dae
 
 		void Load();
 		void ResetEnemies();
+		void LoadLevel1();
 		void LoadLevel2();
+		void LoadLevel3();
+
+		int GetLevel();
 
 	private:
 		std::shared_ptr<Scene> m_TronGameScene;
 		std::vector<std::shared_ptr<GameObject>> m_pEnemiesLv1;
+		std::vector<std::shared_ptr<GameObject>> m_pEnemiesLv2;
+		std::vector<std::shared_ptr<GameObject>> m_pEnemiesLv3;
 		std::shared_ptr<GameObject> m_pPlayer;
 		std::shared_ptr<GameObject> m_pGrid;
+
+		int m_Level{};
 	};
 }
 

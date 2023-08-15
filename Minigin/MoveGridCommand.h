@@ -17,11 +17,12 @@ namespace dae
 
 		void Execute() override;
 
+		static bool m_MovementFlag;
+
 	private:
 		glm::vec2 m_Dir{};
 		GridComponent* m_pGrid{};
 
-		static bool m_MovementFlag;
 		static bool m_IsValid;
 		static glm::vec2 m_TempDir;
 		static Cell m_Cell;

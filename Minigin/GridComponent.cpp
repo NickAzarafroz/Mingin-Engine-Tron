@@ -46,6 +46,9 @@ void dae::GridComponent::ReceiveMessage(int message)
 
 void GridComponent::Initialize(float cellWidth, float cellHeight, const std::string& filename)
 {
+	m_Cells.clear();
+	m_TextureIDs.clear();
+
 	m_CellWidth = cellWidth;
 	m_CellHeight = cellHeight;
 

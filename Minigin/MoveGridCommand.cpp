@@ -26,8 +26,8 @@ void MoveGridCommand::Execute()
 		m_MovementFlag = true;
 	}
 
-	x += m_TempDir.x * 50.f * GetGameActor()->GetElapsedSec();									// Move to destination with certain amount of speed TODO: fix magic numbers :)
-	y += m_TempDir.y * 50.f * GetGameActor()->GetElapsedSec();
+	x += m_TempDir.x * 75.f * GetGameActor()->GetElapsedSec();									// Move to destination with certain amount of speed TODO: fix magic numbers :)
+	y += m_TempDir.y * 75.f * GetGameActor()->GetElapsedSec();
 
 	float distanceX = fabs(m_DestinationCell.centerPosition.x - (x + m_Cell.width / 2));		// Calculate the distance from the destionation and the player (length)
 	float distanceY = fabs(m_DestinationCell.centerPosition.y - (y + m_Cell.height / 2));

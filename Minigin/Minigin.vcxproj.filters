@@ -198,6 +198,9 @@
     <ClInclude Include="EnemyComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="AliveComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -330,6 +333,9 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="EnemyComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="AliveComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>

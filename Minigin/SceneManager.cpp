@@ -43,14 +43,24 @@ void dae::SceneManager::Initialize()
 	m_TronGameScene->Load();
 }
 
-void dae::SceneManager::ResetEnemiesLv1()
+void dae::SceneManager::ResetEnemies()
 {
 	m_TronGameScene->ResetEnemies();
+}
+
+void dae::SceneManager::LoadLevel1()
+{
+	m_TronGameScene->LoadLevel1();
 }
 
 void dae::SceneManager::LoadLevel2()
 {
 	m_TronGameScene->LoadLevel2();
+}
+
+void dae::SceneManager::LoadLevel3()
+{
+	m_TronGameScene->LoadLevel3();
 }
 
 void dae::SceneManager::GoNextScene()
@@ -61,4 +71,14 @@ void dae::SceneManager::GoNextScene()
 int dae::SceneManager::GetCurrentSceneIndex()
 {
 	return m_ActiveSceneIndex;
+}
+
+void dae::SceneManager::SetCurrentSceneIndex(int index)
+{
+	m_ActiveSceneIndex = index;
+}
+
+int dae::SceneManager::GetLevel()
+{
+	return m_TronGameScene->GetLevel();
 }

@@ -22,7 +22,7 @@ namespace dae
 
 		void SetObjectToShoot(std::shared_ptr<GameObject> pPlayer);
 		void SetGrid(GridComponent* pGrid);
-
+		void SetSpeed(float speed);
 		void SetMovementFlag(bool flag);
 
 	private:
@@ -33,6 +33,8 @@ namespace dae
 		GridComponent* m_pGrid{};
 		std::shared_ptr<GameObject> m_pPlayer{};
 		std::shared_ptr<GameObject> m_pGoBullet{};
+
+		float m_Speed{ 25.f };
 
 		bool m_MovementFlag;
 		bool m_IsValid;
