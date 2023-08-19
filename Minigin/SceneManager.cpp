@@ -37,10 +37,9 @@ dae::Scene& dae::SceneManager::GetScene(int index)
 void dae::SceneManager::Initialize()
 {
 	m_MainMenuScene = std::make_shared<MainMenuScene>(m_scenes[0]);
-	m_MainMenuScene->Load();
-
 	m_TronGameScene = std::make_shared<TronGameScene>(m_scenes[1]);
-	m_TronGameScene->Load();
+
+	m_MainMenuScene->Load();
 }
 
 void dae::SceneManager::ResetEnemies()
@@ -81,4 +80,19 @@ void dae::SceneManager::SetCurrentSceneIndex(int index)
 int dae::SceneManager::GetLevel()
 {
 	return m_TronGameScene->GetLevel();
+}
+
+void dae::SceneManager::LoadMainGame(int mode)
+{
+	switch (mode)
+	{
+	case 0: m_TronGameScene->LoadSinglePlayer();
+		break;
+	case 1: m_TronGameScene->LoadVersus();
+		break;
+	case -1: m_TronGameScene->LoadCoop();
+		break;
+	default:
+		break;
+	}
 }

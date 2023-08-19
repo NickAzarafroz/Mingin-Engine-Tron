@@ -223,6 +223,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="AudioClip.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BoxTriggerComponent.h" />
+    <ClInclude Include="ChangeModeCommand.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="EnemyComponent.h" />
     <ClInclude Include="EventManager.h" />
@@ -281,6 +282,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="AudioClip.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="BoxTriggerComponent.cpp" />
+    <ClCompile Include="ChangeModeCommand.cpp" />
     <ClCompile Include="EnemyComponent.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSComponent.cpp" />

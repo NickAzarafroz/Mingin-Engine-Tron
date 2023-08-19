@@ -20,7 +20,7 @@ void LiveDisplayComponent::Start()
     m_pPlayer->healthChanged.AddObserver(this);
     m_HealthPoints = m_pPlayer->GetHealth();
 
-    m_pText->SetText("HealthPoints " + std::to_string(m_HealthPoints));
+    m_pText->SetText(std::to_string(m_HealthPoints));
 }
 
 void LiveDisplayComponent::Render() const
@@ -44,7 +44,7 @@ LiveDisplayComponent::~LiveDisplayComponent()
 void LiveDisplayComponent::HandleEvent()
 {
     --m_HealthPoints;
-    m_pText->SetText("HealthPoints " + std::to_string(m_HealthPoints));
+    m_pText->SetText(std::to_string(m_HealthPoints));
 }
 
 void LiveDisplayComponent::OnSubjectDestroy()

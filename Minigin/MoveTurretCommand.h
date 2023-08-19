@@ -20,5 +20,24 @@ namespace dae
 
 		static float m_Angle;
 	};
+
+	class MoveTurretCommandP2 : public GameActorCommand
+	{
+	public:
+		MoveTurretCommandP2(GameObject* actor, bool increase) : GameActorCommand(actor), m_Increase{ increase } {}
+		virtual ~MoveTurretCommandP2() = default;
+
+		MoveTurretCommandP2(const MoveTurretCommandP2& other) = delete;
+		MoveTurretCommandP2(MoveTurretCommandP2&& other) = delete;
+		MoveTurretCommandP2& operator=(const MoveTurretCommandP2& other) = delete;
+		MoveTurretCommandP2& operator=(MoveTurretCommandP2&& other) = delete;
+
+		void Execute() override;
+
+	private:
+		bool m_Increase{};
+
+		static float m_Angle;
+	};
 }
 

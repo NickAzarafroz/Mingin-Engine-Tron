@@ -16,8 +16,12 @@ namespace dae
 		TronGameScene& operator=(const TronGameScene& other) = delete;
 		TronGameScene& operator=(TronGameScene&& other) = delete;
 
-		void Load();
+		void LoadSinglePlayer();
+		void LoadVersus();
+		void LoadCoop();
+
 		void ResetEnemies();
+
 		void LoadLevel1();
 		void LoadLevel2();
 		void LoadLevel3();

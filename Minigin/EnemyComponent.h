@@ -18,12 +18,14 @@ namespace dae
 		virtual void ReceiveMessage(int message) override;
 
 		void SetPlayer(GameObject* pPlayer);
+		void SetKillPoints(int points);
 		int GetHealth() const;
 		void TakeDamage(int amount);
 		void Destroy();
 
 	private:
 		int m_Health;
+		int m_KillPoints{};
 		GameObject* m_pPlayer;
 	};
 }

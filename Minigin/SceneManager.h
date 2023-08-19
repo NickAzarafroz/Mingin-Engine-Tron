@@ -17,7 +17,6 @@ namespace dae
 
 		void Initialize();
 		void ResetEnemies();
-
 		void LoadLevel1();
 		void LoadLevel2();
 		void LoadLevel3();
@@ -27,6 +26,8 @@ namespace dae
 		void SetCurrentSceneIndex(int index);
 
 		int GetLevel();
+
+		void LoadMainGame(int mode);
 
 		void Start();
 		void Update(float elapsedSec);

@@ -15,9 +15,13 @@ bool dae::InputManager::ProcessInput()
 
 		for(const auto& [controllerKey, command] : m_ConsoleCommands)
 		{
-			if(controllerKey.first == controllerIndex && controller->IsPressed(controllerKey.second))
+			if(controllerKey.first == controllerIndex && command.first == 0 && controller->IsPressed(controllerKey.second))
 			{
-				command->Execute();
+				command.second->Execute();
+			}
+			else if(controllerKey.first == controllerIndex && command.first == 1 && controller->IsUpThisFrame(controllerKey.second))
+			{
+				command.second->Execute();
 			}
 		}
 	}
@@ -29,6 +33,20 @@ bool dae::InputManager::ProcessInput()
 	for(const auto& [keyBoardKey, command] : m_KeyBoardCommands)
 	{
 		if(pStates[keyBoardKey] && command.first == 0)
+		{
+			if (!commandExecuted)
+			{
+				command.second->Execute();
+				commandExecuted = true;
+			}
+		}
+	}
+
+	commandExecuted = false;
+
+	for (const auto& [keyBoardKey, command] : m_KeyBoardCommands)
+	{
+		if (pStates[keyBoardKey] && command.first == 2)
 		{
 			if (!commandExecuted)
 			{
@@ -71,9 +89,10 @@ void dae::InputManager::AddController(std::unique_ptr<XBox360Controller> control
 	m_Controllers.emplace_back(std::move(controller));
 }
 
-void dae::InputManager::BindCommandController(unsigned controllerIndex, XBox360Controller::ControllerButton button, std::unique_ptr<Command> command)
+void dae::InputManager::BindCommandController(unsigned controllerIndex, XBox360Controller::ControllerButton button, std::unique_ptr<Command> command, int state)
 {
-	m_ConsoleCommands[ControllerKey(controllerIndex, button)] = std::move(command);
+	m_ConsoleCommands[ControllerKey(controllerIndex, button)].first = state;
+	m_ConsoleCommands[ControllerKey(controllerIndex, button)].second = std::move(command);
 }
 
 void dae::InputManager::BindCommandKeyBoard(SDL_Scancode keyBoardkey, std::unique_ptr<Command> command, int state)

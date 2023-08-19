@@ -1,5 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
+#include <vector>
+#include <memory>
 namespace dae
 {
 	class BoxTriggerComponent : public BaseComponent
@@ -16,7 +18,7 @@ namespace dae
 		virtual void Update(float elapsedSec) override;
 
 		void SetSize(float width, float height);
-		void SetOtherObject(GameObject* go);
+		void AddOtherObject(std::shared_ptr<GameObject> go);
 		void SetPlayerObject(GameObject* pPlayer);
 
 		void DestroyOtherAfterOverLap(bool condition);
@@ -29,7 +31,7 @@ namespace dae
 		float GetHeight();
 
 	private:
-		bool IsOverlapping(GameObject* go);
+		bool IsOverlapping(std::shared_ptr<GameObject> go);
 
 		float m_Width;
 		float m_Height;
@@ -39,7 +41,7 @@ namespace dae
 		bool m_ConditionHealth;
 		bool m_ConditionPlayer;
 
-		GameObject* m_pOtherObject;
+		std::vector<std::shared_ptr<GameObject>> m_pOthers;
 		GameObject* m_pPlayer;
 	};
 }

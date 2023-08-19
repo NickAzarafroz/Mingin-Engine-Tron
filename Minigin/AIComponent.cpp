@@ -159,7 +159,7 @@ void AIComponent::ShootPlayer()
 		m_pGoBullet->AddComponent<TextureComponent>()->AddTexture("BulletNPC.png");
 		m_pGoBullet->AddComponent<TransformComponent>()->SetPosition(m_pGameObject->GetWorldPosition().x + 12.f, m_pGameObject->GetWorldPosition().y + 10.f, 0);
 		m_pGoBullet->AddComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
-		m_pGoBullet->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_pPlayer.get());
+		m_pGoBullet->GetComponent<BoxTriggerComponent>()->AddOtherObject(m_pPlayer);
 		m_pGoBullet->GetComponent<BoxTriggerComponent>()->DecOtherHealthAfterOverlap(true);
 
 		if(m_pGrid->GetCell(glm::vec2{x,y}).col > m_pGrid->GetCell(glm::vec2{ px, py }).col)
@@ -188,7 +188,7 @@ void AIComponent::ShootPlayer()
 		m_pGoBullet->AddComponent<TextureComponent>()->AddTexture("BulletNPC.png");
 		m_pGoBullet->AddComponent<TransformComponent>()->SetPosition(m_pGameObject->GetWorldPosition().x + 12.f, m_pGameObject->GetWorldPosition().y + 10.f, 0);
 		m_pGoBullet->AddComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
-		m_pGoBullet->GetComponent<BoxTriggerComponent>()->SetOtherObject(m_pPlayer.get());
+		m_pGoBullet->GetComponent<BoxTriggerComponent>()->AddOtherObject(m_pPlayer);
 		m_pGoBullet->GetComponent<BoxTriggerComponent>()->DecOtherHealthAfterOverlap(true);
 
 		if (m_pGrid->GetCell(glm::vec2{ x,y }).row > m_pGrid->GetCell(glm::vec2{ px, py }).row)

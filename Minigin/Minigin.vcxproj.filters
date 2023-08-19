@@ -201,6 +201,9 @@
     <ClInclude Include="AliveComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="ChangeModeCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -337,6 +340,9 @@
     </ClCompile>
     <ClCompile Include="AliveComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeModeCommand.cpp">
+      <Filter>Commands</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

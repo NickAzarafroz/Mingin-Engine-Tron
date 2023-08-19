@@ -10,32 +10,42 @@ using namespace dae;
 
 void BoxTriggerComponent::Update(float)
 {
-	if (IsOverlapping(m_pOtherObject))
+	for(std::shared_ptr<GameObject> other : m_pOthers)
 	{
-		if(m_ConditionHealth)
+		if (IsOverlapping(other))
 		{
-			m_pGameObject->GetComponent<EnemyComponent>()->TakeDamage(1);
+			if (m_ConditionHealth)
+			{
+				if (m_pGameObject->GetComponent<EnemyComponent>())
+				{
+					m_pGameObject->GetComponent<EnemyComponent>()->TakeDamage(1);
+				}
+				else
+				{
+					m_pGameObject->GetComponent<PlayerComponent>()->TakeDamage(1);
+				}
+			}
+
+			if (m_ConditionPlayer)
+			{
+				other->GetComponent<TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
+				other->GetComponent<PlayerComponent>()->TakeDamage(1);
+
+				MoveGridCommand::m_MovementFlag = false;
+				SceneManager::GetInstance().ResetEnemies();
+			}
+
+			if (m_ConditionOther)
+			{
+				other->GetComponent<TransformComponent>()->SetPosition(0.f, -50.f, 0.f);
+				other->RemoveGameObject();
+			}
+
+			if (m_ConditionMe)
+			{
+				m_pGameObject->MarkForDelete();
+			}
 		}
-
-		if(m_ConditionPlayer)
-		{
-			m_pOtherObject->GetComponent<TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
-			m_pOtherObject->GetComponent<PlayerComponent>()->TakeDamage(1);
-
-			MoveGridCommand::m_MovementFlag = false;
-			SceneManager::GetInstance().ResetEnemies();
-		}
-
-		if (m_ConditionOther)
-		{
-			m_pOtherObject->MarkForDelete();
-			m_pOtherObject = nullptr;
-		}
-
-		if (m_ConditionMe) 
-		{
-			m_pGameObject->MarkForDelete();
-		} 
 	}
 }
 
@@ -45,9 +55,19 @@ void BoxTriggerComponent::SetSize(float width, float height)
 	m_Height = height;
 }
 
-void BoxTriggerComponent::SetOtherObject(GameObject* go)
+void BoxTriggerComponent::AddOtherObject(std::shared_ptr<GameObject> go)
 {
-	m_pOtherObject = go;
+	/*for (const auto& other : m_pOthers)
+	{
+		if (other == go) return;
+	}*/
+
+	for (int i{}; i < m_pOthers.size(); ++i)
+	{
+		if (m_pOthers[i] == go) return;
+	}
+
+	m_pOthers.emplace_back(go);
 }
 
 void BoxTriggerComponent::SetPlayerObject(GameObject* pPlayer)
@@ -75,7 +95,7 @@ void dae::BoxTriggerComponent::DecOtherHealthAfterOverlap(bool condition)
 	m_ConditionPlayer = condition;
 }
 
-bool BoxTriggerComponent::IsOverlapping(GameObject* go)
+bool BoxTriggerComponent::IsOverlapping(std::shared_ptr<GameObject> go)
 {
 	if (go == nullptr) return false;
 

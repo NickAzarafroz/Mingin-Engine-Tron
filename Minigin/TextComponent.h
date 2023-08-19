@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <memory>
+#include <SDL_stdinc.h>
+#include <SDL.h>
 #include "Transform.h"
 #include "ResourceManager.h"
 #include "BaseComponent.h"
