@@ -212,4 +212,9 @@ bool dae::GameObject::IsDeleted()
 	return m_MarkedForDelete;
 }
 
+void dae::GameObject::SetScene(Scene* scene)
+{
+	m_pScene = scene;
+}
+
 

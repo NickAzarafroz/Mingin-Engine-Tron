@@ -32,11 +32,23 @@ void BoxTriggerComponent::Update(float)
 				other->GetComponent<PlayerComponent>()->TakeDamage(1);
 
 				MoveGridCommand::m_MovementFlag = false;
+				MoveGridCommandP2::m_MovementFlag = false;
 				SceneManager::GetInstance().ResetEnemies();
 			}
 
 			if (m_ConditionOther)
 			{
+				if(other->GetComponent<PlayerComponent>())
+				{
+					other->GetComponent<TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
+					other->GetComponent<PlayerComponent>()->TakeDamage(1);
+
+					MoveGridCommand::m_MovementFlag = false;
+					MoveGridCommandP2::m_MovementFlag = false;
+					SceneManager::GetInstance().ResetEnemies();
+					return;
+				}
+
 				other->GetComponent<TransformComponent>()->SetPosition(0.f, -50.f, 0.f);
 				other->RemoveGameObject();
 			}

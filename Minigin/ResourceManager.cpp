@@ -31,3 +31,13 @@ std::shared_ptr<dae::Font> dae::ResourceManager::LoadFont(const std::string& fil
 {
 	return std::make_shared<Font>(m_dataPath + file, size);
 }
+
+std::ifstream dae::ResourceManager::ReadFile(const std::string& file) const
+{
+	return std::ifstream(m_dataPath + file);
+}
+
+std::ofstream dae::ResourceManager::WriteToFile(const std::string& file)
+{
+	return std::ofstream(m_dataPath + file);
+}

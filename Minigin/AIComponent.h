@@ -1,8 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
 #include "GridComponent.h"
-#include "glm/glm.hpp"
-#include <memory>
 namespace dae
 {
 	struct Cell;
@@ -20,7 +18,7 @@ namespace dae
 
 		virtual void Update(float elapsedSec) override;
 
-		void SetObjectToShoot(std::shared_ptr<GameObject> pPlayer);
+		void AddObjectToShoot(std::shared_ptr<GameObject> pPlayer);
 		void SetGrid(GridComponent* pGrid);
 		void SetSpeed(float speed);
 		void SetMovementFlag(bool flag);
@@ -31,7 +29,7 @@ namespace dae
 
 		glm::vec2 m_Dir{0.f, 0.f};
 		GridComponent* m_pGrid{};
-		std::shared_ptr<GameObject> m_pPlayer{};
+		std::vector<std::shared_ptr<GameObject>> m_pPlayers{};
 		std::shared_ptr<GameObject> m_pGoBullet{};
 
 		float m_Speed{ 25.f };

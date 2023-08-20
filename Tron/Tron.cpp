@@ -9,33 +9,13 @@
 
 #include "Minigin.h"
 #include "SceneManager.h"
-#include "ResourceManager.h"
-#include "GameObject.h"
 #include "Scene.h"
-#include "InputManager.h"
-
-#include "TransformComponent.h"
-#include "TextureComponent.h"
-#include "FPSComponent.h"
-#include "RotateComponent.h"
-#include "LiveDisplayComponent.h"
-#include "ScoreDisplayComponent.h"
-#include "GridComponent.h"
-#include "BoxTriggerComponent.h"
-#include "AIComponent.h"
-#include "PlayerComponent.h"
-
-#include "MoveCommand.h"
-#include "MoveGridCommand.h"
-#include "MoveTurretCommand.h"
-#include "SpawnBulletCommand.h"
-
-#include "XBox360Controller.h"
 
 void load()
 {
 	dae::SceneManager::GetInstance().CreateScene("Menu");
 	dae::SceneManager::GetInstance().CreateScene("MainGame");
+	dae::SceneManager::GetInstance().CreateScene("EndScreen");
 	dae::SceneManager::GetInstance().Initialize();
 }
 

@@ -23,6 +23,7 @@ namespace dae
 		void Start();
 		void Update(float elapsedSec);
 		void Render() const;
+
 		void SendMessageID(int message);
 		float GetElapsedSec() { return m_ElapsedSec; };
 
@@ -41,6 +42,8 @@ namespace dae
 		void MarkForDelete();
 		void UnmarkForDelete();
 		bool IsDeleted();
+
+		void SetScene(Scene* scene);
 
 		template <typename T> T* AddComponent();
 		template <typename T> void RemoveComponent();

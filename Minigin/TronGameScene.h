@@ -34,6 +34,7 @@ namespace dae
 		std::vector<std::shared_ptr<GameObject>> m_pEnemiesLv2;
 		std::vector<std::shared_ptr<GameObject>> m_pEnemiesLv3;
 		std::shared_ptr<GameObject> m_pPlayer;
+		std::shared_ptr<GameObject> m_pPlayer2;
 		std::shared_ptr<GameObject> m_pGrid;
 
 		int m_Level{};

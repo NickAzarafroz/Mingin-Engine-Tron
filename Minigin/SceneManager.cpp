@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "MainMenuScene.h"
 #include "TronGameScene.h"
+#include "EndScene.h"
 
 void dae::SceneManager::Start()
 {
@@ -38,6 +39,7 @@ void dae::SceneManager::Initialize()
 {
 	m_MainMenuScene = std::make_shared<MainMenuScene>(m_scenes[0]);
 	m_TronGameScene = std::make_shared<TronGameScene>(m_scenes[1]);
+	m_EndScene = std::make_shared<EndScene>(m_scenes[2]);
 
 	m_MainMenuScene->Load();
 }
@@ -95,4 +97,14 @@ void dae::SceneManager::LoadMainGame(int mode)
 	default:
 		break;
 	}
+}
+
+void dae::SceneManager::LoadEndScene(int endscore)
+{
+	m_EndScene->Load(endscore);
+}
+
+void dae::SceneManager::LoadEndScene()
+{
+	m_EndScene->Load();
 }

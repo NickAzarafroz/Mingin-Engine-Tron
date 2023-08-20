@@ -16,9 +16,17 @@ namespace dae
 		virtual void Update(float elapsedSec) override;
 
 		void CheckIfEnemiesAlive(bool condition);
+		void CheckIfPlayerAlive(bool condition);
+		void CheckIfOnePlayerAlive(bool condition);
+		void AddPlayersToCheck(std::shared_ptr<GameObject> pPlayer);
 
 	private:
 		bool m_EnemiesCondition{};
+		bool m_PlayerCondition{};
+		bool m_OnePlayerCondition{};
+		int m_CurrentScore{};
+
+		std::vector<std::shared_ptr<GameObject>> m_pPlayers{};
 	};
 }
 
