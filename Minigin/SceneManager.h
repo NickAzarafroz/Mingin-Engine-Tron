@@ -39,7 +39,7 @@ namespace dae
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
 
-		std::vector<std::shared_ptr<Scene>> m_scenes;
+		std::vector<std::shared_ptr<Scene>> m_pScenes;
 		std::shared_ptr<MainMenuScene> m_MainMenuScene;
 		std::shared_ptr<TronGameScene> m_TronGameScene;
 		std::shared_ptr<EndScene> m_EndScene;

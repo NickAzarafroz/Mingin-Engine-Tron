@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 #include "Subject.h"
+#include <string>
 namespace dae
 {
 	class PlayerComponent : public BaseComponent
@@ -20,10 +21,12 @@ namespace dae
 
 		int GetHealth() const;
 		int GetScore() const;
+		std::string GetName() const;
 
 		void TakeDamage(int amount);
 		void IncreaseScore(int amount);
 		void Destroy();
+		void SetName(std::string name);
 
 		Subject<> healthChanged;
 		Subject<> scoreChanged;
@@ -31,6 +34,7 @@ namespace dae
 	private:
 		int m_Health;
 		int m_Score;
+		std::string m_Name;
 	};
 }
 

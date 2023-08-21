@@ -95,9 +95,6 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& input = InputManager::GetInstance();
 	auto& soundSystem = ServiceLocator::GetSoundSystem();
 
-	// todo: this update loop could use some work.
-
-	//define namespace chrono
 	using namespace std::chrono;
 
 	const float capFrames{ 144.f };
@@ -105,7 +102,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 	bool doContinue = true;
 	soundSystem.Init();
-	soundSystem.Play("../Data/MainMenuMusic.mp3", 20.f);
+	soundSystem.Play("../Data/MainMenuMusic.mp3", 20.f, 0);
 	auto lastTime = high_resolution_clock::now();
 	while (doContinue)
 	{
@@ -118,7 +115,6 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		sceneManager.Update(deltaTime);
 		renderer.Render();
 
-		//TODO: Add sleep for Update here
 		const auto sleepTime = currentTime + milliseconds(static_cast<long long>(msPerFrame)) - high_resolution_clock::now();
 		std::this_thread::sleep_for(sleepTime);
 

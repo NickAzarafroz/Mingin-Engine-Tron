@@ -26,7 +26,7 @@ void AudioClip::Load(const std::string filePath)
 
 	if (Mix_OpenAudio(frequency, audioFormat, channels, chunkSize) != 0) {
 		// Handle error
-		std::cerr << "Failed to open audio device: " << Mix_GetError() << std::endl;
+		std::cout << "Failed to open audio device: " << Mix_GetError() << std::endl;
 		return;
 	}
 
@@ -35,7 +35,7 @@ void AudioClip::Load(const std::string filePath)
 	if (m_pMixChunk == nullptr)
 	{
 		std::string errorMsg = "SoundEffect: Failed to load " + filePath + ",\nSDL_mixer Error: " + Mix_GetError();
-		std::cerr << errorMsg;
+		std::cout << errorMsg;
 		return;
 	}
 }
@@ -45,7 +45,12 @@ void AudioClip::SetVolume(float volume)
 	Mix_VolumeChunk(m_pMixChunk, static_cast<int>(volume));
 }
 
-void AudioClip::Play()
+void AudioClip::Play(int loop)
 {
-	Mix_PlayChannel(-1, m_pMixChunk, 0);
+	Mix_PlayChannel(-1, m_pMixChunk, loop);
+}
+
+void AudioClip::Stop()
+{
+	Mix_HaltChannel(-1);
 }

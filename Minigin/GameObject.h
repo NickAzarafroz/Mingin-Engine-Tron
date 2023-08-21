@@ -43,8 +43,6 @@ namespace dae
 		void UnmarkForDelete();
 		bool IsDeleted();
 
-		void SetScene(Scene* scene);
-
 		template <typename T> T* AddComponent();
 		template <typename T> void RemoveComponent();
 		template <typename T> T* GetComponent() const;

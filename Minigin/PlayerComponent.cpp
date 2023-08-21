@@ -6,6 +6,7 @@ using namespace dae;
 void PlayerComponent::Start()
 {
 	m_Health = 3;
+	if (m_Name.empty()) m_Name = "NoName";
 }
 
 void PlayerComponent::Update(float)
@@ -34,6 +35,11 @@ int PlayerComponent::GetScore() const
 	return m_Score;
 }
 
+std::string dae::PlayerComponent::GetName() const
+{
+	return m_Name;
+}
+
 void PlayerComponent::TakeDamage(int amount)
 {
 	m_Health -= amount;
@@ -51,6 +57,11 @@ void PlayerComponent::IncreaseScore(int amount)
 void PlayerComponent::Destroy()
 {
 	m_pGameObject->MarkForDelete();
+}
+
+void PlayerComponent::SetName(std::string name)
+{
+	m_Name = name;
 }
 
 PlayerComponent::~PlayerComponent()

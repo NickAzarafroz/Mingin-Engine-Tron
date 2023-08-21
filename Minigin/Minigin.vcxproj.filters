@@ -183,7 +183,7 @@
     <ClInclude Include="MoveTurretCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="GoToNextSceneCommand.h">
+    <ClInclude Include="GoToMainSceneCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
     <ClInclude Include="MainMenuScene.h">
@@ -203,6 +203,9 @@
     </ClInclude>
     <ClInclude Include="EndScene.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SkipLevelCommand.h">
+      <Filter>Commands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -323,7 +326,7 @@
     <ClCompile Include="MoveTurretCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
-    <ClCompile Include="GoToNextSceneCommand.cpp">
+    <ClCompile Include="GoToMainSceneCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
     <ClCompile Include="ServiceLocator.cpp">
@@ -346,6 +349,9 @@
     </ClCompile>
     <ClCompile Include="EndScene.cpp">
       <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SkipLevelCommand.cpp">
+      <Filter>Commands</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

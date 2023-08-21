@@ -231,7 +231,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameActorCommand.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GoToNextSceneCommand.h" />
+    <ClInclude Include="GoToMainSceneCommand.h" />
     <ClInclude Include="GridComponent.h" />
     <ClInclude Include="LiveDisplayComponent.h" />
     <ClInclude Include="InputManager.h" />
@@ -254,6 +254,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="ScoreDisplayComponent.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SkipLevelCommand.h" />
     <ClInclude Include="SoundSystem.h" />
     <ClInclude Include="SpawnBulletCommand.h" />
     <ClInclude Include="Subject.h" />
@@ -288,7 +289,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GoToNextSceneCommand.cpp" />
+    <ClCompile Include="GoToMainSceneCommand.cpp" />
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LiveDisplayComponent.cpp" />
@@ -306,6 +307,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ScoreDisplayComponent.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
+    <ClCompile Include="SkipLevelCommand.cpp" />
     <ClCompile Include="SpawnBulletCommand.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="TextObject.cpp" />

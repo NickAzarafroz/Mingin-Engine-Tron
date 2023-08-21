@@ -15,9 +15,10 @@
 #include "MoveGridCommand.h"
 #include "SpawnBulletCommand.h"
 #include "MoveTurretCommand.h"
-#include "GoToNextSceneCommand.h"
 #include "ValidCellComponent.h"
 #include "AliveComponent.h"
+#include "SkipLevelCommand.h"
+#include "ServiceLocator.h"
 #include "Scene.h"
 using namespace dae;
 
@@ -26,9 +27,9 @@ TronGameScene::TronGameScene(std::shared_ptr<Scene> pScene) : m_TronGameScene{ p
 void TronGameScene::LoadSinglePlayer()
 {
 	auto& input = dae::InputManager::GetInstance();
-
 	auto pTronFont = dae::ResourceManager::GetInstance().LoadFont("Tr2n.ttf", 30);
 	auto pFontFpsText = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	auto& soundsystem = dae::ServiceLocator::GetSoundSystem();
 
 	auto goHighScoreText = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goHighScoreValue = std::make_shared<dae::GameObject>(m_TronGameScene.get());
@@ -39,6 +40,7 @@ void TronGameScene::LoadSinglePlayer()
 	auto goEnemy2 = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goEnemy3 = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goGrid = std::make_shared<dae::GameObject>(m_TronGameScene.get());
+	auto goHealthText = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goHealth = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goPlayerTurret = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goPlayerAlive = std::make_shared<dae::GameObject>(m_TronGameScene.get());
@@ -76,7 +78,7 @@ void TronGameScene::LoadSinglePlayer()
 	//--------------------------------------------------------------------------
 	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("RedTank.png");
 	goPlayer->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
-	goPlayer->AddComponent<dae::PlayerComponent>();
+	goPlayer->AddComponent<dae::PlayerComponent>()->SetName("Player1");
 	goPlayer->AddComponent<dae::AliveComponent>()->CheckIfEnemiesAlive(true);
 	goPlayer->AddComponent<dae::TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
 	//---------------------------------------------------------------------------
@@ -128,10 +130,15 @@ void TronGameScene::LoadSinglePlayer()
 
 	//Health Displayer
 	//---------------------------------------------------------------------------
+	goHealthText->AddComponent<dae::TextComponent>()->SetText("HealthPoints:");
+	goHealthText->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
+	goHealthText->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 255);
+	goHealthText->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 50.f, 0.f);
+
 	goHealth->AddComponent<dae::TextComponent>()->SetFont(pTronFont);
 	goHealth->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 255);
 	goHealth->AddComponent<dae::LiveDisplayComponent>()->SetObjectToDisplayLives(goPlayer.get());
-	goHealth->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 50.f, 0.f);
+	goHealth->AddComponent<dae::TransformComponent>()->SetPosition(250.f, 50.f, 0.f);
 	//---------------------------------------------------------------------------
 
 	//Player Turret
@@ -154,6 +161,8 @@ void TronGameScene::LoadSinglePlayer()
 	auto spawnBullet = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get(), goEnemies, goGrid->GetComponent<dae::GridComponent>());
 	auto spawnBulletGP = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get(), goEnemies, goGrid->GetComponent<dae::GridComponent>());
 
+	auto skipLevel = std::make_unique<dae::SkipLevelCommand>(goPlayer.get());
+	auto skipLevelGP = std::make_unique<dae::SkipLevelCommand>(goPlayer.get());
 
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_D, std::move(gridRight), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_A, std::move(gridLeft), 0);
@@ -162,6 +171,7 @@ void TronGameScene::LoadSinglePlayer()
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_SPACE, std::move(spawnBullet), 1);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_UP, std::move(incTurret), 1);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_DOWN, std::move(decTurret), 1);
+	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_F1, std::move(skipLevel), 1);
 
 	auto moveRightCommand = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
 	auto moveLeftCommand = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ -1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
@@ -176,6 +186,7 @@ void TronGameScene::LoadSinglePlayer()
 	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::A, std::move(spawnBulletGP), 1);
 	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::RightShoulder, std::move(incTurretGP), 1);
 	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::LeftShoulder, std::move(decTurretGP), 1);
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::Start, std::move(skipLevelGP), 1);
 
 	goPlayer->SendMessageID(0);
 
@@ -191,10 +202,13 @@ void TronGameScene::LoadSinglePlayer()
 	goPlayer1Text->AddGameObject();
 	goFPS->AddGameObject();
 	goPlayer->AddGameObject();
+	goHealthText->AddGameObject();
 	goHealth->AddGameObject();
 	goEnemy->AddGameObject();
 	goEnemy2->AddGameObject();
 	goEnemy3->AddGameObject();
+
+	soundsystem.Play("../Data/Background.mp3", 20.f, -1);
 
 	m_TronGameScene->Start();
 }
@@ -205,12 +219,16 @@ void TronGameScene::LoadVersus()
 
 	auto pTronFont = dae::ResourceManager::GetInstance().LoadFont("Tr2n.ttf", 30);
 	auto pFontFpsText = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	auto& soundsystem = dae::ServiceLocator::GetSoundSystem();
 
 	auto goFPS = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goPlayer = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goPlayer2 = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goGrid = std::make_shared<dae::GameObject>(m_TronGameScene.get());
+	auto goHealthText = std::make_shared<dae::GameObject>(m_TronGameScene.get());
+	auto goHealthTextP2 = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goHealth = std::make_shared<dae::GameObject>(m_TronGameScene.get());
+	auto goHealthP2 = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goPlayerTurret = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goPlayerTurret2 = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goPlayersAlive = std::make_shared<dae::GameObject>(m_TronGameScene.get());
@@ -239,7 +257,7 @@ void TronGameScene::LoadVersus()
 	//--------------------------------------------------------------------------
 	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("RedTank.png");
 	goPlayer->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
-	goPlayer->AddComponent<dae::PlayerComponent>();
+	goPlayer->AddComponent<dae::PlayerComponent>()->SetName("Player1");
 	goPlayer->AddComponent<dae::TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
 	//---------------------------------------------------------------------------
 
@@ -247,7 +265,7 @@ void TronGameScene::LoadVersus()
 	//--------------------------------------------------------------------------
 	goPlayer2->AddComponent<dae::TextureComponent>()->SetTexture("PinkTank.png");
 	goPlayer2->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
-	goPlayer2->AddComponent<dae::PlayerComponent>();
+	goPlayer2->AddComponent<dae::PlayerComponent>()->SetName("Player2");
 	goPlayer2->AddComponent<dae::TransformComponent>()->SetPosition(576.f, 480.f, 0.0f);
 	//---------------------------------------------------------------------------
 
@@ -263,10 +281,25 @@ void TronGameScene::LoadVersus()
 
 	//Health Displayer
 	//---------------------------------------------------------------------------
+	goHealthText->AddComponent<dae::TextComponent>()->SetText("HealthPoints P1:");
+	goHealthText->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
+	goHealthText->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 0);
+	goHealthText->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 40.f, 0.f);
+
+	goHealthTextP2->AddComponent<dae::TextComponent>()->SetText("HealthPoints P2:");
+	goHealthTextP2->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
+	goHealthTextP2->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 255);
+	goHealthTextP2->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 70.f, 0.f);
+
 	goHealth->AddComponent<dae::TextComponent>()->SetFont(pTronFont);
-	goHealth->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 255);
+	goHealth->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 0);
 	goHealth->AddComponent<dae::LiveDisplayComponent>()->SetObjectToDisplayLives(goPlayer.get());
-	goHealth->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 50.f, 0.f);
+	goHealth->AddComponent<dae::TransformComponent>()->SetPosition(300.f, 40.f, 0.f);
+
+	goHealthP2->AddComponent<dae::TextComponent>()->SetFont(pTronFont);
+	goHealthP2->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 255);
+	goHealthP2->AddComponent<dae::LiveDisplayComponent>()->SetObjectToDisplayLives(goPlayer2.get());
+	goHealthP2->AddComponent<dae::TransformComponent>()->SetPosition(310.f, 70.f, 0.f);
 	//---------------------------------------------------------------------------
 
 	//Player Turret
@@ -293,16 +326,17 @@ void TronGameScene::LoadVersus()
 
 	auto incTurret = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), true);
 	auto decTurret = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), false);
-
-	auto incTurretGP = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), true);
-	auto decTurretGP = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), false);
-
 	auto incTurret2 = std::make_unique<dae::MoveTurretCommandP2>(goPlayerTurret2.get(), true);
 	auto decTurret2 = std::make_unique<dae::MoveTurretCommandP2>(goPlayerTurret2.get(), false);
+	auto incTurretGP = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), true);
+	auto decTurretGP = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), false);
+	auto incTurretGP2 = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret2.get(), true);
+	auto decTurretGP2 = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret2.get(), false);
 
 	auto spawnBulletP1 = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get(), goOtherPlayers2, goGrid->GetComponent<dae::GridComponent>());
 	auto spawnBulletP1GP = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get(), goOtherPlayers2, goGrid->GetComponent<dae::GridComponent>());
 	auto spawnBulletP2 = std::make_unique<dae::SpawnBulletCommand>(goPlayer2.get(), goOtherPlayers1, goGrid->GetComponent<dae::GridComponent>());
+	auto spawnBulletP2GP = std::make_unique<dae::SpawnBulletCommand>(goPlayer2.get(), goOtherPlayers1, goGrid->GetComponent<dae::GridComponent>());
 
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_D, std::move(gridRight), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_A, std::move(gridLeft), 0);
@@ -328,6 +362,11 @@ void TronGameScene::LoadVersus()
 	auto moveUpCommand = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, -1.f }, goGrid->GetComponent<dae::GridComponent>());
 	auto moveDownCommand = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, 1.f }, goGrid->GetComponent<dae::GridComponent>());
 
+	auto moveRightCommandP2 = std::make_unique<dae::MoveGridCommand>(goPlayer2.get(), glm::vec2{1.f, 0.f}, goGrid->GetComponent<dae::GridComponent>());
+	auto moveLeftCommandP2 = std::make_unique<dae::MoveGridCommand>(goPlayer2.get(), glm::vec2{ -1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto moveUpCommandP2 = std::make_unique<dae::MoveGridCommand>(goPlayer2.get(), glm::vec2{ 0.f, -1.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto moveDownCommandP2 = std::make_unique<dae::MoveGridCommand>(goPlayer2.get(), glm::vec2{ 0.f, 1.f }, goGrid->GetComponent<dae::GridComponent>());
+
 	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadRight, std::move(moveRightCommand), 0);
 	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadLeft, std::move(moveLeftCommand), 0);
 	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadUp, std::move(moveUpCommand), 0);
@@ -335,6 +374,14 @@ void TronGameScene::LoadVersus()
 	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::A, std::move(spawnBulletP1GP), 1);
 	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::RightShoulder, std::move(incTurretGP), 1);
 	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::LeftShoulder, std::move(decTurretGP), 1);
+
+	input.BindCommandController(1, dae::XBox360Controller::ControllerButton::DPadRight, std::move(moveRightCommandP2), 0);
+	input.BindCommandController(1, dae::XBox360Controller::ControllerButton::DPadLeft, std::move(moveLeftCommandP2), 0);
+	input.BindCommandController(1, dae::XBox360Controller::ControllerButton::DPadUp, std::move(moveUpCommandP2), 0);
+	input.BindCommandController(1, dae::XBox360Controller::ControllerButton::DPadDown, std::move(moveDownCommandP2), 0);
+	input.BindCommandController(1, dae::XBox360Controller::ControllerButton::A, std::move(spawnBulletP2GP), 1);
+	input.BindCommandController(1, dae::XBox360Controller::ControllerButton::RightShoulder, std::move(incTurretGP2), 1);
+	input.BindCommandController(1, dae::XBox360Controller::ControllerButton::LeftShoulder, std::move(decTurretGP2), 1);
 
 	goPlayer->SendMessageID(0);
 
@@ -349,7 +396,12 @@ void TronGameScene::LoadVersus()
 	goFPS->AddGameObject();
 	goPlayer->AddGameObject();
 	goPlayer2->AddGameObject();
+	goHealthText->AddGameObject();
+	goHealthTextP2->AddGameObject();
 	goHealth->AddGameObject();
+	goHealthP2->AddGameObject();
+
+	soundsystem.Play("../Data/Background.mp3", 20.f, -1);
 
 	m_TronGameScene->Start();
 }
@@ -360,6 +412,7 @@ void TronGameScene::LoadCoop()
 
 	auto pTronFont = dae::ResourceManager::GetInstance().LoadFont("Tr2n.ttf", 30);
 	auto pFontFpsText = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	auto& soundsystem = dae::ServiceLocator::GetSoundSystem();
 
 	auto goHighScoreText = std::make_shared<dae::GameObject>(m_TronGameScene.get());
 	auto goHighScoreValue = std::make_shared<dae::GameObject>(m_TronGameScene.get());
@@ -401,7 +454,7 @@ void TronGameScene::LoadCoop()
 	//--------------------------------------------------------------------------
 	goPlayer->AddComponent<dae::TextureComponent>()->SetTexture("RedTank.png");
 	goPlayer->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
-	goPlayer->AddComponent<dae::PlayerComponent>();
+	goPlayer->AddComponent<dae::PlayerComponent>()->SetName("Player1");
 	goPlayer->AddComponent<dae::AliveComponent>()->CheckIfEnemiesAlive(true);
 	goPlayer->AddComponent<dae::TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
 	//---------------------------------------------------------------------------
@@ -410,7 +463,7 @@ void TronGameScene::LoadCoop()
 	//--------------------------------------------------------------------------
 	goPlayer2->AddComponent<dae::TextureComponent>()->SetTexture("PinkTank.png");
 	goPlayer2->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
-	goPlayer2->AddComponent<dae::PlayerComponent>();
+	goPlayer2->AddComponent<dae::PlayerComponent>()->SetName("Player2");
 	goPlayer2->AddComponent<dae::TransformComponent>()->SetPosition(576.f, 480.f, 0.0f);
 	//---------------------------------------------------------------------------
 
@@ -436,7 +489,7 @@ void TronGameScene::LoadCoop()
 	//---------------------------------------------------------------------------
 	goHealthTextP1->AddComponent<dae::TextComponent>()->SetText("HealthPoints P1: ");
 	goHealthTextP1->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
-	goHealthTextP1->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 255);
+	goHealthTextP1->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 0);
 	goHealthTextP1->AddComponent<dae::TransformComponent>()->SetPosition(0.f, 30.f, 0.f);
 
 	goHealthTextP2->AddComponent<dae::TextComponent>()->SetText("HealthPoints P2: ");
@@ -446,7 +499,7 @@ void TronGameScene::LoadCoop()
 
 	goHealthP1->AddComponent<dae::TextComponent>()->SetText("3");
 	goHealthP1->GetComponent<dae::TextComponent>()->SetFont(pTronFont);
-	goHealthP1->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 255);
+	goHealthP1->GetComponent<dae::TextComponent>()->SetFontColor(255, 0, 0);
 	goHealthP1->AddComponent<dae::LiveDisplayComponent>()->SetObjectToDisplayLives(goPlayer.get());
 	goHealthP1->AddComponent<dae::TransformComponent>()->SetPosition(310.f, 30.f, 0.f);
 
@@ -515,12 +568,17 @@ void TronGameScene::LoadCoop()
 
 	auto incTurret = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), true);
 	auto decTurret = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), false);
-
 	auto incTurret2 = std::make_unique<dae::MoveTurretCommandP2>(goPlayerTurret2.get(), true);
 	auto decTurret2 = std::make_unique<dae::MoveTurretCommandP2>(goPlayerTurret2.get(), false);
+	auto incTurretGP = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), true);
+	auto decTurretGP = std::make_unique<dae::MoveTurretCommand>(goPlayerTurret.get(), false);
+	auto incTurret2GP = std::make_unique<dae::MoveTurretCommandP2>(goPlayerTurret2.get(), true);
+	auto decTurret2GP = std::make_unique<dae::MoveTurretCommandP2>(goPlayerTurret2.get(), false);
 
 	auto spawnBulletP1 = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get(), goEnemies, goGrid->GetComponent<dae::GridComponent>());
+	auto spawnBulletP1GP = std::make_unique<dae::SpawnBulletCommand>(goPlayer.get(), goEnemies, goGrid->GetComponent<dae::GridComponent>());
 	auto spawnBulletP2 = std::make_unique<dae::SpawnBulletCommand>(goPlayer2.get(), goEnemies, goGrid->GetComponent<dae::GridComponent>());
+	auto spawnBulletP2GP = std::make_unique<dae::SpawnBulletCommand>(goPlayer2.get(), goEnemies, goGrid->GetComponent<dae::GridComponent>());
 
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_D, std::move(gridRight), 0);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_A, std::move(gridLeft), 0);
@@ -539,6 +597,32 @@ void TronGameScene::LoadCoop()
 
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_SPACE, std::move(spawnBulletP1), 1);
 	input.BindCommandKeyBoard(SDL_Scancode::SDL_SCANCODE_RSHIFT, std::move(spawnBulletP2), 1);
+
+	auto moveRightCommand = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto moveLeftCommand = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ -1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto moveUpCommand = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, -1.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto moveDownCommand = std::make_unique<dae::MoveGridCommand>(goPlayer.get(), glm::vec2{ 0.f, 1.f }, goGrid->GetComponent<dae::GridComponent>());
+
+	auto moveRightCommandP2 = std::make_unique<dae::MoveGridCommand>(goPlayer2.get(), glm::vec2{ 1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto moveLeftCommandP2 = std::make_unique<dae::MoveGridCommand>(goPlayer2.get(), glm::vec2{ -1.f, 0.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto moveUpCommandP2 = std::make_unique<dae::MoveGridCommand>(goPlayer2.get(), glm::vec2{ 0.f, -1.f }, goGrid->GetComponent<dae::GridComponent>());
+	auto moveDownCommandP2 = std::make_unique<dae::MoveGridCommand>(goPlayer2.get(), glm::vec2{ 0.f, 1.f }, goGrid->GetComponent<dae::GridComponent>());
+
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadRight, std::move(moveRightCommand), 0);
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadLeft, std::move(moveLeftCommand), 0);
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadUp, std::move(moveUpCommand), 0);
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::DPadDown, std::move(moveDownCommand), 0);
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::A, std::move(spawnBulletP1GP), 1);
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::RightShoulder, std::move(incTurretGP), 1);
+	input.BindCommandController(0, dae::XBox360Controller::ControllerButton::LeftShoulder, std::move(decTurretGP), 1);
+
+	input.BindCommandController(1, dae::XBox360Controller::ControllerButton::DPadRight, std::move(moveRightCommandP2), 0);
+	input.BindCommandController(1, dae::XBox360Controller::ControllerButton::DPadLeft, std::move(moveLeftCommandP2), 0);
+	input.BindCommandController(1, dae::XBox360Controller::ControllerButton::DPadUp, std::move(moveUpCommandP2), 0);
+	input.BindCommandController(1, dae::XBox360Controller::ControllerButton::DPadDown, std::move(moveDownCommandP2), 0);
+	input.BindCommandController(1, dae::XBox360Controller::ControllerButton::A, std::move(spawnBulletP2GP), 1);
+	input.BindCommandController(1, dae::XBox360Controller::ControllerButton::RightShoulder, std::move(incTurret2GP), 1);
+	input.BindCommandController(1, dae::XBox360Controller::ControllerButton::LeftShoulder, std::move(decTurret2GP), 1);
 
 	goPlayerTurret->SetParent(goPlayer.get(), true);
 	goPlayerTurret2->SetParent(goPlayer2.get(), true);
@@ -561,6 +645,8 @@ void TronGameScene::LoadCoop()
 	goEnemy->AddGameObject();
 	goEnemy2->AddGameObject();
 	goEnemy3->AddGameObject();
+
+	soundsystem.Play("../Data/Background.mp3", 20.f, -1);
 
 	m_TronGameScene->Start();
 }

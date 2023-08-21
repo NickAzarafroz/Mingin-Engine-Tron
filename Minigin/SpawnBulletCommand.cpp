@@ -17,7 +17,7 @@ void SpawnBulletCommand::Execute()
 
 	if (scene.IsObjectInScene(m_GoBullet)) return;
 
-	soundSystem.Play("../Data/Shoot.mp3", 20.f);
+	soundSystem.Play("../Data/Shoot.mp3", 20.f, 0);
 
 	m_GoBullet = std::make_shared<GameObject>(&scene);
 	m_GoBullet->AddComponent<TextureComponent>()->AddTexture("BulletPlayer.png");

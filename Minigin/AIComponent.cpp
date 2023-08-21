@@ -151,6 +151,15 @@ void AIComponent::ShootPlayer()
 	float px = m_pPlayers[0]->GetWorldPosition().x;
 	float py = m_pPlayers[0]->GetWorldPosition().y;
 
+	float p2x{};
+	float p2y{};
+
+	if(m_pPlayers.size() > 1)
+	{
+		p2x = m_pPlayers[1]->GetWorldPosition().x;
+		p2y = m_pPlayers[1]->GetWorldPosition().y;
+	}
+
 	if(m_pGrid->GetCell(glm::vec2{x,y}).row == m_pGrid->GetCell(glm::vec2{px, py}).row)
 	{
 		if (scene.IsObjectInScene(m_pGoBullet)) return;
@@ -208,5 +217,67 @@ void AIComponent::ShootPlayer()
 
 		m_pGoBullet->AddGameObject();
 		m_pGoBullet->Start();
+	}
+
+	if(m_pPlayers.size() > 1)
+	{
+		if (m_pGrid->GetCell(glm::vec2{ x,y }).row == m_pGrid->GetCell(glm::vec2{ p2x, p2y }).row)
+		{
+			if (scene.IsObjectInScene(m_pGoBullet)) return;
+
+			m_pGoBullet = std::make_shared<GameObject>(&scene);
+			m_pGoBullet->AddComponent<TextureComponent>()->AddTexture("BulletNPC.png");
+			m_pGoBullet->AddComponent<TransformComponent>()->SetPosition(m_pGameObject->GetWorldPosition().x + 12.f, m_pGameObject->GetWorldPosition().y + 10.f, 0);
+			m_pGoBullet->AddComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
+			m_pGoBullet->GetComponent<BoxTriggerComponent>()->AddOtherObject(m_pPlayers[0]);
+			m_pGoBullet->GetComponent<BoxTriggerComponent>()->AddOtherObject(m_pPlayers[1]);
+			m_pGoBullet->GetComponent<BoxTriggerComponent>()->DecOtherHealthAfterOverlap(true);
+
+			if (m_pGrid->GetCell(glm::vec2{ x,y }).col > m_pGrid->GetCell(glm::vec2{ p2x, p2y }).col)
+			{
+				m_pGoBullet->AddComponent<MovementComponent>()->SetSpeed(150.f, -1.f, 0.f);
+				m_pGoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
+				m_pGoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ -1.f, 0.f });
+				m_pGoBullet->GetComponent<ValidCellComponent>()->SetBounceThreshold(0);
+			}
+			else
+			{
+				m_pGoBullet->AddComponent<MovementComponent>()->SetSpeed(150.f, 1.f, 0.f);
+				m_pGoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
+				m_pGoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 1.f, 0.f });
+				m_pGoBullet->GetComponent<ValidCellComponent>()->SetBounceThreshold(0);
+			}
+
+			m_pGoBullet->AddGameObject();
+			m_pGoBullet->Start();
+		}
+		else if (m_pGrid->GetCell(glm::vec2{ x,y }).col == m_pGrid->GetCell(glm::vec2{ p2x, p2y }).col)
+		{
+			if (scene.IsObjectInScene(m_pGoBullet)) return;
+
+			m_pGoBullet = std::make_shared<GameObject>(&scene);
+			m_pGoBullet->AddComponent<TextureComponent>()->AddTexture("BulletNPC.png");
+			m_pGoBullet->AddComponent<TransformComponent>()->SetPosition(m_pGameObject->GetWorldPosition().x + 12.f, m_pGameObject->GetWorldPosition().y + 10.f, 0);
+			m_pGoBullet->AddComponent<BoxTriggerComponent>()->SetSize(12.f, 12.f);
+			m_pGoBullet->GetComponent<BoxTriggerComponent>()->AddOtherObject(m_pPlayers[0]);
+			if (m_pPlayers.size() > 1) m_pGoBullet->GetComponent<BoxTriggerComponent>()->AddOtherObject(m_pPlayers[1]);
+			m_pGoBullet->GetComponent<BoxTriggerComponent>()->DecOtherHealthAfterOverlap(true);
+
+			if (m_pGrid->GetCell(glm::vec2{ x,y }).row > m_pGrid->GetCell(glm::vec2{ p2x, p2y }).row)
+			{
+				m_pGoBullet->AddComponent<MovementComponent>()->SetSpeed(150.f, 0.f, -1.f);
+				m_pGoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
+				m_pGoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 0.f, -1.f });
+			}
+			else
+			{
+				m_pGoBullet->AddComponent<MovementComponent>()->SetSpeed(150.f, 0.f, 1.f);
+				m_pGoBullet->AddComponent<ValidCellComponent>()->SetGrid(m_pGrid);
+				m_pGoBullet->GetComponent<ValidCellComponent>()->SetDirection(glm::vec2{ 0.f, 1.f });
+			}
+
+			m_pGoBullet->AddGameObject();
+			m_pGoBullet->Start();
+		}
 	}
 }

@@ -13,6 +13,12 @@ void ValidCellComponent::Update(float)
 	}
 	else
 	{
+		if(m_pGameObject->GetWorldPosition().x < 0.f || m_pGameObject->GetWorldPosition().x > 640.f || 
+ 			m_pGameObject->GetWorldPosition().y < 96.f || m_pGameObject->GetWorldPosition().y > 580.f)
+		{
+			m_pGameObject->RemoveGameObject();
+		}
+
 		if (m_AmountBounce >= m_BounceThreshold)
 		{
 			m_pGameObject->RemoveGameObject();

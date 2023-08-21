@@ -6,7 +6,7 @@
 
 void dae::SceneManager::Start()
 {
-	for (auto& scene : m_scenes)
+	for (auto& scene : m_pScenes)
 	{
 		scene->Start();
 	}
@@ -14,32 +14,32 @@ void dae::SceneManager::Start()
 
 void dae::SceneManager::Update(float elapsedSec)
 {
-	m_scenes[m_ActiveSceneIndex]->Update(elapsedSec);
+	m_pScenes[m_ActiveSceneIndex]->Update(elapsedSec);
 }
 
 void dae::SceneManager::Render()
 {
-	m_scenes[m_ActiveSceneIndex]->Render();
+	m_pScenes[m_ActiveSceneIndex]->Render();
 }
 
 dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
 {
 	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
-	m_scenes.push_back(scene);
+	m_pScenes.push_back(scene);
 	return *scene;
 }
 
 dae::Scene& dae::SceneManager::GetScene(int index)
 {
-	Scene* scene{ m_scenes[index].get() };
+	Scene* scene{ m_pScenes[index].get() };
 	return *scene;
 }
 
 void dae::SceneManager::Initialize()
 {
-	m_MainMenuScene = std::make_shared<MainMenuScene>(m_scenes[0]);
-	m_TronGameScene = std::make_shared<TronGameScene>(m_scenes[1]);
-	m_EndScene = std::make_shared<EndScene>(m_scenes[2]);
+	m_MainMenuScene = std::make_shared<MainMenuScene>(m_pScenes[0]);
+	m_TronGameScene = std::make_shared<TronGameScene>(m_pScenes[1]);
+	m_EndScene = std::make_shared<EndScene>(m_pScenes[2]);
 
 	m_MainMenuScene->Load();
 }

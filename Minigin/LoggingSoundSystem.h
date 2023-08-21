@@ -21,10 +21,16 @@ namespace dae
 			m_pReal_SS->Update();
 		}
 
-		void Play(const SoundFile filePath, const float volume) override 
+		void Play(const SoundFile filePath, const float volume, int loop) override 
 		{
 			std::cout << "Playing " << filePath << " at volume " << volume << std::endl;
-			m_pReal_SS->Play(filePath, volume);
+			m_pReal_SS->Play(filePath, volume, loop);
+		}
+
+		void Stop() override
+		{
+			std::cout << "Stop all channels/sounds\n";
+			m_pReal_SS->Stop();
 		}
 
 		virtual void Release() override 

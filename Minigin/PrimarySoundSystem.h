@@ -34,8 +34,10 @@ namespace dae
 			}
 		}
 
-		void Play(const SoundFile filePath, const float volume) override
+		void Play(const SoundFile filePath, const float volume, int loop) override
 		{
+			m_Loop = loop;
+
 			// If the buffer is full, drop the sound request
 			while ((m_Tail + 1) % MAX_PENDING == m_Head)
 			{
@@ -51,6 +53,11 @@ namespace dae
 			m_CV.notify_one();
 		}
 
+		void Stop()
+		{
+			m_pAudio->Stop();
+		}
+
 		void Release() override
 		{
 			m_DoContinue = false;
@@ -63,6 +70,8 @@ namespace dae
 		static int m_Head;
 		static int m_Tail;
 		static bool m_DoContinue;
+		
+		int m_Loop;
 		std::unique_ptr<AudioClip> m_pAudio;
 
 		std::jthread m_SoundThread;
@@ -89,7 +98,7 @@ namespace dae
 				// Load and play the audio clip
 				m_pAudio->Load(m_Pending[m_Head].filePath);
 				m_pAudio->SetVolume(m_Pending[m_Head].volume);
-				m_pAudio->Play();
+				m_pAudio->Play(m_Loop);
 
 				m_Head = (m_Head + 1) % MAX_PENDING;
 			}

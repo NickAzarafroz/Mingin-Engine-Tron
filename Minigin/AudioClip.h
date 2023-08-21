@@ -18,7 +18,8 @@ namespace dae
         bool IsLoaded() const;
         void Load(const std::string filePath);
         void SetVolume(float volume);
-        void Play();
+        void Play(int loop);
+        void Stop();
 
     private:
         Mix_Chunk* m_pMixChunk{};

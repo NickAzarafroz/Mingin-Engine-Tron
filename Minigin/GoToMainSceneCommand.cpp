@@ -1,4 +1,4 @@
-#include "GoToNextSceneCommand.h"
+#include "GoToMainSceneCommand.h"
 #include "ChangeModeCommand.h"
 #include "GridComponent.h"
 #include "EnemyComponent.h"
@@ -6,19 +6,8 @@
 #include "Scene.h"
 using namespace dae;
 
-void GoToNextSceneCommand::Execute()
+void GoToMainSceneCommand::Execute()
 {
-	if (SceneManager::GetInstance().GetCurrentSceneIndex() == 1)
-	{	
-		for(const auto& object : SceneManager::GetInstance().GetScene(1).GetAllObjects())
-		{
-			if(object->GetComponent<EnemyComponent>())
-			{
-				object->MarkForDelete();
-			}
-		}
-	}
-
 	if(SceneManager::GetInstance().GetCurrentSceneIndex() == 0)
 	{
 		SceneManager::GetInstance().LoadMainGame(ChangeModeCommand::m_ModeIndex);
