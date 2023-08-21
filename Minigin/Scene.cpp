@@ -56,7 +56,7 @@ void Scene::Start()
 
 void Scene::Update(float elapsedSec)
 {
-	for(int i{}; i < m_pObjects.size(); ++i)
+	for(size_t i{}; i < m_pObjects.size(); ++i)
 	{
 		m_pObjects[i]->Update(elapsedSec);
 	}

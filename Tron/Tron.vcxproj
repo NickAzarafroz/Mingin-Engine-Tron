@@ -75,13 +75,21 @@
     <Import Project="..\sdl.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Minigin;$(SolutionDir)\3rdParty\rapidjson-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -100,7 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Minigin;$(SolutionDir)\3rdParty\rapidjson-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -119,7 +127,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Minigin;$(SolutionDir)\3rdParty\rapidjson-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -138,7 +146,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Minigin;$(SolutionDir)\3rdParty\rapidjson-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -152,7 +160,57 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Minigin\AIComponent.cpp" />
+    <ClCompile Include="..\Minigin\AliveComponent.cpp" />
+    <ClCompile Include="..\Minigin\BoxTriggerComponent.cpp" />
+    <ClCompile Include="..\Minigin\ChangeModeCommand.cpp" />
+    <ClCompile Include="..\Minigin\EndScene.cpp" />
+    <ClCompile Include="..\Minigin\EnemyComponent.cpp" />
+    <ClCompile Include="..\Minigin\FPSComponent.cpp" />
+    <ClCompile Include="..\Minigin\GoToMainSceneCommand.cpp" />
+    <ClCompile Include="..\Minigin\GridComponent.cpp" />
+    <ClCompile Include="..\Minigin\LiveDisplayComponent.cpp" />
+    <ClCompile Include="..\Minigin\MainMenuScene.cpp" />
+    <ClCompile Include="..\Minigin\MoveCommand.cpp" />
+    <ClCompile Include="..\Minigin\MoveGridCommand.cpp" />
+    <ClCompile Include="..\Minigin\MovementComponent.cpp" />
+    <ClCompile Include="..\Minigin\MoveTurretCommand.cpp" />
+    <ClCompile Include="..\Minigin\PlayerComponent.cpp" />
+    <ClCompile Include="..\Minigin\RotateComponent.cpp" />
+    <ClCompile Include="..\Minigin\SceneManager.cpp" />
+    <ClCompile Include="..\Minigin\ScoreDisplayComponent.cpp" />
+    <ClCompile Include="..\Minigin\SkipLevelCommand.cpp" />
+    <ClCompile Include="..\Minigin\SpawnBulletCommand.cpp" />
+    <ClCompile Include="..\Minigin\TransformComponent.cpp" />
+    <ClCompile Include="..\Minigin\TronGameScene.cpp" />
+    <ClCompile Include="..\Minigin\ValidCellComponent.cpp" />
     <ClCompile Include="Tron.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Minigin\AIComponent.h" />
+    <ClInclude Include="..\Minigin\AliveComponent.h" />
+    <ClInclude Include="..\Minigin\BoxTriggerComponent.h" />
+    <ClInclude Include="..\Minigin\ChangeModeCommand.h" />
+    <ClInclude Include="..\Minigin\EndScene.h" />
+    <ClInclude Include="..\Minigin\EnemyComponent.h" />
+    <ClInclude Include="..\Minigin\FPSComponent.h" />
+    <ClInclude Include="..\Minigin\GoToMainSceneCommand.h" />
+    <ClInclude Include="..\Minigin\GridComponent.h" />
+    <ClInclude Include="..\Minigin\LiveDisplayComponent.h" />
+    <ClInclude Include="..\Minigin\MainMenuScene.h" />
+    <ClInclude Include="..\Minigin\MoveCommand.h" />
+    <ClInclude Include="..\Minigin\MoveGridCommand.h" />
+    <ClInclude Include="..\Minigin\MovementComponent.h" />
+    <ClInclude Include="..\Minigin\MoveTurretCommand.h" />
+    <ClInclude Include="..\Minigin\PlayerComponent.h" />
+    <ClInclude Include="..\Minigin\RotateComponent.h" />
+    <ClInclude Include="..\Minigin\SceneManager.h" />
+    <ClInclude Include="..\Minigin\ScoreDisplayComponent.h" />
+    <ClInclude Include="..\Minigin\SkipLevelCommand.h" />
+    <ClInclude Include="..\Minigin\SpawnBulletCommand.h" />
+    <ClInclude Include="..\Minigin\TransformComponent.h" />
+    <ClInclude Include="..\Minigin\TronGameScene.h" />
+    <ClInclude Include="..\Minigin\ValidCellComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

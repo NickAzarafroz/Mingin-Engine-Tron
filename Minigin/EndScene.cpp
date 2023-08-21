@@ -65,7 +65,7 @@ void EndScene::Load(int endscore)
 
 		if (outputFile.is_open())
 		{
-			for (int i{}; i < m_HighScores.size(); ++i)
+			for (size_t i{}; i < m_HighScores.size(); ++i)
 			{
 				outputFile << m_HighScores[i] << "\n";
 			}
@@ -76,7 +76,7 @@ void EndScene::Load(int endscore)
 
 	float inc{ 30.f };
 
-	for (int i{}; i < goScores.size(); ++i)
+	for (size_t i{}; i < goScores.size(); ++i)
 	{
 		goScores[i]->AddComponent<TextComponent>()->SetText(std::to_string(m_HighScores[i]));
 		goScores[i]->GetComponent<TextComponent>()->SetFont(pTronFont);

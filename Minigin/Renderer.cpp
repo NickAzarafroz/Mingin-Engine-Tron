@@ -2,7 +2,6 @@
 #include "Renderer.h"
 #include "SceneManager.h"
 #include "Texture2D.h"
-#include "TrashTheCashe.h"
 #include "../3rdParty/imgui-1.89.4/imgui.h"
 #include "../3rdParty/imgui-1.89.4/backends/imgui_impl_sdl.h"
 #include "../3rdParty/imgui-1.89.4/backends/imgui_impl_opengl2.h"

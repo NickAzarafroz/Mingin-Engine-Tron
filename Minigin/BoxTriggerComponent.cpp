@@ -69,12 +69,7 @@ void BoxTriggerComponent::SetSize(float width, float height)
 
 void BoxTriggerComponent::AddOtherObject(std::shared_ptr<GameObject> go)
 {
-	/*for (const auto& other : m_pOthers)
-	{
-		if (other == go) return;
-	}*/
-
-	for (int i{}; i < m_pOthers.size(); ++i)
+	for (size_t i{}; i < m_pOthers.size(); ++i)
 	{
 		if (m_pOthers[i] == go) return;
 	}

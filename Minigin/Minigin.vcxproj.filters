@@ -25,47 +25,17 @@
     <Filter Include="Sound">
       <UniqueIdentifier>{6f0d09a3-70f8-4640-b990-cda4b8e22643}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scenes">
-      <UniqueIdentifier>{8e8475ce-04ac-4b5f-a81b-806db2d7479a}</UniqueIdentifier>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{a82454ff-5d18-4e33-a719-6d7535815b2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other">
+      <UniqueIdentifier>{711eb002-c1cb-4b09-85eb-7cfa57ce3a46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Minigin">
+      <UniqueIdentifier>{8c3525c2-4ed4-42e6-8875-edd7e227cc55}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Font.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Minigin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imconfig.h">
       <Filter>Imgui</Filter>
     </ClInclude>
@@ -93,47 +63,8 @@
     <ClInclude Include="..\3rdParty\imgui-1.89.4\imgui_plot.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="TrashTheCashe.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="XBox360Controller.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Observer.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="FPSComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="GridComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="LiveDisplayComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="RotateComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreDisplayComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TextComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>Commands</Filter>
     </ClInclude>
     <ClInclude Include="AudioClip.h">
       <Filter>Sound</Filter>
@@ -153,95 +84,62 @@
     <ClInclude Include="ServiceLocator.h">
       <Filter>Sound</Filter>
     </ClInclude>
-    <ClInclude Include="GameActorCommand.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
     <ClInclude Include="Subject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MovementComponent.h">
+    <ClInclude Include="Command.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="GameActorCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="ValidCellComponent.h">
+    <ClInclude Include="TextComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="BoxTriggerComponent.h">
+    <ClInclude Include="TextureComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="AIComponent.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="InputManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="MoveCommand.h">
-      <Filter>Commands</Filter>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="MoveGridCommand.h">
-      <Filter>Commands</Filter>
+    <ClInclude Include="Font.h">
+      <Filter>Other</Filter>
     </ClInclude>
-    <ClInclude Include="SpawnBulletCommand.h">
-      <Filter>Commands</Filter>
+    <ClInclude Include="TextObject.h">
+      <Filter>Other</Filter>
     </ClInclude>
-    <ClInclude Include="MoveTurretCommand.h">
-      <Filter>Commands</Filter>
+    <ClInclude Include="Transform.h">
+      <Filter>Other</Filter>
     </ClInclude>
-    <ClInclude Include="GoToMainSceneCommand.h">
-      <Filter>Commands</Filter>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Other</Filter>
     </ClInclude>
-    <ClInclude Include="MainMenuScene.h">
-      <Filter>Scenes</Filter>
+    <ClInclude Include="XBox360Controller.h">
+      <Filter>Other</Filter>
     </ClInclude>
-    <ClInclude Include="TronGameScene.h">
-      <Filter>Scenes</Filter>
+    <ClInclude Include="Renderer.h">
+      <Filter>Other</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyComponent.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="GameObject.h">
+      <Filter>Other</Filter>
     </ClInclude>
-    <ClInclude Include="AliveComponent.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="Singleton.h">
+      <Filter>Other</Filter>
     </ClInclude>
-    <ClInclude Include="ChangeModeCommand.h">
-      <Filter>Commands</Filter>
+    <ClInclude Include="Minigin.h">
+      <Filter>Minigin</Filter>
     </ClInclude>
-    <ClInclude Include="EndScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="SkipLevelCommand.h">
-      <Filter>Commands</Filter>
+    <ClInclude Include="Scene.h">
+      <Filter>Other</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Font.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Minigin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
@@ -266,92 +164,53 @@
     <ClCompile Include="..\3rdParty\imgui-1.89.4\imgui_plot.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="XBox360Controller.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="AudioClip.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceLocator.cpp">
+      <Filter>Sound</Filter>
     </ClCompile>
     <ClCompile Include="BaseComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="FPSComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="GridComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="LiveDisplayComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="RotateComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreDisplayComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="TextComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="TransformComponent.cpp">
+    <ClCompile Include="TextureComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="AudioClip.cpp">
-      <Filter>Sound</Filter>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="MovementComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="ValidCellComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Font.cpp">
+      <Filter>Other</Filter>
     </ClCompile>
-    <ClCompile Include="BoxTriggerComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="TextObject.cpp">
+      <Filter>Other</Filter>
     </ClCompile>
-    <ClCompile Include="AIComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Other</Filter>
     </ClCompile>
-    <ClCompile Include="MoveCommand.cpp">
-      <Filter>Commands</Filter>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Other</Filter>
     </ClCompile>
-    <ClCompile Include="MoveGridCommand.cpp">
-      <Filter>Commands</Filter>
+    <ClCompile Include="XBox360Controller.cpp">
+      <Filter>Other</Filter>
     </ClCompile>
-    <ClCompile Include="SpawnBulletCommand.cpp">
-      <Filter>Commands</Filter>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Other</Filter>
     </ClCompile>
-    <ClCompile Include="MoveTurretCommand.cpp">
-      <Filter>Commands</Filter>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Other</Filter>
     </ClCompile>
-    <ClCompile Include="GoToMainSceneCommand.cpp">
-      <Filter>Commands</Filter>
+    <ClCompile Include="Minigin.cpp">
+      <Filter>Minigin</Filter>
     </ClCompile>
-    <ClCompile Include="ServiceLocator.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenuScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="TronGameScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="AliveComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ChangeModeCommand.cpp">
-      <Filter>Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="EndScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="SkipLevelCommand.cpp">
-      <Filter>Commands</Filter>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Other</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

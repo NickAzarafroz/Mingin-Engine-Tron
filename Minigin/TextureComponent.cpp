@@ -39,7 +39,7 @@ void TextureComponent::AddTexture(const std::string& filename)
 
 void TextureComponent::SetActiveTexture(int index)
 {
-	if (index >= 0 && index < m_Textures.size())
+	if (index >= 0 && index < static_cast<int>(m_Textures.size()))
 	{
 		// Set the active texture for rendering
 		m_ActiveTextureIndex = index;
@@ -48,7 +48,7 @@ void TextureComponent::SetActiveTexture(int index)
 
 std::shared_ptr<Texture2D> dae::TextureComponent::GetTexture()
 {
-	if (m_ActiveTextureIndex >= 0 && m_ActiveTextureIndex < m_Textures.size())
+	if (m_ActiveTextureIndex >= 0 && m_ActiveTextureIndex < static_cast<int>(m_Textures.size()))
 	{
 		return m_Textures[m_ActiveTextureIndex];
 	}
