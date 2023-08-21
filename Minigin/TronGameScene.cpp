@@ -464,7 +464,7 @@ void TronGameScene::LoadCoop()
 	goPlayer2->AddComponent<dae::TextureComponent>()->SetTexture("PinkTank.png");
 	goPlayer2->AddComponent<dae::BoxTriggerComponent>()->SetSize(32.f, 32.f);
 	goPlayer2->AddComponent<dae::PlayerComponent>()->SetName("Player2");
-	goPlayer2->AddComponent<dae::TransformComponent>()->SetPosition(576.f, 480.f, 0.0f);
+	goPlayer2->AddComponent<dae::TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
 	//---------------------------------------------------------------------------
 
 	goPlayersAlive->AddComponent<dae::AliveComponent>()->AddPlayersToCheck(goPlayer);
@@ -519,7 +519,7 @@ void TronGameScene::LoadCoop()
 	//Player2 Turret
 	//-----------------------------------------------------------------------------------
 	goPlayerTurret2->AddComponent<dae::TextureComponent>()->AddTexture("BlueTankGun.png");
-	goPlayerTurret2->AddComponent<dae::TransformComponent>()->SetPosition(568.f, 472.f, 0.f);
+	goPlayerTurret2->AddComponent<dae::TransformComponent>()->SetPosition(24.f, 120.f, 0.f);
 	//-----------------------------------------------------------------------------------
 
 	//Enemy
@@ -705,7 +705,7 @@ void TronGameScene::LoadLevel1()
 	auto& input = dae::InputManager::GetInstance();
 
 	m_pPlayer->GetComponent<TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
-	if (m_pPlayer2) m_pPlayer2->GetComponent<TransformComponent>()->SetPosition(576.f, 480.f, 0.0f);
+	if (m_pPlayer2) m_pPlayer2->GetComponent<TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
 	m_pGrid->GetComponent<GridComponent>()->Initialize(32.f, 32.f, "../Data/LevelTron.json");
 
 	auto goEnemy = std::make_shared<dae::GameObject>(m_TronGameScene.get());
@@ -770,7 +770,7 @@ void TronGameScene::LoadLevel2()
 	auto& input = dae::InputManager::GetInstance();
 
 	m_pPlayer->GetComponent<TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
-	if (m_pPlayer2) m_pPlayer2->GetComponent<TransformComponent>()->SetPosition(576.f, 480.f, 0.0f);
+	if (m_pPlayer2) m_pPlayer2->GetComponent<TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
 	m_pGrid->GetComponent<GridComponent>()->Initialize(32.f, 32.f, "../Data/LevelTron2.json");
 
 	auto goEnemy = std::make_shared<dae::GameObject>(m_TronGameScene.get());
@@ -859,7 +859,7 @@ void TronGameScene::LoadLevel3()
 	auto& input = dae::InputManager::GetInstance();
 
 	m_pPlayer->GetComponent<TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
-	if (m_pPlayer2) m_pPlayer2->GetComponent<TransformComponent>()->SetPosition(576.f, 480.f, 0.0f);
+	if (m_pPlayer2) m_pPlayer2->GetComponent<TransformComponent>()->SetPosition(32.f, 128.f, 0.0f);
 	m_pGrid->GetComponent<GridComponent>()->Initialize(32.f, 32.f, "../Data/LevelTron3.json");
 
 	auto goEnemy = std::make_shared<dae::GameObject>(m_TronGameScene.get());

@@ -102,7 +102,7 @@ Cell GridComponent::GetCell(glm::vec2 localPosition) const
 		return m_Cells[index];
 	}
 
-	std::cout << "OutOfRange";
+	//std::cout << "OutOfRange";
 	Cell c;
 	c.row = -1;
 	c.col = -1;
@@ -128,13 +128,13 @@ std::pair<Cell, bool> dae::GridComponent::GetDestinationCell(glm::vec2 localPosi
 		}
 		else
 		{
-			std::cout << "Wall";
+			//std::cout << "Wall";
 			return std::make_pair(Cell{}, false);
 		}
 	}
 	else
 	{
-		std::cout << "OutOfMap";
+		//std::cout << "OutOfMap";
 		return std::make_pair(Cell{}, false);
 	}
 }
